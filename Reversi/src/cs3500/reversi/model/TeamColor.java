@@ -3,11 +3,11 @@ package cs3500.reversi.model;
 /**
  * Represents an enumerated type of every game state.
  */
-public enum State {
-  WHITE("O"), BLACK("X"), EMPTY("_");
+public enum TeamColor {
+  WHITE("O"), BLACK("X");
 
   String symbol;
-  State(String str) {
+  TeamColor(String str) {
     this.symbol = str;
   }
 }

@@ -1,5 +1,7 @@
 package cs3500.reversi.model;
 
+import java.util.Objects;
+
 public class HexPosition {
   int q;
   int r;
@@ -9,5 +11,43 @@ public class HexPosition {
     this.q = q;
     this.r = r;
     this.s = s;
+  }
+
+  public HexPosition(HexPosition pos) {
+    this.q = pos.q;
+    this.r = pos.r;
+    this.s = pos.s;
+  }
+
+  public int getQPosition() {
+    return this.q;
+  }
+
+  public int getRPosition() {
+    return this.r;
+  }
+
+  public int getSPosition() {
+    return this.s;
+  }
+
+
+
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof HexPosition)) {
+      return false;
+    }
+    else {
+      HexPosition that = (HexPosition) other;
+      return this.q == that.q
+              && this.r == that.r
+              && this.s == that.s;
+    }
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.q, this.r, this.s);
   }
 }
