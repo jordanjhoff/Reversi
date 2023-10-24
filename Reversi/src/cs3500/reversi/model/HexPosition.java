@@ -3,9 +3,11 @@ package cs3500.reversi.model;
 import java.util.Objects;
 
 public class HexPosition {
-  int q;
-  int r;
-  int s;
+  private final int q;
+  private final int r;
+  private final int s;
+
+
 
   public HexPosition(int q, int r, int s) {
     this.q = q;

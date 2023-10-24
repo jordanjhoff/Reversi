@@ -4,13 +4,15 @@ public interface ReversiModel {
 
   public void startGame(int radius);
 
-  public void addPiece(State tile, HexPosition posn);
+  public void addPiece(TeamColor piece, HexPosition posn);
 
-  public State getPiece(HexPosition posn);
+  public TeamColor getPieceAt(HexPosition posn);
 
-  public List<HexPosition> getValidMoves(State piece);
+  public TeamColor getCurrentTurn();
 
   public boolean isGameOver();
+
+  public int getRadius();
 
 
 }
