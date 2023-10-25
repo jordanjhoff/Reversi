@@ -25,6 +25,23 @@ public class HexReversi implements ReversiModel {
   }
 
   private void dealBoard() {
+    int[][] circle = {{1, -1}, {0, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 0}};
+    TeamColor color = TeamColor.BLACK;
+    int q;
+    int r;
+    int s;
+    for (int i = 0; i < 6; i++) {
+      q = circle[i][1];
+      r = circle[i][0];
+      s = -q - r;
+      board.put(new HexPosition(q, r, s), color);
+      color = color.cycle();
+
+    }
+  }
+
+  //ignore this method it was quicker to hardcode lol
+  private void dealBoardIgnore() {
     TeamColor current = TeamColor.BLACK;
     for (int r = -1; r <= 1; r++) {
       int rMin = Math.max(-1, -r - 1);
@@ -40,22 +57,23 @@ public class HexReversi implements ReversiModel {
     }
   }
 
-//  private boolean validMove(TeamColor color, HexPosition posn) {
-//    int currQ = posn.getQPosition();
-//    int currR = posn.getRPosition();
-//    int currS = posn.getSPosition();
-//
-//    ArrayList<HexPosition> toFlip = new ArrayList<>();
-//    int currIterator = currQ + 1;
-//    while ()
-//
-//
-//
-//
-//    for (int qneg = currQ-1; qneg > -radius; qneg--) {
-//
-//    }
-//  }
+
+  private boolean validMove(TeamColor color, HexPosition posn) {
+    int currQ = posn.getQPosition();
+    int currR = posn.getRPosition();
+    int currS = posn.getSPosition();
+
+    ArrayList<HexPosition> toFlip = new ArrayList<>();
+    int currIterator = currQ + 1;
+    while ()
+
+
+
+
+    for (int qneg = currQ-1; qneg > -radius; qneg--) {
+
+    }
+  }
 
 
   @Override
