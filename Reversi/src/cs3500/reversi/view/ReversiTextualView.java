@@ -2,7 +2,9 @@ package cs3500.reversi.view;
 
 import java.io.IOException;
 
+import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.ReversiModel;
+import cs3500.reversi.model.TeamColor;
 
 public class ReversiTextualView implements ReversiView {
 
@@ -36,7 +38,6 @@ public class ReversiTextualView implements ReversiView {
   public void render() throws IOException {
     int radius = model.getRadius();
     int row;
-    int counter
 
     for (int r = -radius; r <= radius; r++) {
       row = Math.abs(r);
@@ -44,7 +45,7 @@ public class ReversiTextualView implements ReversiView {
       int rMax = Math.min(radius, -r + radius);
 
       for (int i = 0; i < row; i++) {
-        out.append(" ")
+        out.append(" ");
       }
 
       for (int q = rMin; q <= rMax; q++) {
@@ -55,7 +56,7 @@ public class ReversiTextualView implements ReversiView {
           out.append("_");
         }
         else {
-          out.append(color.symbol);
+          out.append(color.toString());
         }
         out.append(" ");
       }
@@ -64,7 +65,7 @@ public class ReversiTextualView implements ReversiView {
 
 
   @Override
-  public void writeMessage(String message) {
+  public void writeMessage(String message) throws IOException {
     out.append(message);
   }
 

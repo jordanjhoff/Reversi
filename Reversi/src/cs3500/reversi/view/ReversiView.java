@@ -16,5 +16,5 @@ public interface ReversiView {
    * @param message message to be printed
    * @throws IllegalStateException if message cant be sent
    */
-  void writeMessage(String message);
+  void writeMessage(String message) throws IOException;
 }

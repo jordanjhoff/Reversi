@@ -11,5 +11,10 @@ public enum TeamColor {
     this.symbol = str;
   }
 
+  @Override
+  public String toString() {
+    return this.symbol;
+  }
+
 
 }
