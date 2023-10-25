@@ -1,16 +1,21 @@
+import java.io.IOException;
+
+import cs3500.reversi.model.HexReversi;
+import cs3500.reversi.model.ReversiModel;
+import cs3500.reversi.view.ReversiTextualView;
+import cs3500.reversi.view.ReversiView;
 
 public class Main {
   public static void main(String[] args) {
-    int radius = model.getRadius();
-
-    for (int r = -radius; r <= radius; r++) {
-      int rMin = Math.max(-radius, -r - radius);
-      int rMax = Math.min(radius, -r + radius);
-      for (int q = rMin; q <= rMax; q++) {
-        int s = -r - q;
-
-        System.out.println("Hexagon at (" + q + ", " + r + ", " + s + ")");
-      }
+    ReversiModel model = new HexReversi(5);
+    model.startGame();
+    Appendable out = new StringBuilder();
+    ReversiView view = new ReversiTextualView(model, out);
+    try {
+      view.render();
+    } catch (IOException e) {
+      //dont care!
     }
+    System.out.println(out.toString());
   }
 }

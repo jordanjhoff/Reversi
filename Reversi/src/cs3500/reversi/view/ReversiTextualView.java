@@ -56,10 +56,11 @@ public class ReversiTextualView implements ReversiView {
           out.append("_");
         }
         else {
-          out.append(color.toString());
+          out.append(color.symbol);
         }
         out.append(" ");
       }
+      out.append(System.lineSeparator());
     }
   }
 
@@ -68,5 +69,4 @@ public class ReversiTextualView implements ReversiView {
   public void writeMessage(String message) throws IOException {
     out.append(message);
   }
-
 }

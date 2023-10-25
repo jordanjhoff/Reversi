@@ -15,52 +15,68 @@ public class HexReversi implements ReversiModel {
   }
 
   public HexReversi(int radius) {
+
+    if (radius < 2) {
+      throw new IllegalArgumentException("radius must be greater than 2!");
+    }
+
     this.radius = radius;
     board = new HashMap<>();
-    dealBoard();
   }
 
   private void dealBoard() {
-    //middle 6;
+    TeamColor current = TeamColor.BLACK;
+    for (int r = -1; r <= 1; r++) {
+      int rMin = Math.max(-1, -r - 1);
+      int rMax = Math.min(1, -r + 1);
 
-  }
-
-  private boolean validMove(TeamColor color, HexPosition posn) {
-    int currQ = posn.getQPosition();
-    int currR = posn.getRPosition();
-    int currS = posn.getSPosition();
-
-    ArrayList<HexPosition> toFlip = new ArrayList<>();
-    int currIterator = currQ + 1;
-    while ()
-
-
-
-
-    for (int qneg = currQ-1; qneg > -radius; qneg--) {
-
+      for (int q = rMin; q <= rMax; q++) {
+        int s = -r - q;
+        if (!(q == 0 && r == 0 && s == 0)) {
+          board.put(new HexPosition(q, r, s), current);
+          current = current.cycle();
+        }
+      }
     }
   }
 
+//  private boolean validMove(TeamColor color, HexPosition posn) {
+//    int currQ = posn.getQPosition();
+//    int currR = posn.getRPosition();
+//    int currS = posn.getSPosition();
+//
+//    ArrayList<HexPosition> toFlip = new ArrayList<>();
+//    int currIterator = currQ + 1;
+//    while ()
+//
+//
+//
+//
+//    for (int qneg = currQ-1; qneg > -radius; qneg--) {
+//
+//    }
+//  }
+
 
   @Override
-  public void startGame(int radius) {
-
+  public void startGame() {
+    dealBoard();
   }
 
   @Override
   public void addPiece(TeamColor piece, HexPosition posn) {
 
+
   }
 
   @Override
   public TeamColor getPieceAt(HexPosition posn) {
-    return null;
+    return board.get(new HexPosition(posn));
   }
 
   @Override
   public TeamColor getCurrentTurn() {
-    return null;
+    return currentTurn;
   }
 
   @Override
@@ -70,6 +86,6 @@ public class HexReversi implements ReversiModel {
 
   @Override
   public int getRadius() {
-    return 0;
+    return radius;
   }
 }

@@ -6,14 +6,20 @@ package cs3500.reversi.model;
 public enum TeamColor {
   WHITE("O"), BLACK("X");
 
-  String symbol;
-  TeamColor(String str) {
+  public final String symbol;
+
+  private TeamColor(String str) {
     this.symbol = str;
   }
 
-  @Override
-  public String toString() {
-    return this.symbol;
+
+  public TeamColor cycle() {
+    if (this.symbol == WHITE.symbol) {
+      return BLACK;
+    }
+    else {
+      return WHITE;
+    }
   }
 
 
