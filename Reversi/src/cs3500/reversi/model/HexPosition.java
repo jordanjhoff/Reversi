@@ -33,8 +33,6 @@ public class HexPosition {
     return this.s;
   }
 
-
-
   @Override
   public boolean equals(Object other) {
     if (!(other instanceof HexPosition)) {

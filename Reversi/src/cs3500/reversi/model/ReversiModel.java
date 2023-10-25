@@ -6,6 +6,8 @@ public interface ReversiModel {
 
   public void addPiece(TeamColor piece, HexPosition posn);
 
+
+  //returns null if empty
   public TeamColor getPieceAt(HexPosition posn);
 
   public TeamColor getCurrentTurn();
