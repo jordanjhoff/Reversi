@@ -4,24 +4,40 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HexReversi implements ReversiModel {
-  private final int radius;
+  private int radius;
 
   private TeamColor currentTurn;
+  boolean started;
 
   private HashMap<HexPosition, TeamColor> board;
 
+
   public HexReversi() {
-    this(6);
+    radius = 5;
+    board = new HashMap<>();
+    started = false;
   }
 
-  public HexReversi(int radius) {
-
+  @Override
+  public void startGame(int radius) {
     if (radius < 2) {
       throw new IllegalArgumentException("radius must be greater than 2!");
     }
+    if (started) {
+      throw new IllegalStateException("Game already started");
+    }
+
+    started = true;
 
     this.radius = radius;
-    board = new HashMap<>();
+    dealBoard();
+    currentTurn = TeamColor.BLACK;
+  }
+
+  void notStarted() {
+    if (!started) {
+      throw new IllegalStateException("Game has not been started yet");
+    }
   }
 
   private void dealBoard() {
@@ -36,29 +52,17 @@ public class HexReversi implements ReversiModel {
       s = -q - r;
       board.put(new HexPosition(q, r, s), color);
       color = color.cycle();
-
-    }
-  }
-
-  //ignore this method it was quicker to hardcode lol
-  private void dealBoardIgnore() {
-    TeamColor current = TeamColor.BLACK;
-    for (int r = -1; r <= 1; r++) {
-      int rMin = Math.max(-1, -r - 1);
-      int rMax = Math.min(1, -r + 1);
-
-      for (int q = rMin; q <= rMax; q++) {
-        int s = -r - q;
-        if (!(q == 0 && r == 0 && s == 0)) {
-          board.put(new HexPosition(q, r, s), current);
-          current = current.cycle();
-        }
-      }
     }
   }
 
 
+  /*
   private boolean validMove(TeamColor color, HexPosition posn) {
+    notStarted();
+    if (!(validPosition(posn))) {
+      throw new IllegalArgumentException("Invalid input position");
+    }
+
     int currQ = posn.getQPosition();
     int currR = posn.getRPosition();
     int currS = posn.getSPosition();
@@ -74,36 +78,50 @@ public class HexReversi implements ReversiModel {
 
     }
   }
+  */
 
-
-  @Override
-  public void startGame() {
-    dealBoard();
+  private boolean validPosition(HexPosition pos) {
+    notStarted();
+    if ((Math.abs(pos.getQPosition()) <= this.radius)
+            && (Math.abs(pos.getRPosition()) <= this.radius)
+            && (pos.getSPosition() == -pos.getQPosition() - pos.getRPosition())) {
+      return true;
+    }
+    return false;
   }
+
+
+
 
   @Override
   public void addPiece(TeamColor piece, HexPosition posn) {
+    notStarted();
+    this.currentTurn = this.currentTurn.cycle();
 
 
   }
 
   @Override
   public TeamColor getPieceAt(HexPosition posn) {
+    notStarted();
     return board.get(new HexPosition(posn));
   }
 
   @Override
   public TeamColor getCurrentTurn() {
+    notStarted();
     return currentTurn;
   }
 
   @Override
   public boolean isGameOver() {
+    notStarted();
     return false;
   }
 
   @Override
   public int getRadius() {
+    notStarted();
     return radius;
   }
 }

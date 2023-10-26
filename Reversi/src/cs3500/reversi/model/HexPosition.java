@@ -11,12 +11,20 @@ public class HexPosition {
     this.q = q;
     this.r = r;
     this.s = s;
+
+    if (!(q == -r - s)) {
+      throw new IllegalArgumentException("invalid coordinate build");
+    }
   }
 
   public HexPosition(HexPosition pos) {
     this.q = pos.q;
     this.r = pos.r;
     this.s = pos.s;
+
+    if (!(pos.s == -pos.q - pos.r)) {
+      throw new IllegalArgumentException("invalid coordinate build");
+    }
   }
 
   public int getQPosition() {
@@ -48,4 +56,5 @@ public class HexPosition {
   public int hashCode() {
     return Objects.hash(this.q, this.r, this.s);
   }
+
 }

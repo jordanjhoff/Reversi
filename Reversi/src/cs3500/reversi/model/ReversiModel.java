@@ -2,7 +2,7 @@ package cs3500.reversi.model;
 
 public interface ReversiModel {
 
-  public void startGame();
+  public void startGame(int radius);
 
   public void addPiece(TeamColor piece, HexPosition posn);
 
@@ -15,6 +15,7 @@ public interface ReversiModel {
   public boolean isGameOver();
 
   public int getRadius();
+
 
 
 }
