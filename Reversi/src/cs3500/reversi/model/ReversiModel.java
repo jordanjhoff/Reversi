@@ -1,21 +1,29 @@
 package cs3500.reversi.model;
 
+import java.util.ArrayList;
+
 public interface ReversiModel {
 
-  public void startGame(int radius);
+  void startGame(int radius);
 
-  public void addPiece(TeamColor piece, HexPosition posn);
+  void addPiece(TeamColor piece, HexPosition posn);
 
 
   //returns null if empty
-  public TeamColor getPieceAt(HexPosition posn);
+  TeamColor getPieceAt(HexPosition posn);
 
-  public TeamColor getCurrentTurn();
+  TeamColor getCurrentTurn();
 
-  public boolean isGameOver();
+  boolean isGameOver();
 
-  public int getRadius();
+  int getRadius();
 
+  /**
+   * Returns valid positions that can be played.
+   * @param color a color
+   * @return a list of valid positions that color can move to.
+   */
+  ArrayList<HexPosition> getValidMoves(TeamColor color);
 
 
 }
