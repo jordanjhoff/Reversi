@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 public class HexReversi implements ReversiModel {
   private int radius;
-
   private TeamColor currentTurn;
   private boolean started;
 
@@ -31,18 +30,18 @@ public class HexReversi implements ReversiModel {
 
   /**
    * Represents valid moves, where the key is the position, and the value is the list of
-   * HexPositions that need to be flipped.
+   * HexPositions that need to be updated if that move is played.
    */
   private HashMap<HexPosition, ArrayList<HexPosition>> validBlackMoves;
   private HashMap<HexPosition, ArrayList<HexPosition>> validWhiteMoves;
 
 
   public HexReversi() {
-    radius = 5;
-    board = new HashMap<>();
-    started = false;
-    validWhiteMoves = new HashMap<>();
-    validBlackMoves = new HashMap<>();
+    this.radius = 5;
+    this.board = new HashMap<>();
+    this.started = false;
+    this.validWhiteMoves = new HashMap<>();
+    this.validBlackMoves = new HashMap<>();
   }
 
   /**
@@ -60,24 +59,24 @@ public class HexReversi implements ReversiModel {
 
 
   @Override
-  public void startGame(int radius) {
-    if (radius < 2) {
+  public void startGame(int size) {
+    if (size < 2) {
       throw new IllegalArgumentException("radius must be greater than 2!");
     }
-    if (started) {
+    if (this.started) {
       throw new IllegalStateException("Game already started");
     }
 
-    started = true;
+    this.started = true;
 
-    this.radius = radius;
+    this.radius = size;
     dealBoard();
-    currentTurn = TeamColor.BLACK;
+    this.currentTurn = TeamColor.BLACK;
     updateValidMoves();
   }
 
   void notStarted() {
-    if (!started) {
+    if (!this.started) {
       throw new IllegalStateException("Game has not been started yet");
     }
   }
@@ -312,24 +311,31 @@ public class HexReversi implements ReversiModel {
   @Override
   public TeamColor getPieceAt(HexPosition posn) {
     notStarted();
-    return board.get(new HexPosition(posn));
+    if (!validPosition(posn)) {
+      throw new IllegalArgumentException("Position out of bounds");
+    }
+    else if (!board.containsKey(posn)) {
+      return null;
+    }
+
+    return this.board.get(new HexPosition(posn));
   }
 
   @Override
   public TeamColor getCurrentTurn() {
     notStarted();
-    return currentTurn;
+    return this.currentTurn;
   }
 
   @Override
   public boolean isGameOver() {
     notStarted();
-    return validBlackMoves.isEmpty() && validWhiteMoves.isEmpty();
+    return this.validBlackMoves.isEmpty() && this.validWhiteMoves.isEmpty();
   }
 
   @Override
-  public int getRadius() {
+  public int getSize() {
     notStarted();
-    return radius;
+    return this.radius;
   }
 }

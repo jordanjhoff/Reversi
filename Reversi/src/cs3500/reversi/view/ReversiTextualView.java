@@ -36,7 +36,7 @@ public class ReversiTextualView implements ReversiView {
 
   @Override
   public void render() throws IOException {
-    int radius = model.getRadius();
+    int radius = this.model.getSize();
     int row;
 
     for (int r = -radius; r <= radius; r++) {
@@ -45,31 +45,31 @@ public class ReversiTextualView implements ReversiView {
       int rMax = Math.min(radius, -r + radius);
 
       for (int i = 0; i < row; i++) {
-        out.append(" ");
+        this.out.append(" ");
       }
 
       for (int q = rMin; q <= rMax; q++) {
         int s = -r - q;
 
-        TeamColor color = model.getPieceAt(new HexPosition(q, r, s));
+        TeamColor color = this.model.getPieceAt(new HexPosition(q, r, s));
         if (color == null) {
-          out.append("_");
+          this.out.append("_");
         }
         else {
-          out.append(color.symbol);
+          this.out.append(color.symbol);
         }
         if (q != rMax) {
-          out.append(" ");
+          this.out.append(" ");
         }
       }
       if (r != radius) {
-        out.append(System.lineSeparator());
+        this.out.append(System.lineSeparator());
       }
     }
   }
 
   @Override
   public void writeMessage(String message) throws IOException {
-    out.append(message);
+    this.out.append(message);
   }
 }
