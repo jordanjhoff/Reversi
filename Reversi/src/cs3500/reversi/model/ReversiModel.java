@@ -37,11 +37,10 @@ public interface ReversiModel {
   int getSize();
 
   /**
-   * Returns valid positions that can be played.
-   * @param color a color
+   * Returns valid positions that can be played for the current turn.
    * @return a list of valid positions that color can move to.
    */
-  ArrayList<HexPosition> getValidMoves(TeamColor color);
+  ArrayList<HexPosition> getValidMoves();
 
 
 }

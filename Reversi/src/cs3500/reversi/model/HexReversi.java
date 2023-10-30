@@ -49,14 +49,13 @@ public class HexReversi implements ReversiModel {
   }
 
   /**
-   * Returns valid positions that can be played.
-   * @param color a color
+   * Returns valid positions that can be played for the current player
    * @return a list of valid positions that color can move to.
    */
   @Override
-  public ArrayList<HexPosition> getValidMoves(TeamColor color) {
+  public ArrayList<HexPosition> getValidMoves() {
 
-    HashMap<HexPosition, ArrayList<HexPosition>> validityMap = color.equals(TeamColor.WHITE) ? this.validWhiteMoves :
+    HashMap<HexPosition, ArrayList<HexPosition>> validityMap = this.currentTurn.equals(TeamColor.WHITE) ? this.validWhiteMoves :
             this.validBlackMoves;
     return new ArrayList<>(validityMap.keySet());
   }
