@@ -17,24 +17,9 @@ public class ReversiTests {
 
   @Before
   public void initData() {
-    model = new HexReversi();
-    five = new HexReversi();
-    five.startGame(5);
+    model = new HexReversi(3);
+    five = new HexReversi(5);
   }
 
-
-  @Test
-  public void testStartGameInvalidRad() {
-    initData();
-    Assert.assertThrows(IllegalArgumentException.class, () -> model.startGame(0));
-    Assert.assertThrows(IllegalArgumentException.class, () -> model.startGame(1));
-    Assert.assertThrows(IllegalArgumentException.class, () -> model.startGame(-1));
-  }
-
-  @Test
-  public void testStartGameStarted() {
-    initData();
-    Assert.assertThrows(IllegalStateException.class, () -> five.startGame(5));
-  }
 
 }

@@ -7,8 +7,7 @@ import cs3500.reversi.view.ReversiView;
 
 public class Main {
   public static void main(String[] args) {
-    ReversiModel model = new HexReversi();
-    model.startGame(5);
+    ReversiModel model = new HexReversi(5);
     Appendable out = new StringBuilder();
     ReversiView view = new ReversiTextualView(model, out);
     try {

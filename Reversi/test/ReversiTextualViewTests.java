@@ -24,18 +24,11 @@ public class ReversiTextualViewTests {
 
   @Before
   public void initData() {
-    model = new HexReversi();
-    five = new HexReversi();
-    five.startGame(5);
+    model = new HexReversi(3);
+    five = new HexReversi(5);
     out = new StringBuilder();
     view = new ReversiTextualView(model, out);
     view5 = new ReversiTextualView(five, out);
-  }
-
-  @Test
-  public void testNotStarted(){
-    initData();
-    Assert.assertThrows(IllegalStateException.class, () -> view.render());
   }
 
   @Test
@@ -54,7 +47,7 @@ public class ReversiTextualViewTests {
                       "  _ _ _ _ _ _ _ _ _\n" +
                       "   _ _ _ _ _ _ _ _\n" +
                       "    _ _ _ _ _ _ _\n" +
-                      "     _ _ _ _ _ _", five.toString());
+                      "     _ _ _ _ _ _\n", out.toString());
     } catch (IOException e) {
       Assert.assertFalse("Should have not thrown", true);
       // cant find assertfail
@@ -65,14 +58,15 @@ public class ReversiTextualViewTests {
   public void testDealtGameRad2() {
     try {
       initData();
-      model.startGame(2);
+      model = new HexReversi(2);
+      view = new ReversiTextualView(model, out);
       view.render();
       Assert.assertEquals(
               "  _ _ _\n" +
                       " _ X O _\n" +
                       "_ O _ X _\n" +
                       " _ X O _\n" +
-                      "  _ _ _", out.toString());
+                      "  _ _ _\n", out.toString());
     } catch (IOException e) {
       Assert.assertFalse("Should have not thrown", true);
       // cant find assertfail
@@ -83,7 +77,8 @@ public class ReversiTextualViewTests {
   public void testDealtGameRad10() {
     try {
       initData();
-      model.startGame(10);
+      model = new HexReversi(10);
+      view = new ReversiTextualView(model, out);
       view.render();
       Assert.assertEquals(
               "          _ _ _ _ _ _ _ _ _ _ _\n" +
@@ -106,7 +101,7 @@ public class ReversiTextualViewTests {
                       "       _ _ _ _ _ _ _ _ _ _ _ _ _ _\n" +
                       "        _ _ _ _ _ _ _ _ _ _ _ _ _\n" +
                       "         _ _ _ _ _ _ _ _ _ _ _ _\n" +
-                      "          _ _ _ _ _ _ _ _ _ _ _", out.toString());
+                      "          _ _ _ _ _ _ _ _ _ _ _\n", out.toString());
     } catch (IOException e) {
       Assert.assertFalse("Should have not thrown", true);
       // cant find assertfail
@@ -117,7 +112,7 @@ public class ReversiTextualViewTests {
   public void testFiveAddPiece() {
     try {
       initData();
-      five.addPiece(TeamColor.BLACK, new HexPosition(1, -2, 1));
+      five.addPiece(new HexPosition(1, -2, 1));
       view5.render();
       Assert.assertEquals(
               "     _ _ _ _ _ _\n" +
@@ -130,24 +125,63 @@ public class ReversiTextualViewTests {
                       "  _ _ _ _ _ _ _ _ _\n" +
                       "   _ _ _ _ _ _ _ _\n" +
                       "    _ _ _ _ _ _ _\n" +
-                      "     _ _ _ _ _ _", out.toString());
+                      "     _ _ _ _ _ _\n", out.toString());
       view5.render();
-      five.addPiece(TeamColor.WHITE, new HexPosition(2, -3, 1));
+      five.addPiece(new HexPosition(2, -3, 1));
+      view5.render();
+      System.out.println(out.toString());
+      Assert.assertTrue(out.toString().contains(
+              "     _ _ _ _ _ _\n" +
+              "    _ _ _ _ _ _ _\n" +
+              "   _ _ _ _ O _ _ _\n" +
+              "  _ _ _ _ O _ _ _ _\n" +
+              " _ _ _ _ O X _ _ _ _\n" +
+              "_ _ _ _ O _ X _ _ _ _\n" +
+              " _ _ _ _ X O _ _ _ _\n" +
+              "  _ _ _ _ _ _ _ _ _\n" +
+              "   _ _ _ _ _ _ _ _\n" +
+              "    _ _ _ _ _ _ _\n" +
+              "     _ _ _ _ _ _"));
+    } catch (IOException e) {
+      Assert.assertFalse("Should have not thrown", true);
+      // cant find assertfail
+    }
+  }
+
+  @Test
+  public void testFiveInvalid() {
+    try {
+      initData();
+      five.addPiece(new HexPosition(1, -2, 1));
+      view5.render();
       Assert.assertEquals(
               "     _ _ _ _ _ _\n" +
                       "    _ _ _ _ _ _ _\n" +
-                      "   _ _ _ _ O _ _ _\n" +
-                      "  _ _ _ _ O _ _ _ _\n" +
-                      " _ _ _ _ O X _ _ _ _\n" +
+                      "   _ _ _ _ _ _ _ _\n" +
+                      "  _ _ _ _ X _ _ _ _\n" +
+                      " _ _ _ _ X X _ _ _ _\n" +
                       "_ _ _ _ O _ X _ _ _ _\n" +
                       " _ _ _ _ X O _ _ _ _\n" +
                       "  _ _ _ _ _ _ _ _ _\n" +
                       "   _ _ _ _ _ _ _ _\n" +
                       "    _ _ _ _ _ _ _\n" +
-                      "     _ _ _ _ _ _", out.toString());
-    } catch (IOException e) {
-      Assert.assertFalse("Should have not thrown", true);
-      // cant find assertfail
+                      "     _ _ _ _ _ _\n", out.toString());
+      five.addPiece(new HexPosition(0, -3, 3));
+      view5.render();
+      Assert.assertFalse(true); // should not have arrived here
+    } catch (Exception e) {
+      Assert.assertTrue(out.toString().contains(
+              "     _ _ _ _ _ _\n" +
+              "    _ _ _ _ _ _ _\n" +
+              "   _ _ _ _ _ _ _ _\n" +
+              "  _ _ _ _ X _ _ _ _\n" +
+              " _ _ _ _ X X _ _ _ _\n" +
+              "_ _ _ _ O _ X _ _ _ _\n" +
+              " _ _ _ _ X O _ _ _ _\n" +
+              "  _ _ _ _ _ _ _ _ _\n" +
+              "   _ _ _ _ _ _ _ _\n" +
+              "    _ _ _ _ _ _ _\n" +
+              "     _ _ _ _ _ _\n"));
     }
   }
 

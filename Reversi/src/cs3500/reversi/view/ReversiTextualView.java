@@ -62,9 +62,10 @@ public class ReversiTextualView implements ReversiView {
           this.out.append(" ");
         }
       }
-      if (r != radius) {
-        this.out.append(System.lineSeparator());
-      }
+//      if (r == radius) {
+//        this.out.append(System.lineSeparator()); //add extra new line
+//      }
+      this.out.append(System.lineSeparator());
     }
   }
 
