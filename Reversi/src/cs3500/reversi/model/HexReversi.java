@@ -296,7 +296,7 @@ public class HexReversi implements ReversiModel {
     if (!validPosition(posn)) {
       throw new IllegalArgumentException("Position out of bounds");
     }
-    else if (validityMap.containsKey(posn)) {
+    else if (!validityMap.containsKey(posn)) {
       throw new IllegalStateException("Invalid move");
     }
 
