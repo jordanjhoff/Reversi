@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HexReversi implements ReversiModel {
-  private int radius;
+  private final int radius;
   private TeamColor currentTurn;
 
   /**
@@ -60,7 +60,10 @@ public class HexReversi implements ReversiModel {
     return new ArrayList<>(validityMap.keySet());
   }
 
-
+  /**
+   * Method to initialize the gameboard, putting the original circle
+   * around the origin of cycling colors.
+   */
   private void dealBoard() {
     int[][] circle = {{1, -1}, {0, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 0}};
     TeamColor color = TeamColor.BLACK;

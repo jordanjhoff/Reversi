@@ -53,7 +53,12 @@ public class ReversiTextualView implements ReversiView {
 
         TeamColor color = this.model.getPieceAt(new HexPosition(q, r, s));
         if (color == null) {
-          this.out.append("_");
+          if (model.getValidMoves().contains(new HexPosition(q, r, s))) {
+            this.out.append("*");
+          }
+          else {
+            this.out.append("_");
+          }
         }
         else {
           this.out.append(color.symbol);

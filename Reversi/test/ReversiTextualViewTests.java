@@ -40,11 +40,11 @@ public class ReversiTextualViewTests {
               "     _ _ _ _ _ _\n" +
                       "    _ _ _ _ _ _ _\n" +
                       "   _ _ _ _ _ _ _ _\n" +
-                      "  _ _ _ _ _ _ _ _ _\n" +
-                      " _ _ _ _ X O _ _ _ _\n" +
+                      "  _ _ _ _ * _ _ _ _\n" +
+                      " _ _ _ * X O * _ _ _\n" +
                       "_ _ _ _ O _ X _ _ _ _\n" +
-                      " _ _ _ _ X O _ _ _ _\n" +
-                      "  _ _ _ _ _ _ _ _ _\n" +
+                      " _ _ _ * X O * _ _ _\n" +
+                      "  _ _ _ _ * _ _ _ _\n" +
                       "   _ _ _ _ _ _ _ _\n" +
                       "    _ _ _ _ _ _ _\n" +
                       "     _ _ _ _ _ _\n", out.toString());
@@ -62,11 +62,11 @@ public class ReversiTextualViewTests {
       view = new ReversiTextualView(model, out);
       view.render();
       Assert.assertEquals(
-              "  _ _ _\n" +
-                      " _ X O _\n" +
+              "  _ * _\n" +
+                      " * X O *\n" +
                       "_ O _ X _\n" +
-                      " _ X O _\n" +
-                      "  _ _ _\n", out.toString());
+                      " * X O *\n" +
+                      "  _ * _\n", out.toString());
     } catch (IOException e) {
       Assert.assertFalse("Should have not thrown", true);
       // cant find assertfail
@@ -89,11 +89,11 @@ public class ReversiTextualViewTests {
                       "     _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n" +
                       "    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n" +
                       "   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n" +
-                      "  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n" +
-                      " _ _ _ _ _ _ _ _ _ X O _ _ _ _ _ _ _ _ _\n" +
+                      "  _ _ _ _ _ _ _ _ _ * _ _ _ _ _ _ _ _ _\n" +
+                      " _ _ _ _ _ _ _ _ * X O * _ _ _ _ _ _ _ _\n" +
                       "_ _ _ _ _ _ _ _ _ O _ X _ _ _ _ _ _ _ _ _\n" +
-                      " _ _ _ _ _ _ _ _ _ X O _ _ _ _ _ _ _ _ _\n" +
-                      "  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n" +
+                      " _ _ _ _ _ _ _ _ * X O * _ _ _ _ _ _ _ _\n" +
+                      "  _ _ _ _ _ _ _ _ _ * _ _ _ _ _ _ _ _ _\n" +
                       "   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n" +
                       "    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n" +
                       "     _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n" +
@@ -117,12 +117,12 @@ public class ReversiTextualViewTests {
       Assert.assertEquals(
               "     _ _ _ _ _ _\n" +
                       "    _ _ _ _ _ _ _\n" +
-                      "   _ _ _ _ _ _ _ _\n" +
+                      "   _ _ _ _ * _ _ _\n" +
                       "  _ _ _ _ X _ _ _ _\n" +
-                      " _ _ _ _ X X _ _ _ _\n" +
+                      " _ _ _ _ X X * _ _ _\n" +
                       "_ _ _ _ O _ X _ _ _ _\n" +
-                      " _ _ _ _ X O _ _ _ _\n" +
-                      "  _ _ _ _ _ _ _ _ _\n" +
+                      " _ _ _ * X O _ _ _ _\n" +
+                      "  _ _ _ _ * _ _ _ _\n" +
                       "   _ _ _ _ _ _ _ _\n" +
                       "    _ _ _ _ _ _ _\n" +
                       "     _ _ _ _ _ _\n", out.toString());
@@ -131,14 +131,14 @@ public class ReversiTextualViewTests {
       view5.render();
       System.out.println(out.toString());
       Assert.assertTrue(out.toString().contains(
-              "     _ _ _ _ _ _\n" +
+              "_ _ _ _ _ _\n" +
               "    _ _ _ _ _ _ _\n" +
-              "   _ _ _ _ O _ _ _\n" +
+              "   _ _ _ * O _ _ _\n" +
               "  _ _ _ _ O _ _ _ _\n" +
-              " _ _ _ _ O X _ _ _ _\n" +
+              " _ _ _ * O X _ _ _ _\n" +
               "_ _ _ _ O _ X _ _ _ _\n" +
-              " _ _ _ _ X O _ _ _ _\n" +
-              "  _ _ _ _ _ _ _ _ _\n" +
+              " _ _ _ _ X O * _ _ _\n" +
+              "  _ _ _ _ * _ _ _ _\n" +
               "   _ _ _ _ _ _ _ _\n" +
               "    _ _ _ _ _ _ _\n" +
               "     _ _ _ _ _ _"));
@@ -157,12 +157,12 @@ public class ReversiTextualViewTests {
       Assert.assertEquals(
               "     _ _ _ _ _ _\n" +
                       "    _ _ _ _ _ _ _\n" +
-                      "   _ _ _ _ _ _ _ _\n" +
+                      "   _ _ _ _ * _ _ _\n" +
                       "  _ _ _ _ X _ _ _ _\n" +
-                      " _ _ _ _ X X _ _ _ _\n" +
+                      " _ _ _ _ X X * _ _ _\n" +
                       "_ _ _ _ O _ X _ _ _ _\n" +
-                      " _ _ _ _ X O _ _ _ _\n" +
-                      "  _ _ _ _ _ _ _ _ _\n" +
+                      " _ _ _ * X O _ _ _ _\n" +
+                      "  _ _ _ _ * _ _ _ _\n" +
                       "   _ _ _ _ _ _ _ _\n" +
                       "    _ _ _ _ _ _ _\n" +
                       "     _ _ _ _ _ _\n", out.toString());
@@ -173,12 +173,12 @@ public class ReversiTextualViewTests {
       Assert.assertTrue(out.toString().contains(
               "     _ _ _ _ _ _\n" +
               "    _ _ _ _ _ _ _\n" +
-              "   _ _ _ _ _ _ _ _\n" +
+              "   _ _ _ _ * _ _ _\n" +
               "  _ _ _ _ X _ _ _ _\n" +
-              " _ _ _ _ X X _ _ _ _\n" +
+              " _ _ _ _ X X * _ _ _\n" +
               "_ _ _ _ O _ X _ _ _ _\n" +
-              " _ _ _ _ X O _ _ _ _\n" +
-              "  _ _ _ _ _ _ _ _ _\n" +
+              " _ _ _ * X O _ _ _ _\n" +
+              "  _ _ _ _ * _ _ _ _\n" +
               "   _ _ _ _ _ _ _ _\n" +
               "    _ _ _ _ _ _ _\n" +
               "     _ _ _ _ _ _\n"));
