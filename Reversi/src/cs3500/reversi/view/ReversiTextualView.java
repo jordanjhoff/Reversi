@@ -8,7 +8,8 @@ import cs3500.reversi.model.TeamColor;
 
 /**
  * Textual implementation of a reversi view. Outputs will
- * be added to the appendable out to be viewed.
+ * be added to the appendable out to be viewed. Possible moves
+ * are highlighted by the *.
  */
 public class ReversiTextualView implements ReversiView {
 
@@ -25,7 +26,8 @@ public class ReversiTextualView implements ReversiView {
   }
 
   /**
-   *  generates a textual view with a specific appendable output;
+   * Generates a textual view with a specific appendable output.
+   *
    * @param model to be rendered and represented
    * @param out where outputs get appended
    */
@@ -54,7 +56,7 @@ public class ReversiTextualView implements ReversiView {
         TeamColor color = this.model.getPieceAt(new HexPosition(q, r, s));
         if (color == null) {
           if (model.getValidMoves().contains(new HexPosition(q, r, s))) {
-            this.out.append("*");
+            this.out.append("*"); //available move = *
           }
           else {
             this.out.append("_");
@@ -67,9 +69,9 @@ public class ReversiTextualView implements ReversiView {
           this.out.append(" ");
         }
       }
-//      if (r == radius) {
-//        this.out.append(System.lineSeparator()); //add extra new line
-//      }
+      //if (r == radius) {
+      //  this.out.append(System.lineSeparator()); //add extra new line
+      //} not sure if we want to implement this
       this.out.append(System.lineSeparator());
     }
   }

@@ -3,6 +3,12 @@ package cs3500.reversi.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * A model to play a generic version of HexReversi.
+ * Game is automatically started by the constructor and
+ * has various fields about size of the game, the current turn,
+ * and available current moves, as well as the board itself.
+ */
 public class HexReversi implements ReversiModel {
   private final int radius;
   private TeamColor currentTurn;
@@ -35,6 +41,13 @@ public class HexReversi implements ReversiModel {
   private HashMap<HexPosition, ArrayList<HexPosition>> validWhiteMoves;
 
 
+  /**
+   * Constructs a game of HexReversi. Additionally,
+   * starts the game by dealing out the board and
+   * updating valid moves. Initial move goes to black.
+   *
+   * @param radius size of the game board to be played.
+   */
   public HexReversi(int radius) {
     this.board = new HashMap<>();
     this.validWhiteMoves = new HashMap<>();
@@ -129,6 +142,12 @@ public class HexReversi implements ReversiModel {
     return toBeFlippedDir1;
   }
 
+  /**
+   * Returns an ArrayList of all the pieces to be flipped on a single R file
+   * @param color the color to be placed
+   * @param posn the position to place the piece
+   * @return a list of positions that need to be flipped
+   */
   private ArrayList<HexPosition> toFlipR(TeamColor color, HexPosition posn) {
     int currR = posn.getRPosition();
 
@@ -173,6 +192,12 @@ public class HexReversi implements ReversiModel {
     return toBeFlippedDir1;
   }
 
+  /**
+   * Returns an ArrayList of all the pieces to be flipped on a single S file
+   * @param color the color to be placed
+   * @param posn the position to place the piece
+   * @return a list of positions that need to be flipped
+   */
   private ArrayList<HexPosition> toFlipS(TeamColor color, HexPosition posn) {
     int currS = posn.getSPosition();
 
@@ -217,15 +242,21 @@ public class HexReversi implements ReversiModel {
     return toBeFlippedDir1;
   }
 
+  /**
+   * Determines whether the position is legal on the board.
+   *
+   * @param pos position to validate
+   * @return true if valid position
+   */
   private boolean validPosition(HexPosition pos) {
-    
     return (Math.abs(pos.getQPosition()) <= this.radius)
             && (Math.abs(pos.getRPosition()) <= this.radius)
             && (pos.getSPosition() == -pos.getQPosition() - pos.getRPosition());
   }
 
   /**
-   * Sets the color of a given list of positions
+   * Sets the color of a given list of positions.
+   *
    * @param color the color to set at each position
    * @param posns the list of positions to set to color
    */

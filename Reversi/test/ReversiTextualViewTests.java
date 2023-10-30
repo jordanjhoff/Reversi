@@ -184,7 +184,4 @@ public class ReversiTextualViewTests {
               "     _ _ _ _ _ _\n"));
     }
   }
-
-
-
 }
