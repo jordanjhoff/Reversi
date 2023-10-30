@@ -5,17 +5,10 @@ import java.util.ArrayList;
 public interface ReversiModel {
 
   /**
-   * Start the game with a given size.
-   * @param size the size of the board
-   */
-  void startGame(int size);
-
-  /**
    * Adds a piece at a given location if the move is valid.
-   * @param piece the color of the piece to add
    * @param posn the position to add the piece
    */
-  void addPiece(TeamColor piece, HexPosition posn);
+  void addPiece(HexPosition posn);
 
 
   /**
