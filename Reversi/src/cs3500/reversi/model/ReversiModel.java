@@ -25,6 +25,18 @@ public interface ReversiModel {
   TeamColor getCurrentTurn();
 
   /**
+   * Skips the current players turn.
+   */
+  void skipTurn();
+
+  /**
+   * Determines who won the game
+   * @return the winner of the game
+   * @throws IllegalStateException if game is not over
+   */
+  TeamColor getWinner();
+
+  /**
    * Determines if the game is over or not.
    * @return true iff the game is over
    */

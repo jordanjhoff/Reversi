@@ -340,6 +340,32 @@ public class HexReversi implements ReversiModel {
   }
 
   @Override
+  public void skipTurn() {
+    this.currentTurn = this.currentTurn.cycle();
+  }
+
+  @Override
+  public TeamColor getWinner() {
+    if (!isGameOver()) {
+      throw new IllegalStateException("Game is not over!");
+    }
+    else {
+      HashMap<TeamColor, Integer> freqMap = new HashMap<>();
+      TeamColor mostFreq = null;
+      int mostFreqCount = -1;
+      for (TeamColor color : board.values()) {
+        Integer count = freqMap.get(color);
+        freqMap.put(color, count = (count == null ? 1 : count+1));
+        if (count > mostFreqCount) {
+          mostFreq = color;
+          mostFreqCount = count;
+        }
+      }
+      return mostFreq;
+    }
+  }
+
+  @Override
   public boolean isGameOver() {
     return this.validBlackMoves.isEmpty() && this.validWhiteMoves.isEmpty();
   }
