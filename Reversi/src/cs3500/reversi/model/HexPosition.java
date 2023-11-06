@@ -79,6 +79,11 @@ public class HexPosition {
   }
 
   @Override
+  public String toString() {
+    return "[" + this.q + "," + this.r + "," + this.s + "]";
+  }
+
+  @Override
   public int hashCode() {
     return Objects.hash(this.q, this.r, this.s);
   }

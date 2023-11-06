@@ -69,9 +69,12 @@ public class HexReversi implements ReversiModel {
    */
   @Override
   public ArrayList<HexPosition> getValidMoves() {
-
-    HashMap<HexPosition, ArrayList<HexPosition>> validityMap = this.currentTurn.equals(TeamColor.WHITE) ? this.validWhiteMoves :
-            this.validBlackMoves;
+    HashMap<HexPosition, ArrayList<HexPosition>> validityMap =
+            this.currentTurn.equals(TeamColor.WHITE)
+                    ? this.validWhiteMoves : this.validBlackMoves;
+    if (isGameOver()) {
+      return new ArrayList<>();
+    }
     return new ArrayList<>(validityMap.keySet());
   }
 
@@ -304,6 +307,12 @@ public class HexReversi implements ReversiModel {
 
   }
 
+  private void validatePosition(HexPosition posn) {
+    if (!validPosition(posn)) {
+      throw new IllegalArgumentException("Invalid position, out of bounds");
+    }
+  }
+
 
   @Override
   public void addPiece(HexPosition posn) {
@@ -313,6 +322,9 @@ public class HexReversi implements ReversiModel {
     validatePosition(posn);
     if (validityMap.isEmpty()) {
       throw new IllegalStateException("No legal moves, player must pass");
+    }
+    else if (!validityMap.containsKey(posn)) {
+      throw new IllegalStateException("Invalid move");
     }
 
     lastPass = false;
@@ -326,10 +338,8 @@ public class HexReversi implements ReversiModel {
 
   @Override
   public TeamColor getPieceAt(HexPosition posn) {
-    if (!validPosition(posn)) {
-      throw new IllegalArgumentException("Position out of bounds");
-    }
-    else if (!board.containsKey(posn)) {
+    validatePosition(posn);
+    if (!board.containsKey(posn)) {
       return null;
     }
 
