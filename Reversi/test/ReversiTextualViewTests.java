@@ -7,7 +7,6 @@ import java.io.IOException;
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.ReversiModel;
-import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.view.ReversiTextualView;
 import cs3500.reversi.view.ReversiView;
 
@@ -182,6 +181,42 @@ public class ReversiTextualViewTests {
               "   _ _ _ _ _ _ _ _\n" +
               "    _ _ _ _ _ _ _\n" +
               "     _ _ _ _ _ _\n"));
+    }
+  }
+
+  @Test
+  public void testWriteMessage() {
+    try {
+      initData();
+      model = new HexReversi(2);
+      view = new ReversiTextualView(model, out);
+      view.render();
+      view.writeMessage("HALLO!!!");
+      Assert.assertTrue(out.toString().contains(
+              "  _ * _\n" +
+              " * X O *\n" +
+              "_ O _ X _\n" +
+              " * X O *\n" +
+              "  _ * _\n"));
+      Assert.assertTrue(out.toString().contains(
+              "HALLO!!!"));
+    } catch (IOException e) {
+      Assert.assertFalse("Should have not thrown", true);
+      // cant find assertfail
+    }
+  }
+
+  @Test
+  public void testOtherConstructor() {
+    try {
+      initData();
+      model = new HexReversi(2);
+      view = new ReversiTextualView(model);
+      view.render();
+      view.writeMessage("HALLO!!!");
+    } catch (IOException e) {
+      Assert.assertFalse("Should have not thrown", true);
+      // cant find assertfail
     }
   }
 }

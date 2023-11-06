@@ -5,7 +5,6 @@ import java.util.Objects;
 /**
  * Class to represent a hexagonal position, represented by
  * three coordinates q, r, and s.
- *
  * A position is invalid solely if s != -q - r.
  */
 public class HexPosition {
@@ -26,7 +25,7 @@ public class HexPosition {
     this.r = r;
     this.s = s;
 
-    if (!(q == -r - s)) {
+    if (q != -r - s) {
       throw new IllegalArgumentException("invalid coordinate build");
     }
   }
@@ -35,16 +34,11 @@ public class HexPosition {
    * Copy constructor for generating a new object of a position
    * with the same values as the parameter to avoid aliasing issues.
    * @param pos to be copied.
-   * @throws IllegalArgumentException if the given position is invalid
    */
   public HexPosition(HexPosition pos) {
     this.q = pos.q;
     this.r = pos.r;
     this.s = pos.s;
-
-    if (!(pos.s == -pos.q - pos.r)) {
-      throw new IllegalArgumentException("invalid coordinate build");
-    }
   }
 
   /**

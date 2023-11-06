@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.ReversiModel;
+import cs3500.reversi.model.TeamColor;
 
 
 /**

@@ -1,4 +1,5 @@
 package cs3500.reversi.view;
+
 import java.io.IOException;
 
 /**

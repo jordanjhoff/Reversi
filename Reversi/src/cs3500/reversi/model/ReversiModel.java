@@ -2,11 +2,17 @@ package cs3500.reversi.model;
 
 import java.util.ArrayList;
 
+/**
+ * Interface for the representing a generic game of Hexagonal Reversi,
+ * able to interface with both the view and controller to provide a
+ * flawless experience for the user.
+ */
 public interface ReversiModel {
 
   /**
    * Adds a piece at a given location if the move is valid.
    * @param posn the position to add the piece
+   * @throws IllegalStateException if game is over
    */
   void addPiece(HexPosition posn);
 
@@ -21,24 +27,26 @@ public interface ReversiModel {
   /**
    * Returns whose turn it is.
    * @return the color of the player whose turn it is
+   * @throws IllegalStateException if game is over
    */
   TeamColor getCurrentTurn();
 
   /**
    * Skips the current players turn.
+   * @throws IllegalStateException if game is over
    */
-  void skipTurn();
+  void pass();
 
   /**
-   * Determines who won the game
-   * @return the winner of the game
+   * Determines who won the game.
+   * @return the winner of the game, and null if the game is tied.
    * @throws IllegalStateException if game is not over
    */
   TeamColor getWinner();
 
   /**
    * Determines if the game is over or not.
-   * @return true iff the game is over
+   * @return true iff the game is over.
    */
   boolean isGameOver();
 

@@ -8,10 +8,12 @@ import java.util.HashMap;
  * Game is automatically started by the constructor and
  * has various fields about size of the game, the current turn,
  * and available current moves, as well as the board itself.
+ * INVARIANT: no coordinate will ever be greater than the radius (checked by validatePositions).
  */
 public class HexReversi implements ReversiModel {
   private final int radius;
   private TeamColor currentTurn;
+  private boolean lastPass;
 
   /**
    * A map of hexagonal positions represeting the board. The central coordinate is
@@ -24,7 +26,6 @@ public class HexReversi implements ReversiModel {
    *               / \
    *              /   \
    *       -q,+r,s     q,+r,-s
-   *
    *    q
    *     /    \
    *    |  *  | r
@@ -59,10 +60,11 @@ public class HexReversi implements ReversiModel {
     dealBoard();
     this.currentTurn = TeamColor.BLACK;
     updateValidMoves();
+    lastPass = false;
   }
 
   /**
-   * Returns valid positions that can be played for the current player
+   * Returns valid positions that can be played for the current player.
    * @return a list of valid positions that color can move to.
    */
   @Override
@@ -93,7 +95,8 @@ public class HexReversi implements ReversiModel {
   }
 
   /**
-   * Returns an ArrayList of all the pieces to be flipped on a single Q file
+   * Returns an ArrayList of all the pieces to be flipped on a single Q file.
+   *
    * @param color the color to be placed
    * @param posn the position to place the piece
    * @return a list of positions that need to be flipped
@@ -143,7 +146,7 @@ public class HexReversi implements ReversiModel {
   }
 
   /**
-   * Returns an ArrayList of all the pieces to be flipped on a single R file
+   * Returns an ArrayList of all the pieces to be flipped on a single R file.
    * @param color the color to be placed
    * @param posn the position to place the piece
    * @return a list of positions that need to be flipped
@@ -193,7 +196,7 @@ public class HexReversi implements ReversiModel {
   }
 
   /**
-   * Returns an ArrayList of all the pieces to be flipped on a single S file
+   * Returns an ArrayList of all the pieces to be flipped on a single S file.
    * @param color the color to be placed
    * @param posn the position to place the piece
    * @return a list of positions that need to be flipped
@@ -304,16 +307,15 @@ public class HexReversi implements ReversiModel {
 
   @Override
   public void addPiece(HexPosition posn) {
-
+    gameRunning();
     HashMap<HexPosition, ArrayList<HexPosition>> validityMap = currentTurn.equals(TeamColor.WHITE) ?
             this.validWhiteMoves : this.validBlackMoves;
-    if (!validPosition(posn)) {
-      throw new IllegalArgumentException("Position out of bounds");
-    }
-    else if (!validityMap.containsKey(posn)) {
-      throw new IllegalStateException("Invalid move");
+    validatePosition(posn);
+    if (validityMap.isEmpty()) {
+      throw new IllegalStateException("No legal moves, player must pass");
     }
 
+    lastPass = false;
 
     this.board.put(posn, currentTurn);
     setColor(currentTurn, validityMap.get(posn));
@@ -336,12 +338,31 @@ public class HexReversi implements ReversiModel {
 
   @Override
   public TeamColor getCurrentTurn() {
+    gameRunning();
     return this.currentTurn;
   }
 
   @Override
-  public void skipTurn() {
-    this.currentTurn = this.currentTurn.cycle();
+  public void pass() {
+    gameRunning();
+    if (!lastPass) {
+      this.currentTurn = this.currentTurn.cycle();
+      lastPass = true;
+    } else {
+      validBlackMoves = new HashMap<>();
+      validWhiteMoves = new HashMap<>();
+      //makes it so gameover would flip
+    }
+
+  }
+
+  /**
+   * Throw exception if the game is called.
+   */
+  private void gameRunning() {
+    if (isGameOver()) {
+      throw new IllegalStateException("Game is over!");
+    }
   }
 
   @Override
@@ -349,20 +370,21 @@ public class HexReversi implements ReversiModel {
     if (!isGameOver()) {
       throw new IllegalStateException("Game is not over!");
     }
-    else {
-      HashMap<TeamColor, Integer> freqMap = new HashMap<>();
-      TeamColor mostFreq = null;
-      int mostFreqCount = -1;
-      for (TeamColor color : board.values()) {
-        Integer count = freqMap.get(color);
-        freqMap.put(color, count = (count == null ? 1 : count+1));
-        if (count > mostFreqCount) {
-          mostFreq = color;
-          mostFreqCount = count;
-        }
+    int blackCount = 0;
+    int whiteCount = 0;
+
+    for (TeamColor color : board.values()) {
+      if (color.equals(TeamColor.WHITE)) {
+        whiteCount = whiteCount + 1;
       }
-      return mostFreq;
+      else if (color.equals(TeamColor.BLACK)) {
+        blackCount = blackCount + 1;
+      }
     }
+    if (blackCount == whiteCount) {
+      return null;
+    }
+    return (blackCount > whiteCount) ? TeamColor.BLACK : TeamColor.WHITE;
   }
 
   @Override

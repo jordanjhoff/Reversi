@@ -22,7 +22,7 @@ public class ReversiTextualView implements ReversiView {
    * @param model to be represented and rendered
    */
   public ReversiTextualView(ReversiModel model) {
-    this(model, new StringBuilder());
+    this(model, System.out);
   }
 
   /**

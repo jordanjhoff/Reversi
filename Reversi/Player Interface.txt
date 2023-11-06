@@ -1,0 +1,9 @@
+Player Interface:
+
+1. A method that returns the players color
+   (regardless whether the player is an ai or not, they have a team color)
+
+2. A method that makes a move
+        - takes in coordinates (may either be q/r/s or of some other form tbd)
+
+3. A method that checks whether it is the players turn
