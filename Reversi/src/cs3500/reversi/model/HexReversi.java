@@ -366,6 +366,40 @@ public class HexReversi implements ReversiModel {
 
   }
 
+  @Override
+  public HashMap<HexPosition, TeamColor> getBoard() {
+    return new HashMap<HexPosition, TeamColor>(board);
+  }
+
+  @Override
+  public boolean isMoveValid(HexPosition pos) {
+    return getValidMoves().contains(pos);
+  }
+
+  @Override
+  public int getWhiteScore() {
+    int whiteCount = 0;
+
+    for (TeamColor color : board.values()) {
+      if (color.equals(TeamColor.WHITE)) {
+        whiteCount = whiteCount + 1;
+      }
+    }
+
+    return whiteCount;
+  }
+
+  @Override
+  public int getBlackScore() {
+    int blackCount = 0;
+    for (TeamColor color : board.values()) {
+      if (color.equals(TeamColor.BLACK)) {
+        blackCount = blackCount + 1;
+      }
+    }
+    return blackCount;
+  }
+
   /**
    * Throw exception if the game is called.
    */
@@ -380,17 +414,10 @@ public class HexReversi implements ReversiModel {
     if (!isGameOver()) {
       throw new IllegalStateException("Game is not over!");
     }
-    int blackCount = 0;
-    int whiteCount = 0;
 
-    for (TeamColor color : board.values()) {
-      if (color.equals(TeamColor.WHITE)) {
-        whiteCount = whiteCount + 1;
-      }
-      else if (color.equals(TeamColor.BLACK)) {
-        blackCount = blackCount + 1;
-      }
-    }
+    int blackCount = getBlackScore();
+    int whiteCount = getWhiteScore();
+
     if (blackCount == whiteCount) {
       return null;
     }

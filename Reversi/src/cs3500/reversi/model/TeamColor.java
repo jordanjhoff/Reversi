@@ -32,5 +32,14 @@ public enum TeamColor {
     }
   }
 
+  public String getName() {
+    if (this.symbol == WHITE.symbol) {
+      return "White";
+    }
+    else {
+      return "Black";
+    }
+  }
+
 
 }

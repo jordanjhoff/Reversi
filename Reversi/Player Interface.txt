@@ -7,3 +7,24 @@ Player Interface:
         - takes in coordinates (may either be q/r/s or of some other form tbd)
 
 3. A method that checks whether it is the players turn
+
+
+
+
+what we need to do for next homework
+
+ability to create copy of a board
+readonly interface (just the observer methods)
+Is it legal for the current player to play at a given coordinate?
+What is the current score for either player?
+
+
+You will likely need to design at least one, and possibly two,
+interfaces for your view: one should describe what the frame
+ought to be capable of, and one might be needed to describe
+what the panel ought to be capable of. (These may be empty
+interfaces for now, if you do not see a need for any methods
+in them yet...but keep reading below for additional ideas.)
+Note that your textual rendering from the previous assignment
+does not have to implement this new GUI view interface, and
+you do not have to force it to do so.
