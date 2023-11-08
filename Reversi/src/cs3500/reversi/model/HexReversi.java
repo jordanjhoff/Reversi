@@ -131,9 +131,9 @@ public class HexReversi implements ReversiModel {
     ArrayList<HexPosition> toBeFlippedDir1 = new ArrayList<>();
     int currRDir1 = posn.getRPosition() + 1;
     int currSDir1 = posn.getSPosition() - 1;
-    while (Math.abs(currRDir1) <= radius && Math.abs(currSDir1) <= radius) {
+    while (Math.abs(currRDir1) <= radius + 1 && Math.abs(currSDir1) <= radius + 1) {
       HexPosition currPosnDir1 = new HexPosition(currQ, currRDir1, currSDir1);
-      if (!this.board.containsKey(currPosnDir1)) {
+      if (!this.board.containsKey(currPosnDir1) || !validPosition(currPosnDir1)) {
         toBeFlippedDir1.clear();
         break;
       }
@@ -150,9 +150,9 @@ public class HexReversi implements ReversiModel {
     ArrayList<HexPosition> toBeFlippedDir2 = new ArrayList<>();
     int currRDir2 = posn.getRPosition() - 1;
     int currSDir2 = posn.getSPosition() + 1;
-    while (Math.abs(currRDir2) <= radius && Math.abs(currSDir2) <= radius) {
+    while (Math.abs(currRDir2) <= radius + 1 && Math.abs(currSDir2) <= radius + 1) {
       HexPosition currPosnDir2 = new HexPosition(currQ, currRDir2, currSDir2);
-      if (!this.board.containsKey(currPosnDir2)) {
+      if (!this.board.containsKey(currPosnDir2) || !validPosition(currPosnDir2)) {
         toBeFlippedDir2.clear();
         break;
       }
@@ -181,9 +181,9 @@ public class HexReversi implements ReversiModel {
     ArrayList<HexPosition> toBeFlippedDir1 = new ArrayList<>();
     int currQDir1 = posn.getQPosition() + 1;
     int currSDir1 = posn.getSPosition() - 1;
-    while (Math.abs(currQDir1) <= radius && Math.abs(currSDir1) <= radius) {
+    while (Math.abs(currQDir1) <= radius + 1 && Math.abs(currSDir1) <= radius + 1) {
       HexPosition currPosnDir1 = new HexPosition(currQDir1, currR, currSDir1);
-      if (!this.board.containsKey(currPosnDir1)) {
+      if (!this.board.containsKey(currPosnDir1) || !validPosition(currPosnDir1)) {
         toBeFlippedDir1.clear();
         break;
       }
@@ -200,9 +200,9 @@ public class HexReversi implements ReversiModel {
     ArrayList<HexPosition> toBeFlippedDir2 = new ArrayList<>();
     int currQDir2 = posn.getQPosition() - 1;
     int currSDir2 = posn.getSPosition() + 1;
-    while (Math.abs(currQDir2) <= radius && Math.abs(currSDir2) <= radius) {
+    while (Math.abs(currQDir2) <= radius + 1 && Math.abs(currSDir2) <= radius + 1) {
       HexPosition currPosnDir2 = new HexPosition(currQDir2, currR, currSDir2);
-      if (!this.board.containsKey(currPosnDir2)) {
+      if (!this.board.containsKey(currPosnDir2) || !validPosition(currPosnDir2)) {
         toBeFlippedDir2.clear();
         break;
       }
@@ -231,9 +231,9 @@ public class HexReversi implements ReversiModel {
     ArrayList<HexPosition> toBeFlippedDir1 = new ArrayList<>();
     int currQDir1 = posn.getQPosition() + 1;
     int currRDir1 = posn.getRPosition() - 1;
-    while (Math.abs(currQDir1) <= radius && Math.abs(currRDir1) <= radius) {
+    while (Math.abs(currQDir1) <= radius + 1 && Math.abs(currRDir1) <= radius + 1) {
       HexPosition currPosnDir1 = new HexPosition(currQDir1, currRDir1, currS);
-      if (!this.board.containsKey(currPosnDir1)) {
+      if (!this.board.containsKey(currPosnDir1) || !validPosition(currPosnDir1)) {
         toBeFlippedDir1.clear();
         break;
       }
@@ -250,9 +250,9 @@ public class HexReversi implements ReversiModel {
     ArrayList<HexPosition> toBeFlippedDir2 = new ArrayList<>();
     int currQDir2 = posn.getQPosition() - 1;
     int currRDir2 = posn.getRPosition() + 1;
-    while (Math.abs(currQDir2) <= radius && Math.abs(currRDir2) <= radius) {
+    while (Math.abs(currQDir2) <= radius + 1 && Math.abs(currRDir2) <= radius + 1) {
       HexPosition currPosnDir2 = new HexPosition(currQDir2, currRDir2, currS);
-      if (!this.board.containsKey(currPosnDir2)) {
+      if (!this.board.containsKey(currPosnDir2) || !validPosition(currPosnDir2)) {
         toBeFlippedDir2.clear();
         break;
       }
