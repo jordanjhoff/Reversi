@@ -70,4 +70,13 @@ public interface ReadonlyReversiModel {
    */
   int getBlackScore();
 
+  /**
+   * Returns the number of pieces a move will flip for the current player at a given
+   * position.
+   * @param posn the position to
+   * @return the number of pieces that will be flipped if a piece is placed at posn
+   * @throws IllegalArgumentException if the position is of bounds
+   */
+  public int flipCount(HexPosition posn);
+
 }

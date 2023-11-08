@@ -1,7 +1,9 @@
 package cs3500.reversi.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 /**
  * A model to play a generic version of HexReversi.
@@ -76,6 +78,17 @@ public class HexReversi implements ReversiModel {
       return new ArrayList<>();
     }
     return new ArrayList<>(validityMap.keySet());
+  }
+
+  /**
+   * Returns the number of pieces a move will flip for the current player at a given
+   * position.
+   * @param posn the position to
+   * @return the number of pieces that will be flipped if a piece is placed at posn
+   * @throws IllegalArgumentException if the position is of bounds
+   */
+  public int flipCount(HexPosition posn) {
+    return 0;
   }
 
   /**

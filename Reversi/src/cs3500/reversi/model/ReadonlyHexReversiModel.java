@@ -62,4 +62,9 @@ public class ReadonlyHexReversiModel implements ReadonlyReversiModel {
   public int getBlackScore() {
     return this.adaptee.getBlackScore();
   }
+
+  @Override
+  public int flipCount(HexPosition posn) {
+    return this.adaptee.flipCount(posn);
+  }
 }
