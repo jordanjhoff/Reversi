@@ -40,7 +40,7 @@ public interface ReadonlyReversiModel {
   int getSize();
 
   /**
-   * Returns valid positions that can be played for the current turn.
+   * Returns valid positions that can be played for the current turn in top-leftmost order.
    * @return a list of valid positions that color can move to.
    */
   ArrayList<HexPosition> getValidMoves();

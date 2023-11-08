@@ -3,6 +3,7 @@ package cs3500.reversi.model;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -40,8 +41,8 @@ public class HexReversi implements ReversiModel {
    * Represents valid moves, where the key is the position, and the value is the list of
    * HexPositions that need to be updated if that move is played.
    */
-  private HashMap<HexPosition, ArrayList<HexPosition>> validBlackMoves;
-  private HashMap<HexPosition, ArrayList<HexPosition>> validWhiteMoves;
+  private LinkedHashMap<HexPosition, ArrayList<HexPosition>> validBlackMoves;
+  private LinkedHashMap<HexPosition, ArrayList<HexPosition>> validWhiteMoves;
 
 
   /**
@@ -53,8 +54,8 @@ public class HexReversi implements ReversiModel {
    */
   public HexReversi(int radius) {
     this.board = new HashMap<>();
-    this.validWhiteMoves = new HashMap<>();
-    this.validBlackMoves = new HashMap<>();
+    this.validWhiteMoves = new LinkedHashMap<>();
+    this.validBlackMoves = new LinkedHashMap<>();
     if (radius < 2) {
       throw new IllegalArgumentException("radius must be greater than 2!");
     }
@@ -66,7 +67,7 @@ public class HexReversi implements ReversiModel {
   }
 
   /**
-   * Returns valid positions that can be played for the current player.
+   * Returns valid positions that can be played for the current player in top-leftmost order.
    * @return a list of valid positions that color can move to.
    */
   @Override
@@ -77,7 +78,11 @@ public class HexReversi implements ReversiModel {
     if (isGameOver()) {
       return new ArrayList<>();
     }
-    return new ArrayList<>(validityMap.keySet());
+    ArrayList<HexPosition> result = new ArrayList<>();
+    validityMap.entrySet().forEach(entry -> {
+      result.add(entry.getKey());});
+
+    return result;
   }
 
   /**
@@ -88,7 +93,10 @@ public class HexReversi implements ReversiModel {
    * @throws IllegalArgumentException if the position is of bounds
    */
   public int flipCount(HexPosition posn) {
-    return 0;
+    HashMap<HexPosition, ArrayList<HexPosition>> validityMap =
+            this.currentTurn.equals(TeamColor.WHITE)
+                    ? this.validWhiteMoves : this.validBlackMoves;
+    return validityMap.get(posn).size();
   }
 
   /**
