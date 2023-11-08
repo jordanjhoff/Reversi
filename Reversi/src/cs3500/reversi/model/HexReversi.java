@@ -376,12 +376,12 @@ public class HexReversi implements ReversiModel {
   @Override
   public void pass() {
     gameRunning();
-    if (!lastPass) {
+    if (!this.lastPass) {
       this.currentTurn = this.currentTurn.cycle();
-      lastPass = true;
+      this.lastPass = true;
     } else {
-      validBlackMoves = new HashMap<>();
-      validWhiteMoves = new HashMap<>();
+      validBlackMoves = new LinkedHashMap<>();
+      validWhiteMoves = new LinkedHashMap<>();
       //makes it so gameover would flip
     }
 
