@@ -72,7 +72,7 @@ public class HexReversi implements ReversiModel {
    */
   @Override
   public ArrayList<HexPosition> getValidMoves() {
-    HashMap<HexPosition, ArrayList<HexPosition>> validityMap =
+    LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap =
             this.currentTurn.equals(TeamColor.WHITE)
                     ? this.validWhiteMoves : this.validBlackMoves;
     if (isGameOver()) {
@@ -93,7 +93,7 @@ public class HexReversi implements ReversiModel {
    * @throws IllegalArgumentException if the position is of bounds
    */
   public int flipCount(HexPosition posn) {
-    HashMap<HexPosition, ArrayList<HexPosition>> validityMap =
+    LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap =
             this.currentTurn.equals(TeamColor.WHITE)
                     ? this.validWhiteMoves : this.validBlackMoves;
     return validityMap.get(posn).size();
@@ -299,7 +299,7 @@ public class HexReversi implements ReversiModel {
   private void updateValidMoves() {
     for (int teams = 0; teams < 2; teams++) {
       TeamColor color = teams == 0 ? TeamColor.WHITE : TeamColor.BLACK;
-      HashMap<HexPosition, ArrayList<HexPosition>> validityMap = teams == 0 ? this.validWhiteMoves :
+      LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap = teams == 0 ? this.validWhiteMoves :
               this.validBlackMoves;
       validityMap.clear();
 
@@ -338,7 +338,7 @@ public class HexReversi implements ReversiModel {
   @Override
   public void addPiece(HexPosition posn) {
     gameRunning();
-    HashMap<HexPosition, ArrayList<HexPosition>> validityMap = currentTurn.equals(TeamColor.WHITE) ?
+    LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap = currentTurn.equals(TeamColor.WHITE) ?
             this.validWhiteMoves : this.validBlackMoves;
     validatePosition(posn);
     if (validityMap.isEmpty()) {
