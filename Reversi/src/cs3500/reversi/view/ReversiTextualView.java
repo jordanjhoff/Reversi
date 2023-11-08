@@ -3,6 +3,7 @@ package cs3500.reversi.view;
 import java.io.IOException;
 
 import cs3500.reversi.model.HexPosition;
+import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 
@@ -14,14 +15,14 @@ import cs3500.reversi.model.TeamColor;
 public class ReversiTextualView implements ReversiView {
 
   private Appendable out;
-  private ReversiModel model;
+  private ReadonlyHexReversiModel model;
 
   /**
    * generates a textual view with generic stringbuilder output.
    *
    * @param model to be represented and rendered
    */
-  public ReversiTextualView(ReversiModel model) {
+  public ReversiTextualView(ReadonlyHexReversiModel model) {
     this(model, System.out);
   }
 
@@ -31,7 +32,7 @@ public class ReversiTextualView implements ReversiView {
    * @param model to be rendered and represented
    * @param out where outputs get appended
    */
-  public ReversiTextualView(ReversiModel model, Appendable out) {
+  public ReversiTextualView(ReadonlyHexReversiModel model, Appendable out) {
     this.model = model;
     this.out = out;
   }
@@ -57,21 +58,19 @@ public class ReversiTextualView implements ReversiView {
         if (color == null) {
           if (model.getValidMoves().contains(new HexPosition(q, r, s))) {
             this.out.append("*"); //available move = *
-          }
-          else {
+          } else {
             this.out.append("_");
           }
-        }
-        else {
+        } else {
           this.out.append(color.symbol);
         }
         if (q != rMax) {
           this.out.append(" ");
         }
       }
-      //if (r == radius) {
-      //  this.out.append(System.lineSeparator()); //add extra new line
-      //} not sure if we want to implement this
+      if (r == radius) {
+        this.out.append(System.lineSeparator());
+      } //add extra new line in last case
       this.out.append(System.lineSeparator());
     }
   }

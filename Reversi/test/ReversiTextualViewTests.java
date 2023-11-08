@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.HexReversi;
+import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.view.ReversiTextualView;
 import cs3500.reversi.view.ReversiView;
@@ -26,8 +27,8 @@ public class ReversiTextualViewTests {
     model = new HexReversi(3);
     five = new HexReversi(5);
     out = new StringBuilder();
-    view = new ReversiTextualView(model, out);
-    view5 = new ReversiTextualView(five, out);
+    view = new ReversiTextualView(new ReadonlyHexReversiModel(model), out);
+    view5 = new ReversiTextualView(new ReadonlyHexReversiModel(five), out);
   }
 
   @Test
@@ -58,7 +59,7 @@ public class ReversiTextualViewTests {
     try {
       initData();
       model = new HexReversi(2);
-      view = new ReversiTextualView(model, out);
+      view = new ReversiTextualView(new ReadonlyHexReversiModel(model), out);
       view.render();
       Assert.assertEquals(
               "  _ * _\n" +
@@ -77,7 +78,7 @@ public class ReversiTextualViewTests {
     try {
       initData();
       model = new HexReversi(10);
-      view = new ReversiTextualView(model, out);
+      view = new ReversiTextualView(new ReadonlyHexReversiModel(model), out);
       view.render();
       Assert.assertEquals(
               "          _ _ _ _ _ _ _ _ _ _ _\n" +
@@ -189,7 +190,7 @@ public class ReversiTextualViewTests {
     try {
       initData();
       model = new HexReversi(2);
-      view = new ReversiTextualView(model, out);
+      view = new ReversiTextualView(new ReadonlyHexReversiModel(model), out);
       view.render();
       view.writeMessage("HALLO!!!");
       Assert.assertTrue(out.toString().contains(
@@ -211,7 +212,7 @@ public class ReversiTextualViewTests {
     try {
       initData();
       model = new HexReversi(2);
-      view = new ReversiTextualView(model);
+      view = new ReversiTextualView(new ReadonlyHexReversiModel(model));
       view.render();
       view.writeMessage("HALLO!!!");
     } catch (IOException e) {
