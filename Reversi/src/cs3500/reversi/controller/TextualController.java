@@ -6,12 +6,11 @@ import java.util.List;
 
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
-import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.ReversiModel;
-import cs3500.reversi.model.TeamColor;
+import cs3500.reversi.view.IReversiView;
 import cs3500.reversi.view.ReversiView;
 
-public class HRController implements HexReversiController {
+public class TextualController implements HexReversiController {
   private final ReversiModel model;
   private final ReversiView view;
   private final List<Player> players;
