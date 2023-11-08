@@ -21,4 +21,6 @@ public interface ReversiView {
    * @throws IOException if message cant be sent
    */
   void writeMessage(String message) throws IOException;
+
+
 }

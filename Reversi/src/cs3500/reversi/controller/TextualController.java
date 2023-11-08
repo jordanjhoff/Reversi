@@ -16,7 +16,7 @@ public class TextualController implements HexReversiController {
   private final List<Player> players;
   private int playerIndex;
 
-  public HRController(ReversiModel model, ReversiView view) {
+  public TextualController(ReversiModel model, ReversiView view) {
     this.model = model;
     this.view = view;
     this.players = new ArrayList<Player>();
