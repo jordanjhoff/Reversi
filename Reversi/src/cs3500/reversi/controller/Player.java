@@ -7,7 +7,6 @@ import cs3500.reversi.model.TeamColor;
 
 public interface Player {
   HexPosition play(ReadonlyHexReversiModel model);
-
   TeamColor getColor();
 
 }

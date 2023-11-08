@@ -38,7 +38,10 @@ public class HRController implements HexReversiController {
       try {
         this.view.render();
         HexPosition pos = this.players.get(this.playerIndex).play(new ReadonlyHexReversiModel(this.model));
-        this.model.addPiece(pos);
+        if (pos == null) {
+          this.model.pass();
+        }
+         this.model.addPiece(pos);
         this.playerIndex = (this.playerIndex + 1) % this.players.size();
       } catch (Exception e) {
         if (e instanceof IOException) {
