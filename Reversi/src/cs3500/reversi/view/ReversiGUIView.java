@@ -20,4 +20,9 @@ public class ReversiGUIView extends JFrame implements IReversiView {
   public void addFeatureListener(IViewFeatures features) {
 
   }
+
+  @Override
+  public void display(boolean show) {
+    this.setVisible(show);
+  }
 }

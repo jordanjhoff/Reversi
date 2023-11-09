@@ -33,35 +33,6 @@ public class VisualController implements HexReversiController, IViewFeatures {
 
   @Override
   public void play() {
-    this.playerIndex = 0;
-    while (!this.model.isGameOver()) {
-      try {
-        this.view.render();
-        HexPosition pos = this.players.get(this.playerIndex).play(new ReadonlyHexReversiModel(this.model));
-        if (pos == null) {
-          this.model.pass();
-        }
-        this.model.addPiece(pos);
-        this.playerIndex = (this.playerIndex + 1) % this.players.size();
-      } catch (Exception e) {
-        if (e instanceof IOException) {
-          throw new IllegalStateException("Unable to print");
-        }
-        if (e instanceof IllegalStateException) {
-
-        }
-      }
-    }
-    try {
-      view.render();
-      if (this.model.getWinner() == null) {
-        view.writeMessage("Game was tied!");
-      }
-      else {
-        view.writeMessage(this.model.getWinner().getName() + " won the game!");
-      }
-    } catch (Exception e) {
-
-    }
+    this.view.display(true);
   }
 }
