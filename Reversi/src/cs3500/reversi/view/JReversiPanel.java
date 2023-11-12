@@ -70,7 +70,8 @@ public class JReversiPanel extends JPanel {
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     Rectangle bounds = this.getBounds();
-    this.hexagonSize = Math.min(bounds.width / (5 * this.modelRadius), bounds.height / (5 * this.modelRadius));
+    this.hexagonSize = Math.min(bounds.width / (5 * this.modelRadius),
+            bounds.height / (5 * this.modelRadius));
 
 
     Graphics2D g2d = (Graphics2D) g.create();
@@ -165,14 +166,21 @@ public class JReversiPanel extends JPanel {
   }
 
 
-
-
   private class MyMouseListener extends MouseInputAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
       int x = e.getX();
       int y = e.getY();
-      selectedHex = pixelToHex(x,y);
+      HexPosition clickedHex = pixelToHex(x,y);
+      if (clickedHex.equals(selectedHex)) {
+        selectedHex = null;
+      }
+      else if (Math.abs(clickedHex.getQPosition()) <= modelRadius &&
+              Math.abs(clickedHex.getRPosition()) <= modelRadius &&
+              Math.abs(clickedHex.getSPosition()) <= modelRadius) {
+        selectedHex = clickedHex;
+      }
+
       repaint();
     }
 
