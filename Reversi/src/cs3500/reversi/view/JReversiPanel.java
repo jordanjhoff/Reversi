@@ -177,7 +177,8 @@ public class JReversiPanel extends JPanel {
       }
       else if (Math.abs(clickedHex.getQPosition()) <= modelRadius &&
               Math.abs(clickedHex.getRPosition()) <= modelRadius &&
-              Math.abs(clickedHex.getSPosition()) <= modelRadius) {
+              Math.abs(clickedHex.getSPosition()) <= modelRadius &&
+              model.getPieceAt(clickedHex) == null) {
         selectedHex = clickedHex;
       }
 
