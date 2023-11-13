@@ -34,5 +34,18 @@ public class main {
     IReversiView view = new ReversiGUIView(model);
     HexReversiController controller = new VisualController(model, view);
     controller.play();
+
+
+    ReversiStrategy textStrat = new UserTextInput(new Scanner(System.in));
+    Appendable out = System.out;
+    Player white = new PlayerImpl(TeamColor.WHITE, textStrat);
+    Player black = new PlayerImpl(TeamColor.BLACK, new CaptureMost());
+    ReversiModel modelText = new HexReversi(2);
+    ReversiView viewText = new ReversiTextualView(new ReadonlyHexReversiModel(modelText), out);
+    HexReversiController controllerText = new TextualController(modelText, viewText);
+    controllerText.addPlayer(white);
+    controllerText.addPlayer(black);
+    controllerText.play();
+
   }
 }
