@@ -48,8 +48,8 @@ public class main {
 
     ReversiStrategy textStrat = new UserTextInput(new Scanner(System.in));
     Appendable out = System.out;
-    Player white = new PlayerImpl(TeamColor.WHITE, new CaptureMost());
-    Player black = new PlayerImpl(TeamColor.BLACK, new CaptureMost());
+    Player white = new PlayerImpl(TeamColor.WHITE, textStrat);
+    Player black = new PlayerImpl(TeamColor.BLACK, textStrat);
     ReversiModel modelText = new HexReversi(2);
     ReversiView viewText = new ReversiTextualView(new ReadonlyHexReversiModel(modelText), out);
     HexReversiController controllerText = new TextualController(modelText, viewText);

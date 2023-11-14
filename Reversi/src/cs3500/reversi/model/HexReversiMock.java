@@ -6,9 +6,11 @@ import java.util.HashMap;
 
 public class HexReversiMock implements ReversiModel {
   Appendable out;
+  HexReversi adaptee;
 
-  public HexReversiMock(Appendable out) {
+  public HexReversiMock(Appendable out, HexReversi adaptee) {
     this.out = out;
+    this.adaptee = adaptee;
   }
 
   @Override
@@ -18,7 +20,7 @@ public class HexReversiMock implements ReversiModel {
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    return null;
+    return adaptee.getPieceAt(posn);
   }
 
   @Override
@@ -28,7 +30,7 @@ public class HexReversiMock implements ReversiModel {
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    return null;
+    return adaptee.getCurrentTurn();
   }
 
   @Override
@@ -38,7 +40,7 @@ public class HexReversiMock implements ReversiModel {
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    return null;
+    return adaptee.getWinner();
   }
 
   @Override
@@ -48,7 +50,7 @@ public class HexReversiMock implements ReversiModel {
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    return false;
+    return adaptee.isGameOver();
   }
 
   @Override
@@ -58,7 +60,7 @@ public class HexReversiMock implements ReversiModel {
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    return 0;
+    return adaptee.getSize();
   }
 
   @Override
@@ -68,7 +70,7 @@ public class HexReversiMock implements ReversiModel {
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    return null;
+    return adaptee.getValidMoves();
   }
 
   @Override
@@ -78,18 +80,9 @@ public class HexReversiMock implements ReversiModel {
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    return null;
+    return adaptee.getBoard();
   }
 
-  @Override
-  public boolean isMoveValid(HexPosition pos) {
-    try {
-      out.append("\nisMoveValid: " + pos.toString());
-    } catch (IOException e) {
-      throw new IllegalStateException("Could not read data");
-    }
-    return false;
-  }
 
   @Override
   public int getWhiteScore() {
@@ -98,7 +91,7 @@ public class HexReversiMock implements ReversiModel {
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    return 0;
+    return adaptee.getWhiteScore();
   }
 
   @Override
@@ -108,17 +101,18 @@ public class HexReversiMock implements ReversiModel {
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    return 0;
+    return adaptee.getBlackScore();
   }
 
   @Override
   public int flipCount(HexPosition posn) {
+    int value = adaptee.flipCount(posn);
     try {
-      out.append("\nflipCount: " + posn.toString());
+      out.append("\nflipCount: " + posn.toString() + ", value: " + value);
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    return 0;
+    return value;
   }
 
   @Override
@@ -128,10 +122,12 @@ public class HexReversiMock implements ReversiModel {
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
+    adaptee.addPiece(color, posn);
   }
 
   @Override
   public void pass() {
+    adaptee.pass();
     try {
       out.append("\npass");
     } catch (IOException e) {

@@ -289,11 +289,6 @@ public class HexReversi implements ReversiModel {
   }
 
   @Override
-  public boolean isMoveValid(HexPosition pos) {
-    return getValidMoves().contains(pos);
-  }
-
-  @Override
   public int getWhiteScore() {
     int whiteCount = 0;
 

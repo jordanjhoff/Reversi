@@ -40,9 +40,6 @@ public class TextualController implements HexReversiController {
         if (pos == null) {
           this.model.pass();
         }
-        System.out.println(this.players.get(this.playerIndex).getColor().symbol);
-        System.out.println(pos);
-
         this.model.addPiece(this.players.get(this.playerIndex).getColor(), pos);
         this.playerIndex = (this.playerIndex + 1) % this.players.size();
       } catch (Exception e) {
@@ -50,7 +47,6 @@ public class TextualController implements HexReversiController {
           throw new IllegalStateException("Unable to print");
         }
         if (e instanceof IllegalStateException) {
-          System.out.println("here");
           System.out.println(e.getMessage());
         }
       }

@@ -49,11 +49,6 @@ public class ReadonlyHexReversiModel implements ReadonlyReversiModel {
   }
 
   @Override
-  public boolean isMoveValid(HexPosition pos) {
-    return this.adaptee.isMoveValid(pos);
-  }
-
-  @Override
   public int getWhiteScore() {
     return this.adaptee.getWhiteScore();
   }

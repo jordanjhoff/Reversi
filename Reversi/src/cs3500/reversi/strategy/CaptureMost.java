@@ -17,8 +17,9 @@ public class CaptureMost implements ReversiStrategy {
       int max = 0;
       HexPosition flipMax = posList.get(0);
       for (int i = 0; i < posList.size(); i++) {
-        if (max < model.flipCount(posList.get(i))) {
-          max = model.flipCount(posList.get(i));
+        int flipC = model.flipCount(posList.get(i));
+        if (max < flipC) {
+          max = flipC;
           flipMax = posList.get(i);
         }
       }
