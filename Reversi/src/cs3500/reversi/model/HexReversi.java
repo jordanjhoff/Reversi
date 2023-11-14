@@ -226,6 +226,9 @@ public class HexReversi implements ReversiModel {
   @Override
   public void addPiece(TeamColor color, HexPosition posn) {
     gameRunning();
+    if (!color.equals(currentTurn)) {
+      throw new IllegalArgumentException("Wrong turn");
+    }
     LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap = color.equals(TeamColor.WHITE) ?
             this.validWhiteMoves : this.validBlackMoves;
     validatePosition(posn);

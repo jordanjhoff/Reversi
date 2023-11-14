@@ -1,5 +1,8 @@
 package cs3500.reversi.view;
 
+import java.awt.*;
+import java.awt.event.ComponentEvent;
+
 import javax.swing.JFrame;
 
 import cs3500.reversi.model.ReadonlyReversiModel;
@@ -14,6 +17,7 @@ public class ReversiGUIView extends JFrame implements IReversiView {
     this.add(panel);
     this.pack();
   }
+
 
 
   @Override

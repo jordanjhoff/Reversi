@@ -122,42 +122,32 @@ public class JReversiPanel extends JPanel {
   }
 
   private void drawCenteredPiece(Graphics2D g2d, int x, int y, int size) {
-    x = x-(size/2);
-    y = y-(size/2);
-    g2d.fillOval(x,y,size,size);
+    x = x - (size/2);
+    y = y - (size/2);
+    g2d.fillOval(x, y, size, size);
   }
 
 
 
   private HexPosition pixelToHex(int x, int y) {
     Rectangle bounds = this.getBounds();
-
     double q = (sqrt(3)/3 * (x - bounds.width/2)  -  1./3 * (y - bounds.height/2)) / this.hexagonSize;
     double r = (2./3 * (y - bounds.height/2)) / this.hexagonSize;
 
     return roundHex(q,r);
   }
 
-  private HexPosition roundHex(double q, double r) {
-    double s = -(q + r);
-    int qRounded = (int)Math.round(q);
-    int rRounded = (int)Math.round(r);
-    int sRounded = (int)Math.round(s);
+  private HexPosition roundHex(double x, double y) {
+    int xgrid = (int) Math.round(x);
+    int ygrid = (int) Math.round(y);
 
-    double q_diff = Math.abs(qRounded - q);
-    double r_diff = Math.abs(rRounded - r);
-    double s_diff = Math.abs(sRounded - s);
+    x -= xgrid;
+    y -= ygrid;
 
-    if (q_diff > r_diff && q_diff > s_diff) {
-      qRounded = -rRounded-sRounded;
-    }
-    else if (r_diff > s_diff) {
-      rRounded = -qRounded-sRounded;
-    }
-    else {
-      sRounded = -qRounded-rRounded;
-    }
-    return new HexPosition(qRounded, rRounded, sRounded);
+    // remainder
+    int dx = (int) Math.round(x + 0.5 * y) * (x * x >= y * y ? 1 : 0);
+    int dy = (int) Math.round(y + 0.5 * x) * (x * x < y * y ? 1 : 0);
+    return new HexPosition(xgrid + dx,ygrid + dy, -(xgrid + dx + ygrid + dy));
   }
 
   private Point hexToPixel(int q, int r) {
@@ -184,7 +174,7 @@ public class JReversiPanel extends JPanel {
               model.getPieceAt(clickedHex) == null) {
         selectedHex = clickedHex;
       }
-
+      System.out.println("Selected cell " + selectedHex);
       repaint();
     }
 

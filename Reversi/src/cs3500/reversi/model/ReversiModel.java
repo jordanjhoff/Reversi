@@ -12,7 +12,7 @@ public interface ReversiModel extends ReadonlyReversiModel {
   /**
    * Adds a piece at a given location if the move is valid.
    * @param posn the position to add the piece
-   * @throws IllegalStateException if game is over
+   * @throws IllegalStateException if game is over, or if its not the right color
    */
   void addPiece(TeamColor color, HexPosition posn);
 

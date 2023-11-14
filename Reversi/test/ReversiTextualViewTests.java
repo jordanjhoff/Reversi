@@ -8,6 +8,7 @@ import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReversiModel;
+import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.view.ReversiTextualView;
 import cs3500.reversi.view.ReversiView;
 
@@ -112,7 +113,7 @@ public class ReversiTextualViewTests {
   public void testFiveAddPiece() {
     try {
       initData();
-      five.addPiece(new HexPosition(1, -2, 1));
+      five.addPiece(TeamColor.BLACK, new HexPosition(1, -2, 1));
       view5.render();
       Assert.assertEquals(
               "     _ _ _ _ _ _\n" +
@@ -127,7 +128,7 @@ public class ReversiTextualViewTests {
                       "    _ _ _ _ _ _ _\n" +
                       "     _ _ _ _ _ _\n", out.toString());
       view5.render();
-      five.addPiece(new HexPosition(2, -3, 1));
+      five.addPiece(TeamColor.WHITE, new HexPosition(2, -3, 1));
       view5.render();
       System.out.println(out.toString());
       Assert.assertTrue(out.toString().contains(
@@ -152,7 +153,7 @@ public class ReversiTextualViewTests {
   public void testFiveInvalid() {
     try {
       initData();
-      five.addPiece(new HexPosition(1, -2, 1));
+      five.addPiece(TeamColor.BLACK, new HexPosition(1, -2, 1));
       view5.render();
       Assert.assertEquals(
               "     _ _ _ _ _ _\n" +
@@ -166,7 +167,7 @@ public class ReversiTextualViewTests {
                       "   _ _ _ _ _ _ _ _\n" +
                       "    _ _ _ _ _ _ _\n" +
                       "     _ _ _ _ _ _\n", out.toString());
-      five.addPiece(new HexPosition(0, -3, 3));
+      five.addPiece(TeamColor.WHITE, new HexPosition(0, -3, 3));
       view5.render();
       Assert.assertFalse(true); // should not have arrived here
     } catch (Exception e) {

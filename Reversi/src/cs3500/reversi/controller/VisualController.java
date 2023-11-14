@@ -41,6 +41,6 @@ public class VisualController implements HexReversiController, IViewFeatures {
     if (pos == null) {
       this.model.pass();
     }
-    this.model.addPiece(pos);
+    //this.model.addPiece(pos);
   }
 }

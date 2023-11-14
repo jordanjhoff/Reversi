@@ -122,7 +122,7 @@ public class HexReversiMock implements ReversiModel {
   }
 
   @Override
-  public void addPiece(HexPosition posn) {
+  public void addPiece(TeamColor color, HexPosition posn) {
     try {
       out.append("\naddPiece: " + posn.toString());
     } catch (IOException e) {
