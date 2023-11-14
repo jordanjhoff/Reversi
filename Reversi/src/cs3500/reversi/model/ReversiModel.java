@@ -14,7 +14,7 @@ public interface ReversiModel extends ReadonlyReversiModel {
    * @param posn the position to add the piece
    * @throws IllegalStateException if game is over
    */
-  void addPiece(HexPosition posn);
+  void addPiece(TeamColor color, HexPosition posn);
 
   /**
    * Skips the current players turn.

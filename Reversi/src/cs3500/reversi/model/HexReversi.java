@@ -62,7 +62,8 @@ public class HexReversi implements ReversiModel {
     this.radius = radius;
     dealBoard();
     this.currentTurn = TeamColor.BLACK;
-    updateValidMoves();
+    updateValidMoves(TeamColor.BLACK);
+    updateValidMoves(TeamColor.WHITE);
     lastPass = false;
   }
 
@@ -119,155 +120,41 @@ public class HexReversi implements ReversiModel {
   }
 
   /**
-   * Returns an ArrayList of all the pieces to be flipped on a single Q file.
-   *
-   * @param color the color to be placed
-   * @param posn the position to place the piece
-   * @return a list of positions that need to be flipped
+   * Determines which pieces need to be flipped for a placed piece.
+   * @param color the color of the piece to be placed
+   * @param posn the position to be flipped
+   * @param vector the [q,r,s] vector direction to iterate in
+   * @return the list of pieces that need to be flipped for a given move.
    */
-  private ArrayList<HexPosition> toFlipQ(TeamColor color, HexPosition posn) {
-    int currQ = posn.getQPosition();
+  private ArrayList<HexPosition> toFlip(TeamColor color, HexPosition posn, int[] vector) {
+    if (vector.length != 3) {
+      throw new IllegalArgumentException("Invalid position vector");
+    }
+    ArrayList<HexPosition> toBeFlipped = new ArrayList<>();
+    HexPosition currPosn = posn;
+    while (Math.abs(posn.getQPosition()) <= radius + 1 &&
+            Math.abs(posn.getRPosition()) <= radius + 1 &&
+            Math.abs(posn.getSPosition()) <= radius + 1) {
 
-    ArrayList<HexPosition> toBeFlippedDir1 = new ArrayList<>();
-    int currRDir1 = posn.getRPosition() + 1;
-    int currSDir1 = posn.getSPosition() - 1;
-    while (Math.abs(currRDir1) <= radius + 1 && Math.abs(currSDir1) <= radius + 1) {
-      HexPosition currPosnDir1 = new HexPosition(currQ, currRDir1, currSDir1);
-      if (!this.board.containsKey(currPosnDir1) || !validPosition(currPosnDir1)) {
-        toBeFlippedDir1.clear();
+      currPosn = new HexPosition(currPosn.getQPosition() + vector[0],
+              currPosn.getRPosition() + vector[1],
+              currPosn.getSPosition() + vector[2]);
+      if (!this.board.containsKey(currPosn) || !validPosition(currPosn)) {
+        toBeFlipped.clear();
         break;
       }
-      else if (this.board.get(currPosnDir1).equals(color)) {
+      else if (this.board.get(currPosn).equals(color)) {
         break;
       }
-      else if (!this.board.get(currPosnDir1).equals(color)) {
-        toBeFlippedDir1.add(currPosnDir1);
+      else if (!this.board.get(currPosn).equals(color)) {
+        toBeFlipped.add(currPosn);
       }
-      currRDir1 = currRDir1 + 1;
-      currSDir1 = currSDir1 - 1;
     }
 
-    ArrayList<HexPosition> toBeFlippedDir2 = new ArrayList<>();
-    int currRDir2 = posn.getRPosition() - 1;
-    int currSDir2 = posn.getSPosition() + 1;
-    while (Math.abs(currRDir2) <= radius + 1 && Math.abs(currSDir2) <= radius + 1) {
-      HexPosition currPosnDir2 = new HexPosition(currQ, currRDir2, currSDir2);
-      if (!this.board.containsKey(currPosnDir2) || !validPosition(currPosnDir2)) {
-        toBeFlippedDir2.clear();
-        break;
-      }
-      else if (this.board.get(currPosnDir2).equals(color)) {
-        break;
-      }
-      else if (!this.board.get(currPosnDir2).equals(color)) {
-        toBeFlippedDir2.add(currPosnDir2);
-      }
-      currRDir2 = currRDir2 - 1;
-      currSDir2 = currSDir2 + 1;
-    }
-    toBeFlippedDir1.addAll(toBeFlippedDir2);
-    return toBeFlippedDir1;
+    return toBeFlipped;
   }
 
-  /**
-   * Returns an ArrayList of all the pieces to be flipped on a single R file.
-   * @param color the color to be placed
-   * @param posn the position to place the piece
-   * @return a list of positions that need to be flipped
-   */
-  private ArrayList<HexPosition> toFlipR(TeamColor color, HexPosition posn) {
-    int currR = posn.getRPosition();
 
-    ArrayList<HexPosition> toBeFlippedDir1 = new ArrayList<>();
-    int currQDir1 = posn.getQPosition() + 1;
-    int currSDir1 = posn.getSPosition() - 1;
-    while (Math.abs(currQDir1) <= radius + 1 && Math.abs(currSDir1) <= radius + 1) {
-      HexPosition currPosnDir1 = new HexPosition(currQDir1, currR, currSDir1);
-      if (!this.board.containsKey(currPosnDir1) || !validPosition(currPosnDir1)) {
-        toBeFlippedDir1.clear();
-        break;
-      }
-      else if (this.board.get(currPosnDir1).equals(color)) {
-        break;
-      }
-      else if (!this.board.get(currPosnDir1).equals(color)) {
-        toBeFlippedDir1.add(currPosnDir1);
-      }
-      currQDir1 = currQDir1 + 1;
-      currSDir1 = currSDir1 - 1;
-    }
-
-    ArrayList<HexPosition> toBeFlippedDir2 = new ArrayList<>();
-    int currQDir2 = posn.getQPosition() - 1;
-    int currSDir2 = posn.getSPosition() + 1;
-    while (Math.abs(currQDir2) <= radius + 1 && Math.abs(currSDir2) <= radius + 1) {
-      HexPosition currPosnDir2 = new HexPosition(currQDir2, currR, currSDir2);
-      if (!this.board.containsKey(currPosnDir2) || !validPosition(currPosnDir2)) {
-        toBeFlippedDir2.clear();
-        break;
-      }
-      else if (this.board.get(currPosnDir2).equals(color)) {
-        break;
-      }
-      else if (!this.board.get(currPosnDir2).equals(color)) {
-        toBeFlippedDir2.add(currPosnDir2);
-      }
-      currQDir2 = currQDir2 - 1;
-      currSDir2 = currSDir2 + 1;
-    }
-    toBeFlippedDir1.addAll(toBeFlippedDir2);
-    return toBeFlippedDir1;
-  }
-
-  /**
-   * Returns an ArrayList of all the pieces to be flipped on a single S file.
-   * @param color the color to be placed
-   * @param posn the position to place the piece
-   * @return a list of positions that need to be flipped
-   */
-  private ArrayList<HexPosition> toFlipS(TeamColor color, HexPosition posn) {
-    int currS = posn.getSPosition();
-
-    ArrayList<HexPosition> toBeFlippedDir1 = new ArrayList<>();
-    int currQDir1 = posn.getQPosition() + 1;
-    int currRDir1 = posn.getRPosition() - 1;
-    while (Math.abs(currQDir1) <= radius + 1 && Math.abs(currRDir1) <= radius + 1) {
-      HexPosition currPosnDir1 = new HexPosition(currQDir1, currRDir1, currS);
-      if (!this.board.containsKey(currPosnDir1) || !validPosition(currPosnDir1)) {
-        toBeFlippedDir1.clear();
-        break;
-      }
-      else if (this.board.get(currPosnDir1).equals(color)) {
-        break;
-      }
-      else if (!this.board.get(currPosnDir1).equals(color)) {
-        toBeFlippedDir1.add(currPosnDir1);
-      }
-      currQDir1 = currQDir1 + 1;
-      currRDir1 = currRDir1 - 1;
-    }
-
-    ArrayList<HexPosition> toBeFlippedDir2 = new ArrayList<>();
-    int currQDir2 = posn.getQPosition() - 1;
-    int currRDir2 = posn.getRPosition() + 1;
-    while (Math.abs(currQDir2) <= radius + 1 && Math.abs(currRDir2) <= radius + 1) {
-      HexPosition currPosnDir2 = new HexPosition(currQDir2, currRDir2, currS);
-      if (!this.board.containsKey(currPosnDir2) || !validPosition(currPosnDir2)) {
-        toBeFlippedDir2.clear();
-        break;
-      }
-      else if (this.board.get(currPosnDir2).equals(color)) {
-        break;
-      }
-      else if (!this.board.get(currPosnDir2).equals(color)) {
-        toBeFlippedDir2.add(currPosnDir2);
-      }
-      currQDir2 = currQDir2 - 1;
-      currRDir2 = currRDir2 + 1;
-    }
-    toBeFlippedDir1.addAll(toBeFlippedDir2);
-    return toBeFlippedDir1;
-  }
 
   /**
    * Determines whether the position is legal on the board.
@@ -294,37 +181,38 @@ public class HexReversi implements ReversiModel {
   }
 
   /**
-   * Updates the validity maps to contain all available moves.
+   * Updates the validity maps to contain all available moves for a specific team color.
    */
-  private void updateValidMoves() {
-    for (int teams = 0; teams < 2; teams++) {
-      TeamColor color = teams == 0 ? TeamColor.WHITE : TeamColor.BLACK;
-      LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap = teams == 0 ? this.validWhiteMoves :
-              this.validBlackMoves;
-      validityMap.clear();
+  private void updateValidMoves(TeamColor color) {
+    LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap = color == TeamColor.WHITE ?
+            this.validWhiteMoves :
+            this.validBlackMoves;
+    validityMap.clear();
 
-      for (int r = -this.radius; r <= this.radius; r++) {
-        int rMin = Math.max(-this.radius, -r - this.radius);
-        int rMax = Math.min(this.radius, -r + this.radius);
+    for (int r = -this.radius; r <= this.radius; r++) {
+      int rMin = Math.max(-this.radius, -r - this.radius);
+      int rMax = Math.min(this.radius, -r + this.radius);
 
-        for (int q = rMin; q <= rMax; q++) {
-          int s = -r - q;
-          HexPosition currPos = new HexPosition(q,r,s);
-          if (!this.board.containsKey(currPos)) {
+      for (int q = rMin; q <= rMax; q++) {
+        int s = -r - q;
+        HexPosition currPos = new HexPosition(q,r,s);
+        if (!this.board.containsKey(currPos)) {
 
-            ArrayList<HexPosition> toBeFlipped = new ArrayList<>();
-            toBeFlipped.addAll(toFlipQ(color, currPos));
-            toBeFlipped.addAll(toFlipR(color, currPos));
-            toBeFlipped.addAll(toFlipS(color, currPos));
+          ArrayList<HexPosition> toBeFlipped = new ArrayList<>();
+          toBeFlipped.addAll(toFlip(color,currPos, new int[]{0,1,-1}));
+          toBeFlipped.addAll(toFlip(color,currPos, new int[]{0,-1,1}));
+          toBeFlipped.addAll(toFlip(color,currPos, new int[]{1,0,-1}));
+          toBeFlipped.addAll(toFlip(color,currPos, new int[]{-1,0,1}));
+          toBeFlipped.addAll(toFlip(color,currPos, new int[]{1,-1,0}));
+          toBeFlipped.addAll(toFlip(color,currPos, new int[]{-1,1,0}));
 
-
-            if (!toBeFlipped.isEmpty()) {
-              validityMap.put(currPos,toBeFlipped);
-            }
+          if (!toBeFlipped.isEmpty()) {
+            validityMap.put(currPos,toBeFlipped);
           }
         }
       }
     }
+
 
   }
 
@@ -336,9 +224,9 @@ public class HexReversi implements ReversiModel {
 
 
   @Override
-  public void addPiece(HexPosition posn) {
+  public void addPiece(TeamColor color, HexPosition posn) {
     gameRunning();
-    LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap = currentTurn.equals(TeamColor.WHITE) ?
+    LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap = color.equals(TeamColor.WHITE) ?
             this.validWhiteMoves : this.validBlackMoves;
     validatePosition(posn);
     if (validityMap.isEmpty()) {
@@ -354,7 +242,8 @@ public class HexReversi implements ReversiModel {
     setColor(currentTurn, validityMap.get(posn));
 
     this.currentTurn = this.currentTurn.cycle();
-    updateValidMoves();
+    updateValidMoves(TeamColor.BLACK);
+    updateValidMoves(TeamColor.WHITE);
   }
 
   @Override
