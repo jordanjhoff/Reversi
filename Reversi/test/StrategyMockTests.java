@@ -22,7 +22,6 @@ public class StrategyMockTests {
   Appendable mockOut;
   Appendable viewOut;
   ReversiStrategy captureMost;
-  HexReversiController controller;
   ReversiView view;
   Player player1;
   Player player2;
@@ -37,8 +36,6 @@ public class StrategyMockTests {
     view = new ReversiTextualView(new ReadonlyHexReversiModel(mock), viewOut);
     player1 = new PlayerImpl(TeamColor.BLACK, captureMost);
     player2 = new PlayerImpl(TeamColor.WHITE, captureMost);
-    controller.addPlayer(player1);
-    controller.addPlayer(player2);
   }
 
   @Test
