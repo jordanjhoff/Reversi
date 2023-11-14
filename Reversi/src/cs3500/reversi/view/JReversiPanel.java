@@ -25,7 +25,10 @@ public class JReversiPanel extends JPanel {
 
 
   public JReversiPanel(ReadonlyReversiModel model) {
-    this.model = Objects.requireNonNull(model);
+    if (model == null) {
+      throw new IllegalArgumentException("Model cannot be null!");
+    }
+    this.model = model;
     this.featuresListeners = new ArrayList<>();
     MouseListener mouselistener = new MyMouseListener();
     KeyListener keylistener = new MyKeyListener();
@@ -192,6 +195,7 @@ public class JReversiPanel extends JPanel {
     public void keyPressed(KeyEvent e) {
       if (e.getKeyChar() == 'p') {
         System.out.println("Pass");
+
       }
       else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
         System.out.println("Make move" + selectedHex);

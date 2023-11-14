@@ -35,4 +35,12 @@ public class VisualController implements HexReversiController, IViewFeatures {
   public void play() {
     this.view.display(true);
   }
+
+  @Override
+  public void handleInput(HexPosition pos) {
+    if (pos == null) {
+      this.model.pass();
+    }
+    this.model.addPiece(pos);
+  }
 }
