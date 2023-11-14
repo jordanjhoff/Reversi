@@ -16,7 +16,6 @@ import cs3500.reversi.strategy.CaptureMost;
 import cs3500.reversi.strategy.ReversiStrategy;
 import cs3500.reversi.strategy.UserTextInput;
 import cs3500.reversi.view.IReversiView;
-import cs3500.reversi.view.IViewFeatures;
 import cs3500.reversi.view.ReversiGUIView;
 import cs3500.reversi.view.ReversiTextualView;
 import cs3500.reversi.view.ReversiView;
@@ -48,11 +47,12 @@ public class main {
 
     ReversiStrategy textStrat = new UserTextInput(new Scanner(System.in));
     Appendable out = System.out;
-    Player white = new PlayerImpl(TeamColor.WHITE, textStrat);
+    Player white = new PlayerImpl(TeamColor.WHITE, new CaptureMost());
     Player black = new PlayerImpl(TeamColor.BLACK, textStrat);
     ReversiModel modelText = new HexReversi(2);
     ReversiView viewText = new ReversiTextualView(new ReadonlyHexReversiModel(modelText), out);
-    HexReversiController controllerText = new TextualController(modelText, viewText);
+    IReversiView viewGui = new ReversiGUIView(new ReadonlyHexReversiModel(modelText));
+    HexReversiController controllerText = new VisualController(modelText, viewGui);
     controllerText.addPlayer(black);
     controllerText.addPlayer(white);
     controllerText.play();

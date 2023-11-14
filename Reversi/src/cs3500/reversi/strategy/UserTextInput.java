@@ -9,9 +9,18 @@ import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 
+/**
+ * Class to represent the strategy for getting the user inputs.
+ * It prompts to the terminal and will respond with the position its given.
+ * There is also error handling for when there are issues interpreting coordinates.
+ */
 public class UserTextInput implements ReversiStrategy {
-  Scanner input;
+  Scanner input; //where the inputs are from
 
+  /**
+   * Generate a usertextinput strategy.
+   * @param input The input from which to read the coordinates
+   */
   public UserTextInput(Scanner input) {
     this.input = input;
   }

@@ -1,11 +1,14 @@
 package cs3500.reversi.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import cs3500.reversi.model.HexPosition;
+import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.view.IReversiView;
+import cs3500.reversi.view.ReversiView;
 
 public class VisualController implements HexReversiController {
   private final ReversiModel model;
@@ -29,14 +32,29 @@ public class VisualController implements HexReversiController {
 
   @Override
   public void play() {
+    this.playerIndex = 0;
     this.view.setVisible(true);
+    while (!this.model.isGameOver()) {
+      try {
+        HexPosition pos = this.players.get(this.playerIndex).play(new ReadonlyHexReversiModel(this.model));
+        if (pos == null) {
+          this.model.pass();
+        }
+        this.model.addPiece(this.players.get(this.playerIndex).getColor(), pos);
+        this.playerIndex = (this.playerIndex + 1) % this.players.size();
+      } catch (Exception e) {
+        if (e instanceof IOException) {
+          throw new IllegalStateException("Unable to print");
+        }
+        if (e instanceof IllegalStateException) {
+          System.out.println(e.getMessage());
+        }
+      }
+    }
   }
 
   @Override
   public void handleInput(HexPosition pos) {
-    if (pos == null) {
-      this.model.pass();
-    }
-    //this.model.addPiece(pos);
+
   }
 }

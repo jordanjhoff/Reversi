@@ -193,7 +193,7 @@ If you choose source, follow this map to be guided.
 
 # Changes for PART II
 
-- added additional observer methods including ...
+- added additional observer methods including
 - 
 
 

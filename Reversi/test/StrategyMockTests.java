@@ -35,7 +35,6 @@ public class StrategyMockTests {
     captureMost = new CaptureMost();
     viewOut = new StringBuilder();
     view = new ReversiTextualView(new ReadonlyHexReversiModel(mock), viewOut);
-    controller = new TextualController(mock, view);
     player1 = new PlayerImpl(TeamColor.BLACK, captureMost);
     player2 = new PlayerImpl(TeamColor.WHITE, captureMost);
     controller.addPlayer(player1);

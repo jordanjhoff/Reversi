@@ -45,6 +45,6 @@ public class ReversiGUIView extends JFrame implements IReversiView {
    */
   @Override
   public void setVisible(boolean show) {
-    this.setVisible(show);
+    super.setVisible(show);
   }
 }
