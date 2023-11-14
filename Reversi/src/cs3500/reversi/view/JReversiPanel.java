@@ -66,7 +66,7 @@ public class JReversiPanel extends JPanel {
    */
   @Override
   public Dimension getPreferredSize() {
-    return new Dimension(350, 350);
+    return new Dimension(600, 600);
   }
 
   @Override
