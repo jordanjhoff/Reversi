@@ -24,12 +24,22 @@ import cs3500.reversi.view.ReversiView;
 public class main {
   public static void main(String[] args) {
     ReversiModel model = new HexReversi(8);
-    model.addPiece(new HexPosition(1,-2,1));
-    model.addPiece(new HexPosition(2,-1,-1));
-    model.addPiece(new HexPosition(1,1,-2));
-    model.addPiece(new HexPosition(-1,2,-1));
-    model.addPiece(new HexPosition(-2,1,1));
-    model.addPiece(new HexPosition(-1,-1,2));
+//black's turn
+    model.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));
+    //white's turn
+    model.addPiece(TeamColor.WHITE, new HexPosition(2,-1,-1));
+    //black's turn
+    model.addPiece(TeamColor.BLACK, new HexPosition(1,1,-2));
+    //white's turn
+    model.pass();
+    //black's turn
+    model.addPiece(TeamColor.BLACK, new HexPosition(-1,-1,2));
+    //white's turn
+    model.addPiece(TeamColor.WHITE, new HexPosition(-1,2,-1));
+    //black's turn
+    model.pass();
+    //white's turn
+    model.addPiece(TeamColor.WHITE, new HexPosition(-2,1,1));
 
     IReversiView view = new ReversiGUIView(model);
     HexReversiController controller = new VisualController(model, view);
