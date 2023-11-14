@@ -23,8 +23,8 @@ import cs3500.reversi.view.ReversiView;
 
 public class main {
   public static void main(String[] args) {
-    ReversiModel model = new HexReversi(8);
-//black's turn
+    ReversiModel model = new HexReversi(8); /*
+    //black's turn
     model.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));
     //white's turn
     model.addPiece(TeamColor.WHITE, new HexPosition(2,-1,-1));
@@ -44,17 +44,17 @@ public class main {
     IReversiView view = new ReversiGUIView(model);
     HexReversiController controller = new VisualController(model, view);
     controller.play();
-
+    */
 
     ReversiStrategy textStrat = new UserTextInput(new Scanner(System.in));
     Appendable out = System.out;
-    Player white = new PlayerImpl(TeamColor.WHITE, textStrat);
+    Player white = new PlayerImpl(TeamColor.WHITE, new CaptureMost());
     Player black = new PlayerImpl(TeamColor.BLACK, new CaptureMost());
     ReversiModel modelText = new HexReversi(2);
     ReversiView viewText = new ReversiTextualView(new ReadonlyHexReversiModel(modelText), out);
     HexReversiController controllerText = new TextualController(modelText, viewText);
-    controllerText.addPlayer(white);
     controllerText.addPlayer(black);
+    controllerText.addPlayer(white);
     controllerText.play();
 
   }

@@ -165,6 +165,7 @@ public class JReversiPanel extends JPanel {
       int x = e.getX();
       int y = e.getY();
       HexPosition clickedHex = pixelToHex(x,y);
+      System.out.println("Clicked cell " + clickedHex);
       if (clickedHex.equals(selectedHex)) {
         selectedHex = null;
       }
@@ -174,7 +175,9 @@ public class JReversiPanel extends JPanel {
               model.getPieceAt(clickedHex) == null) {
         selectedHex = clickedHex;
       }
-      System.out.println("Selected cell " + selectedHex);
+      else {
+        selectedHex = null;
+      }
       repaint();
     }
 

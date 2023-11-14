@@ -26,7 +26,7 @@ public class StrategyMockTests {
 
 
   @Before
-  void initData() {
+  public void initData() {
     mockOut = new StringBuilder();
     mock = new HexReversiMock(mockOut);
     captureMost = new CaptureMost();
@@ -38,8 +38,9 @@ public class StrategyMockTests {
   }
 
   @Test
-  void testCaptureMost() {
-
+  public void testCaptureMost() {
+    controller.play();
+    System.out.println(mockOut.toString());
   }
 
 }

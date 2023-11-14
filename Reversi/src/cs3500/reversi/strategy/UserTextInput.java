@@ -14,13 +14,25 @@ public class UserTextInput implements ReversiStrategy {
     this.input = input;
   }
 
-  //shitty temp implementation
   @Override
   public HexPosition choosePosn(ReadonlyHexReversiModel model, TeamColor color) {
     System.out.println("Enter q, r, and s coordinates");
-    int q = input.nextInt();
-    int r = input.nextInt();
-    int s = input.nextInt();
-    return new HexPosition(q, r, s);
+    int[] nums = new int[3];
+    int i = 0;
+    while (input.hasNext()) {
+      try {
+        nums[i] = Integer.parseInt(input.next());
+        i++;
+      } catch (NumberFormatException e) {
+        System.out.println("Unable to read coordinate, please try again");
+      }
+    }
+    try {
+      HexPosition pos = new HexPosition(nums[0], nums[1], nums[2]);
+      return pos;
+    } catch (IllegalArgumentException e) {
+      System.out.println("invalid coordinates");
+      return choosePosn(model, color);
+    }
   }
 }
