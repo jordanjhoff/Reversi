@@ -61,7 +61,7 @@ public class ReversiTextualView implements ReversiView {
             this.out.append("_");
           }
         } else {
-          this.out.append(color.symbol);
+          this.out.append(color.getSymbol());
         }
         if (q != rMax) {
           this.out.append(" ");

@@ -1,10 +1,8 @@
 package cs3500.reversi.model;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.stream.Collectors;
 
 /**
  * A model to play a generic version of HexReversi.
@@ -14,8 +12,12 @@ import java.util.stream.Collectors;
  * INVARIANT: no coordinate will ever be greater than the radius (checked by validatePositions).
  */
 public class HexReversi implements ReversiModel {
+
+  //the radius from the center in either q, r, or s axis
   private final int radius;
+  //the teamcolor of the current player's turn
   private TeamColor currentTurn;
+  //records if the previous move made was a pass. used in determining two passes in a row
   private boolean lastPass;
 
   /**
@@ -123,7 +125,7 @@ public class HexReversi implements ReversiModel {
    * Determines which pieces need to be flipped for a placed piece.
    * @param color the color of the piece to be placed
    * @param posn the position to be flipped
-   * @param vector the [q,r,s] vector direction to iterate in
+   * @param vector the [q,r,s] direction vector to iterate in
    * @return the list of pieces that need to be flipped for a given move.
    */
   private ArrayList<HexPosition> toFlip(TeamColor color, HexPosition posn, int[] vector) {
@@ -135,7 +137,6 @@ public class HexReversi implements ReversiModel {
     while (Math.abs(posn.getQPosition()) <= radius + 1 &&
             Math.abs(posn.getRPosition()) <= radius + 1 &&
             Math.abs(posn.getSPosition()) <= radius + 1) {
-
       currPosn = new HexPosition(currPosn.getQPosition() + vector[0],
               currPosn.getRPosition() + vector[1],
               currPosn.getSPosition() + vector[2]);
@@ -216,6 +217,11 @@ public class HexReversi implements ReversiModel {
 
   }
 
+  /**
+   * Throws an exeption of the posn is out of the board's bounds
+   * @param posn the posn
+   * @throws IllegalArgumentException if given posn is ot of bounds
+   */
   private void validatePosition(HexPosition posn) {
     if (!validPosition(posn)) {
       throw new IllegalArgumentException("Invalid position, out of bounds");
@@ -223,6 +229,11 @@ public class HexReversi implements ReversiModel {
   }
 
 
+  /**
+   * Adds a piece at a given location if the move is valid.
+   * @param posn the position to add the piece
+   * @throws IllegalStateException if game is over, or if its not the right color
+   */
   @Override
   public void addPiece(TeamColor color, HexPosition posn) {
     gameRunning();
@@ -253,6 +264,11 @@ public class HexReversi implements ReversiModel {
     updateValidMoves(TeamColor.WHITE);
   }
 
+  /**
+   * Gets the color of the piece at a given position.
+   * @param posn a HexPosition to check
+   * @return the color of the piece at the position or null if there is no piece
+   */
   @Override
   public TeamColor getPieceAt(HexPosition posn) {
     validatePosition(posn);
@@ -263,12 +279,21 @@ public class HexReversi implements ReversiModel {
     return this.board.get(new HexPosition(posn));
   }
 
+  /**
+   * Returns whose turn it is.
+   * @return the color of the player whose turn it is
+   * @throws IllegalStateException if game is over
+   */
   @Override
   public TeamColor getCurrentTurn() {
     gameRunning();
     return this.currentTurn;
   }
 
+  /**
+   * Skips the current players turn.
+   * @throws IllegalStateException if game is over
+   */
   @Override
   public void pass() {
     gameRunning();
@@ -306,6 +331,10 @@ public class HexReversi implements ReversiModel {
     return whiteCount;
   }
 
+  /**
+   *
+   * @return
+   */
   @Override
   public int getBlackScore() {
     int blackCount = 0;

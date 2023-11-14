@@ -12,7 +12,9 @@ public enum TeamColor {
   /**
    * The symbol representation of the color.
    */
-  public final String symbol;
+  private final String symbol;
+
+
 
   private TeamColor(String str) {
     this.symbol = str;
@@ -40,6 +42,11 @@ public enum TeamColor {
       return "Black";
     }
   }
+
+  public String getSymbol() {
+    return this.symbol;
+  }
+
 
 
 }

@@ -19,8 +19,7 @@ import cs3500.reversi.view.ReversiGUIView;
 
 
 /**
- * Class for testing the hexreversi model implementation
- * of reversimodel.
+ * Class for testing the hexreversi model implementation of reversimodel.
  */
 public class ReversiTests {
 

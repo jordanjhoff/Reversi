@@ -40,7 +40,7 @@ public class TextualController implements HexReversiController {
         if (pos == null) {
           this.model.pass();
         }
-        System.out.println(this.players.get(this.playerIndex).getColor().symbol);
+        System.out.println(this.players.get(this.playerIndex).getColor().getSymbol());
         System.out.println(pos);
 
         this.model.addPiece(this.players.get(this.playerIndex).getColor(), pos);

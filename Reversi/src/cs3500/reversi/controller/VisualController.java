@@ -1,16 +1,13 @@
 package cs3500.reversi.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import cs3500.reversi.model.HexPosition;
-import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.view.IReversiView;
-import cs3500.reversi.view.IViewFeatures;
 
-public class VisualController implements HexReversiController, IViewFeatures {
+public class VisualController implements HexReversiController {
   private final ReversiModel model;
   private final IReversiView view;
   private final List<Player> players;
@@ -20,7 +17,6 @@ public class VisualController implements HexReversiController, IViewFeatures {
     this.model = model;
     this.view = view;
     this.players = new ArrayList<Player>();
-    this.view.addFeatureListener(this);
   }
 
   @Override
@@ -33,7 +29,7 @@ public class VisualController implements HexReversiController, IViewFeatures {
 
   @Override
   public void play() {
-    this.view.display(true);
+    this.view.setVisible(true);
   }
 
   @Override
