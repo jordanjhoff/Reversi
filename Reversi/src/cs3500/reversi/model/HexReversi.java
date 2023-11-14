@@ -233,15 +233,14 @@ public class HexReversi implements ReversiModel {
    * Adds a piece at a given location if the move is valid.
    * @param posn the position to add the piece
    * @throws IllegalStateException if game is over, or if its not the right color
+   *
    */
   @Override
   public void addPiece(TeamColor color, HexPosition posn) {
     gameRunning();
 
-
-    //THERE IS A BUG HERE
     if (!color.equals(currentTurn)) {
-      throw new IllegalArgumentException("Wrong turn");
+      throw new IllegalStateException("Wrong turn");
     }
 
     LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap = color.equals(TeamColor.WHITE) ?
