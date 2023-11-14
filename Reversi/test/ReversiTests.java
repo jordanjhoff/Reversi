@@ -10,6 +10,8 @@ import cs3500.reversi.controller.HexReversiController;
 import cs3500.reversi.controller.VisualController;
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.HexReversi;
+import cs3500.reversi.model.ReadonlyHexReversiModel;
+import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.view.IReversiView;
@@ -25,10 +27,17 @@ public class ReversiTests {
   ReversiModel hex5;
   ReversiModel hex2;
 
+  ReadonlyReversiModel hex2read;
+
+  ReadonlyReversiModel hex5read;
+
   @Before
   public void init() {
     hex5 = new HexReversi(5);
     hex2 = new HexReversi(2);
+    hex2read = new ReadonlyHexReversiModel(hex2);
+    hex5read = new ReadonlyHexReversiModel(hex5);
+
   }
 
   //test getsize works
@@ -36,6 +45,8 @@ public class ReversiTests {
   public void getSize() {
     Assert.assertEquals(5, hex5.getSize());
     Assert.assertEquals(2, hex2.getSize());
+    Assert.assertEquals(5, hex5read.getSize());
+    Assert.assertEquals(2, hex2read.getSize());
     Assert.assertEquals(100, new HexReversi(100).getSize());
   }
 
@@ -90,16 +101,20 @@ public class ReversiTests {
   @Test
   public void getCurrentTurn() {
     Assert.assertEquals(TeamColor.BLACK, hex5.getCurrentTurn());
+    Assert.assertEquals(TeamColor.BLACK, hex5read.getCurrentTurn());
     hex5.pass();
     Assert.assertEquals(TeamColor.WHITE, hex5.getCurrentTurn());
+    Assert.assertEquals(TeamColor.WHITE, hex5read.getCurrentTurn());
   }
 
   //test getting current turn is correct
   @Test
   public void getCurrentTurn2() {
     Assert.assertEquals(TeamColor.BLACK, hex5.getCurrentTurn());
+    Assert.assertEquals(TeamColor.BLACK, hex5read.getCurrentTurn());
     hex5.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));
     Assert.assertEquals(TeamColor.WHITE, hex5.getCurrentTurn());
+    Assert.assertEquals(TeamColor.WHITE, hex5read.getCurrentTurn());
   }
 
   //test get current turn for finished game throws ISE
@@ -108,6 +123,7 @@ public class ReversiTests {
     hex5.pass();
     hex5.pass();
     Assert.assertThrows(IllegalStateException.class, () -> hex5.getCurrentTurn());
+    Assert.assertThrows(IllegalStateException.class, () -> hex5read.getCurrentTurn());
   }
 
   //test pass advances the turn
@@ -115,8 +131,10 @@ public class ReversiTests {
   public void testPass() {
     try {
       Assert.assertEquals(TeamColor.BLACK, hex5.getCurrentTurn());
+      Assert.assertEquals(TeamColor.BLACK, hex5read.getCurrentTurn());
       hex5.pass();
       Assert.assertEquals(TeamColor.WHITE, hex5.getCurrentTurn());
+      Assert.assertEquals(TeamColor.WHITE, hex5read.getCurrentTurn());
     }
     catch (Exception e) {
       Assert.fail("Test failed");
@@ -138,6 +156,7 @@ public class ReversiTests {
     hex5.pass();
     hex5.pass();
     Assert.assertEquals(TeamColor.BLACK, hex5.getWinner());
+    Assert.assertEquals(TeamColor.BLACK, hex5read.getWinner());
   }
 
   //test winner returns null if number of pieces are the same
@@ -146,6 +165,7 @@ public class ReversiTests {
     hex5.pass();
     hex5.pass();
     Assert.assertNull(hex5.getWinner());
+    Assert.assertNull(hex5read.getWinner());
   }
 
   //test winner is correct after full game
@@ -158,6 +178,7 @@ public class ReversiTests {
     hex2.addPiece(TeamColor.BLACK, new HexPosition(-2,1,1));
     hex2.addPiece(TeamColor.WHITE, new HexPosition(-1,-1,2));
     Assert.assertEquals(TeamColor.WHITE, hex2.getWinner());
+    Assert.assertEquals(TeamColor.WHITE, hex2read.getWinner());
   }
 
 
@@ -166,16 +187,20 @@ public class ReversiTests {
   public void testGetWinnerISE() {
     hex5.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));
     Assert.assertThrows(IllegalStateException.class, () -> hex5.getWinner());
+    Assert.assertThrows(IllegalStateException.class, () -> hex5read.getWinner());
   }
 
   //test game ends after two passes
   @Test
   public void testGameOver() {
     Assert.assertFalse(hex5.isGameOver());
+    Assert.assertFalse(hex5read.isGameOver());
     hex5.pass();
     Assert.assertFalse(hex5.isGameOver());
+    Assert.assertFalse(hex5read.isGameOver());
     hex5.pass();
     Assert.assertTrue(hex5.isGameOver());
+    Assert.assertTrue(hex5read.isGameOver());
   }
 
   //test game ends when no valid moves
@@ -187,19 +212,23 @@ public class ReversiTests {
     hex2.addPiece(TeamColor.WHITE, new HexPosition(-1,2,-1));
     hex2.addPiece(TeamColor.BLACK, new HexPosition(-2,1,1));
     Assert.assertFalse(hex2.isGameOver());
+    Assert.assertFalse(hex2read.isGameOver());
     hex2.addPiece(TeamColor.WHITE, new HexPosition(-1,-1,2));
     Assert.assertTrue(hex2.isGameOver());
+    Assert.assertTrue(hex2read.isGameOver());
   }
 
   //test valid moves are correct before adding any pieces (current turn is black)
   @Test
   public void testValidMoves() {
     Assert.assertEquals(6,hex5.getValidMoves().size());
+    Assert.assertEquals(6,hex5read.getValidMoves().size());
     HashSet<HexPosition> expectedBlackValidMoves = new HashSet<>(Arrays.asList(
             new HexPosition(1,-2,1), new HexPosition(2,-1,-1),
             new HexPosition(1,1,-2), new HexPosition(-1,2,-1),
             new HexPosition(-2,1,1), new HexPosition(-1,-1,2)));
     Assert.assertEquals(expectedBlackValidMoves, new HashSet<>(hex5.getValidMoves()));
+    Assert.assertEquals(expectedBlackValidMoves, new HashSet<>(hex5read.getValidMoves()));
   }
 
   //test valid moves update correctly after adding pieces
@@ -212,17 +241,21 @@ public class ReversiTests {
             new HexPosition(2,-3,1), new HexPosition(-2,1,1),
             new HexPosition(-1,2,-1), new HexPosition(2,-1,-1)));
     Assert.assertNotEquals(validMovesBefore, new HashSet<>(hex5.getValidMoves()));
+    Assert.assertNotEquals(validMovesBefore, new HashSet<>(hex5read.getValidMoves()));
     Assert.assertEquals(4, hex5.getValidMoves().size());
     Assert.assertEquals(expectedWhiteValidMoves, new HashSet<>(hex5.getValidMoves()));
+    Assert.assertEquals(expectedWhiteValidMoves, new HashSet<>(hex5read.getValidMoves()));
   }
 
   //test getValidMoves is empty if the game is over
   @Test
   public void testValidMoves3() {
     Assert.assertTrue(!hex5.getValidMoves().isEmpty());
+    Assert.assertTrue(!hex5read.getValidMoves().isEmpty());
     hex5.pass();
     hex5.pass();
     Assert.assertEquals(new ArrayList<>(), hex5.getValidMoves());
+    Assert.assertEquals(new ArrayList<>(), hex5read.getValidMoves());
   }
 
   //test addPiece adds the correct color
@@ -231,9 +264,11 @@ public class ReversiTests {
     //black's turn
     hex5.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));
     Assert.assertEquals(TeamColor.BLACK, hex5.getPieceAt(new HexPosition(1,-2,1)));
+    Assert.assertEquals(TeamColor.BLACK, hex5read.getPieceAt(new HexPosition(1,-2,1)));
     //white's turn
     hex5.addPiece(TeamColor.WHITE, new HexPosition(2,-3,1));
     Assert.assertEquals(TeamColor.WHITE, hex5.getPieceAt(new HexPosition(2,-3,1)));
+    Assert.assertEquals(TeamColor.WHITE, hex5read.getPieceAt(new HexPosition(2,-3,1)));
   }
 
   //test addPiece updates a single piece correctly
@@ -241,6 +276,7 @@ public class ReversiTests {
   public void testAddPiece2() {
     hex5.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));
     Assert.assertEquals(TeamColor.BLACK, hex5.getPieceAt(new HexPosition(1,-1,0)));
+    Assert.assertEquals(TeamColor.BLACK, hex5read.getPieceAt(new HexPosition(1,-1,0)));
   }
 
   //test addPiece updates multiple pieces correctly
@@ -252,6 +288,8 @@ public class ReversiTests {
     hex5.addPiece(TeamColor.WHITE, new HexPosition(2,-3,1));
     Assert.assertEquals(TeamColor.WHITE, hex5.getPieceAt(new HexPosition(1,-2,1)));
     Assert.assertEquals(TeamColor.WHITE, hex5.getPieceAt(new HexPosition(0,-1,1)));
+    Assert.assertEquals(TeamColor.WHITE, hex5read.getPieceAt(new HexPosition(1,-2,1)));
+    Assert.assertEquals(TeamColor.WHITE, hex5read.getPieceAt(new HexPosition(0,-1,1)));
   }
 
   //test invalid addPiece doesn't change current turn
@@ -259,9 +297,12 @@ public class ReversiTests {
   public void testAddPiece4() {
     //black's turn
     Assert.assertEquals(TeamColor.BLACK, hex5.getCurrentTurn());
+    Assert.assertEquals(TeamColor.BLACK, hex5read.getCurrentTurn());
     Assert.assertThrows(IllegalStateException.class,
         () -> hex5.addPiece(TeamColor.BLACK, new HexPosition(2,-2,0)));
     Assert.assertEquals(TeamColor.BLACK, hex5.getCurrentTurn());
+    Assert.assertEquals(TeamColor.BLACK, hex5read.getCurrentTurn());
+
   }
 
 
@@ -318,6 +359,15 @@ public class ReversiTests {
             new HexPosition(-1,1,0)));
   }
 
+  //test addPiece with same player making a move twice
+  @Test
+  public void testAddPieceISE3() {
+    hex2.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));
+    Assert.assertThrows(IllegalStateException.class, () ->
+            hex2.addPiece(TeamColor.BLACK, new HexPosition(1,1,-2)));
+
+  }
+
   //test model works with all moves
   @Test
   public void testFullGame() {
@@ -343,9 +393,6 @@ public class ReversiTests {
     //no more valid moves for either
     Assert.assertTrue(hex2.isGameOver());
   }
-
-
-
 
 
 
