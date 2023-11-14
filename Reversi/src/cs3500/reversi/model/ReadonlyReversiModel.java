@@ -54,12 +54,6 @@ public interface ReadonlyReversiModel {
   HashMap<HexPosition, TeamColor> getBoard();
 
   /**
-   * Is this position a valid move?
-   * @return whether input position is a valid move
-   */
-  boolean isMoveValid(HexPosition pos);
-
-  /**
    * What is white's score?
    * @return natural number of the count of whites pieces
    */

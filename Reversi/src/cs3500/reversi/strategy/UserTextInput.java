@@ -1,5 +1,7 @@
 package cs3500.reversi.strategy;
 
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import cs3500.reversi.model.HexPosition;
@@ -17,21 +19,25 @@ public class UserTextInput implements ReversiStrategy {
   @Override
   public HexPosition choosePosn(ReadonlyHexReversiModel model, TeamColor color) {
     System.out.println("Enter q, r, and s coordinates");
-    int[] nums = new int[3];
-    int i = 0;
-    while (input.hasNext()) {
-      try {
-        nums[i] = Integer.parseInt(input.next());
-        i++;
-      } catch (NumberFormatException e) {
-        System.out.println("Unable to read coordinate, please try again");
-      }
-    }
     try {
-      HexPosition pos = new HexPosition(nums[0], nums[1], nums[2]);
-      return pos;
-    } catch (IllegalArgumentException e) {
-      System.out.println("invalid coordinates");
+      return new HexPosition(input.nextInt(), input.nextInt(), input.nextInt());
+    } catch (Exception e) {
+      if (e instanceof InputMismatchException) {
+        System.out.println("Invalid input, please input three integers");
+      }
+      else if (e instanceof NoSuchElementException) {
+        System.out.println("Could not read data");
+      }
+      else if (e instanceof IllegalStateException) {
+        System.out.println("Scanner is closed");
+      }
+      else if (e instanceof IllegalArgumentException) {
+        System.out.println("Invalid coordinates");
+      }
+      else {
+        throw e;
+      }
+      input.next();
       return choosePosn(model, color);
     }
   }
