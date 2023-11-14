@@ -175,13 +175,15 @@ If you choose source, follow this map to be guided.
                     /     |      \
                    /      |       \
               model   controller   view
-                /         |          \
+                /         |          \ 
                /          |           \
-              |   CONTROLLER IMPL TBD  \
-              |                         \
-              |                     ReversiView (interface)
-          ReversiModel (interface)               \
-              |                      ReversiTextualView (text based implementation)
+              |   CONTROLLER IMPL TBD  \                        JPanel
+              |                         \         JFrame          |
+              |                     IReversiView   /              |
+          ReversiModel (interface)        \       /               |
+              |                       ReversiGUIView (has a JReversiPanel)
+              |                                
+              |                              
               |
               |
     HexPosition (hexagonal implementation of ReversiModel

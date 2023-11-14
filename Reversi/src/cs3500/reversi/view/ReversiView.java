@@ -5,6 +5,7 @@ import java.io.IOException;
 /**
  * Represents a generic view for representing a reversi model.
  */
+@Deprecated
 public interface ReversiView {
 
   /**

@@ -28,7 +28,7 @@ public interface ReadonlyReversiModel {
   TeamColor getWinner();
 
   /**
-   * Determines if the game is over or not. The game ends if two player's pass, or if no player can
+   * Determines if the game is over or not. The game ends if two players pass, or if no player can
    * make any valid moves (excluding passing).
    * @return true iff the game is over.
    */

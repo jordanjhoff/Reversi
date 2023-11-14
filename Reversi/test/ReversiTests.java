@@ -167,7 +167,8 @@ public class ReversiTests {
     Assert.assertNull(hex5read.getWinner());
   }
 
-  //test winner is correct after full game
+  //test winner is correct after full game of legam moves, where one player has more pieces
+  // than another
   @Test
   public void testGetWinner3() {
     hex2.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));

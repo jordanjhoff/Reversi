@@ -11,9 +11,13 @@ import cs3500.reversi.model.TeamColor;
  * be added to the appendable out to be viewed. Possible moves
  * are highlighted by the *.
  */
+@Deprecated
 public class ReversiTextualView implements ReversiView {
 
+  //output stream
   private Appendable out;
+
+  //model to base behavior on
   private ReadonlyHexReversiModel model;
 
   /**
