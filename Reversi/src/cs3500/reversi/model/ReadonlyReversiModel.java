@@ -21,14 +21,15 @@ public interface ReadonlyReversiModel {
   TeamColor getCurrentTurn();
 
   /**
-   * Determines who won the game.
+   * Determines who won the game by comparing piece count on the board.
    * @return the winner of the game, and null if the game is tied.
    * @throws IllegalStateException if game is not over
    */
   TeamColor getWinner();
 
   /**
-   * Determines if the game is over or not.
+   * Determines if the game is over or not. The game ends if two player's pass, or if no player can
+   * make any valid moves (excluding passing).
    * @return true iff the game is over.
    */
   boolean isGameOver();

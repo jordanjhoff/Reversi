@@ -18,8 +18,8 @@ public class ReversiSubcomponentTests {
 
   @Test
   public void testColorSymbol() {
-    Assert.assertEquals("O", TeamColor.WHITE.symbol);
-    Assert.assertEquals("X", TeamColor.BLACK.symbol);
+    Assert.assertEquals("O", TeamColor.WHITE.getSymbol());
+    Assert.assertEquals("X", TeamColor.BLACK.getSymbol());
   }
 
   @Test
