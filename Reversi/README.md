@@ -193,11 +193,30 @@ If you choose source, follow this map to be guided.
     HexPosition (hex coords)          TeamColor (enum of possible types)
 
 
-# Changes for PART II
+# Changes to PART I
 
-- added additional observer methods including
-- 
+- added additional observer methods
+  - getBoard, flipCount, getWhiteScore, getBlackScore
+- deprecated textualView classes
+- abstracted toFlip methods and improved logic in HexReversi
+- added documentation improvements
+- fixed TeamColor accessibility
+  - private field
 
+# Additions for PART II
+- added GUIView
+- added strategies interface and implementations
+  - userInput, captureMost
+- added player interface and implementation
+- added tests for new methods and classes
+- added mock HexReversi class for testing
+
+## GUI Interaction
+When the GUI is open and in focus, the following behavior is implemented:
+To resize the view, drag and resize the frame. The GUI will scale accordingly. To click on a cell,
+click with the mouse cursor on a cell. The cell coordinates will be printed in the system console. 
+To make a move, select a cell and press enter. The move made will be printed in the system console.
+To pass, press p. An indicator will be printed in the system console.
 
 
 

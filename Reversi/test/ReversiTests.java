@@ -368,6 +368,49 @@ public class ReversiTests {
 
   }
 
+
+  //checks the size of the board is correct
+  @Test
+  public void testGetBoard() {
+    Assert.assertEquals(6, hex2.getBoard().size());
+    Assert.assertEquals(6, hex2read.getBoard().size());
+    hex2.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));
+    Assert.assertEquals(7, hex2.getBoard().size());
+    Assert.assertEquals(7, hex2read.getBoard().size());
+  }
+
+  //test score updates after move
+  @Test
+  public void getScore() {
+    Assert.assertEquals(3, hex5.getWhiteScore());
+    Assert.assertEquals(3, hex5read.getWhiteScore());
+    Assert.assertEquals(3, hex5.getBlackScore());
+    Assert.assertEquals(3, hex5read.getBlackScore());
+    hex5.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));
+    Assert.assertEquals(2, hex5.getWhiteScore());
+    Assert.assertEquals(2, hex5read.getWhiteScore());
+    Assert.assertEquals(5, hex5.getBlackScore());
+    Assert.assertEquals(5, hex5read.getBlackScore());
+    hex5.addPiece(TeamColor.WHITE, new HexPosition(2,-1,-1));
+    Assert.assertEquals(4, hex5.getWhiteScore());
+    Assert.assertEquals(4, hex5read.getWhiteScore());
+    Assert.assertEquals(4, hex5.getBlackScore());
+    Assert.assertEquals(4, hex5read.getBlackScore());
+  }
+
+  //test flipCount works
+  @Test
+  public void flipCount() {
+    Assert.assertEquals(1, hex5.flipCount(new HexPosition(1,-2,1)));
+    Assert.assertEquals(1, hex5read.flipCount(new HexPosition(1,-2,1)));
+    Assert.assertEquals(0, hex5.flipCount(new HexPosition(0,0,0)));
+    Assert.assertEquals(0, hex5read.flipCount(new HexPosition(0,0,0)));
+    hex5.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));
+    hex5.addPiece(TeamColor.WHITE, new HexPosition(2,-1,-1));
+    Assert.assertEquals(2, hex5.flipCount(new HexPosition(1,1,-2)));
+    Assert.assertEquals(2, hex5read.flipCount(new HexPosition(1,1,-2)));
+  }
+
   //test model works with all moves
   @Test
   public void testFullGame() {

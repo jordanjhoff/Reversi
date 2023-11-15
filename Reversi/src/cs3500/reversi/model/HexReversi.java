@@ -75,6 +75,9 @@ public class HexReversi implements ReversiModel {
    */
   @Override
   public ArrayList<HexPosition> getValidMoves() {
+    if (isGameOver()) {
+      throw new IllegalStateException("Game is over!");
+    }
     LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap =
             this.currentTurn.equals(TeamColor.WHITE)
                     ? this.validWhiteMoves : this.validBlackMoves;
@@ -96,10 +99,20 @@ public class HexReversi implements ReversiModel {
    * @throws IllegalArgumentException if the position is of bounds
    */
   public int flipCount(HexPosition posn) {
+    if (isGameOver()) {
+      throw new IllegalStateException("Game is over!");
+    }
+    validatePosition(posn);
     LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap =
             this.currentTurn.equals(TeamColor.WHITE)
                     ? this.validWhiteMoves : this.validBlackMoves;
-    return validityMap.get(posn).size();
+    if (!validityMap.containsKey(posn)) {
+      return 0;
+    }
+    else {
+      return validityMap.get(posn).size();
+    }
+
   }
 
   /**
@@ -237,8 +250,10 @@ public class HexReversi implements ReversiModel {
    */
   @Override
   public void addPiece(TeamColor color, HexPosition posn) {
-    gameRunning();
-
+    if (isGameOver()) {
+      throw new IllegalStateException("Game is over!");
+    }
+    validatePosition(posn);
     if (!color.equals(currentTurn)) {
       throw new IllegalStateException("Wrong turn");
     }
@@ -285,7 +300,9 @@ public class HexReversi implements ReversiModel {
    */
   @Override
   public TeamColor getCurrentTurn() {
-    gameRunning();
+    if (isGameOver()) {
+      throw new IllegalStateException("Game is over!");
+    }
     return this.currentTurn;
   }
 
@@ -295,7 +312,10 @@ public class HexReversi implements ReversiModel {
    */
   @Override
   public void pass() {
-    gameRunning();
+    if (isGameOver()) {
+      throw new IllegalStateException("Game is over!");
+    }
+
     if (!this.lastPass) {
       this.currentTurn = this.currentTurn.cycle();
       this.lastPass = true;
@@ -309,7 +329,7 @@ public class HexReversi implements ReversiModel {
 
   @Override
   public HashMap<HexPosition, TeamColor> getBoard() {
-    return new HashMap<HexPosition, TeamColor>(board);
+    return new HashMap<>(board);
   }
 
   @Override
@@ -338,15 +358,6 @@ public class HexReversi implements ReversiModel {
       }
     }
     return blackCount;
-  }
-
-  /**
-   * Throw exception if the game is called.
-   */
-  private void gameRunning() {
-    if (isGameOver()) {
-      throw new IllegalStateException("Game is over!");
-    }
   }
 
   @Override
