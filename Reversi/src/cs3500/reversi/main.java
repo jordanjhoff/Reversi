@@ -22,29 +22,6 @@ import cs3500.reversi.view.ReversiView;
 
 public class main {
   public static void main(String[] args) {
-    ReversiModel model = new HexReversi(8); /*
-    //black's turn
-    model.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));
-    //white's turn
-    model.addPiece(TeamColor.WHITE, new HexPosition(2,-1,-1));
-    //black's turn
-    model.addPiece(TeamColor.BLACK, new HexPosition(1,1,-2));
-    //white's turn
-    model.pass();
-    //black's turn
-    model.addPiece(TeamColor.BLACK, new HexPosition(-1,-1,2));
-    //white's turn
-    model.addPiece(TeamColor.WHITE, new HexPosition(-1,2,-1));
-    //black's turn
-    model.pass();
-    //white's turn
-    model.addPiece(TeamColor.WHITE, new HexPosition(-2,1,1));
-
-    IReversiView view = new ReversiGUIView(model);
-    HexReversiController controller = new VisualController(model, view);
-    controller.play();
-    */
-
     ReversiStrategy textStrat = new UserTextInput(new Scanner(System.in));
     Appendable out = System.out;
     Player white = new PlayerImpl(TeamColor.WHITE, new CaptureMost());
@@ -52,10 +29,6 @@ public class main {
     ReversiModel modelText = new HexReversi(2);
     ReversiView viewText = new ReversiTextualView(new ReadonlyHexReversiModel(modelText), out);
     IReversiView viewGui = new ReversiGUIView(new ReadonlyHexReversiModel(modelText));
-    HexReversiController controllerText = new VisualController(modelText, viewGui);
-    controllerText.addPlayer(black);
-    controllerText.addPlayer(white);
-    controllerText.play();
-
+    viewGui.setVisible(true);
   }
 }

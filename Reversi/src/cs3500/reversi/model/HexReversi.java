@@ -75,9 +75,6 @@ public class HexReversi implements ReversiModel {
    */
   @Override
   public ArrayList<HexPosition> getValidMoves() {
-    if (isGameOver()) {
-      throw new IllegalStateException("Game is over!");
-    }
     LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap =
             this.currentTurn.equals(TeamColor.WHITE)
                     ? this.validWhiteMoves : this.validBlackMoves;
