@@ -2,10 +2,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import cs3500.reversi.controller.HexReversiController;
 import cs3500.reversi.controller.Player;
 import cs3500.reversi.controller.PlayerImpl;
-import cs3500.reversi.controller.TextualController;
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.HexReversiMock;
@@ -17,6 +15,10 @@ import cs3500.reversi.strategy.ReversiStrategy;
 import cs3500.reversi.view.ReversiTextualView;
 import cs3500.reversi.view.ReversiView;
 
+/**
+ * A class to test the CaptureMost strategy implementation and its interaction
+ * with the HexReversi game model.
+ */
 public class StrategyMockTests {
   ReversiModel mock;
   Appendable mockOut;

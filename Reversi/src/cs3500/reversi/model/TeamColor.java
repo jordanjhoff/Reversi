@@ -34,6 +34,10 @@ public enum TeamColor {
     }
   }
 
+  /**
+   * Returns the name of the team.
+   * @return the team color as a String
+   */
   public String getName() {
     if (this.symbol == WHITE.symbol) {
       return "White";
@@ -43,6 +47,11 @@ public enum TeamColor {
     }
   }
 
+  /**
+   * Gets the symbol for the team color.
+   * @return the symbol for the team
+   */
+  @Deprecated
   public String getSymbol() {
     return this.symbol;
   }

@@ -83,7 +83,7 @@ public class HexReversi implements ReversiModel {
     }
     ArrayList<HexPosition> result = new ArrayList<>();
     validityMap.entrySet().forEach(entry -> {
-      result.add(entry.getKey());});
+      result.add(entry.getKey()); });
 
     return result;
   }
@@ -228,7 +228,7 @@ public class HexReversi implements ReversiModel {
   }
 
   /**
-   * Throws an exeption of the posn is out of the board's bounds
+   * Throws an exeption of the posn is out of the board's bounds.
    * @param posn the posn
    * @throws IllegalArgumentException if given posn is ot of bounds
    */
@@ -342,10 +342,6 @@ public class HexReversi implements ReversiModel {
     return whiteCount;
   }
 
-  /**
-   *
-   * @return
-   */
   @Override
   public int getBlackScore() {
     int blackCount = 0;

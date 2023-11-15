@@ -1,7 +1,5 @@
 package cs3500.reversi.model;
 
-import java.util.HashMap;
-
 /**
  * Interface for the representing a generic game of Hexagonal Reversi,
  * able to interface with both the view and controller to provide a

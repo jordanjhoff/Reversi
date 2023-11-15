@@ -2,9 +2,11 @@ package cs3500.reversi.controller;
 
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
-import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 
+/**
+ * Represents a player in a HexReversi game. A Player can interact with a model and decide moves.
+ */
 public interface Player {
 
   /**

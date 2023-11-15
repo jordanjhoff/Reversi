@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * A mock implementation of the ReversiModel interface for testing and logging purposes.
+ * This class delegates calls to an adaptee HexReversi instance and logs method invocations.
+ */
 public class HexReversiMock implements ReversiModel {
   Appendable out;
   HexReversi adaptee;

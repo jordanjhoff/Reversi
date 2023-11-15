@@ -3,6 +3,10 @@ package cs3500.reversi.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * A readonly Reversi Model providing access to model information without allowing
+ * modifications to the adaptee.
+ */
 public interface ReadonlyReversiModel {
 
 
@@ -54,13 +58,13 @@ public interface ReadonlyReversiModel {
   HashMap<HexPosition, TeamColor> getBoard();
 
   /**
-   * What is white's score?
+   * What is white's score.
    * @return natural number of the count of whites pieces
    */
   int getWhiteScore();
 
   /**
-   * What is black's score?
+   * What is black's score.
    * @return natural number of the count of black pieces
    */
   int getBlackScore();

@@ -5,18 +5,12 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-
-import cs3500.reversi.controller.HexReversiController;
-import cs3500.reversi.controller.VisualController;
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
-import cs3500.reversi.view.IReversiView;
-import cs3500.reversi.view.ReversiGUIView;
-
 
 /**
  * Class for testing the hexreversi model implementation of reversimodel.
@@ -424,7 +418,7 @@ public class ReversiTests {
     hex2.pass();
     //black's turn
     Assert.assertThrows(IllegalStateException.class,
-            () -> hex2.addPiece(TeamColor.BLACK, new HexPosition(-2,2,0)));
+        () -> hex2.addPiece(TeamColor.BLACK, new HexPosition(-2,2,0)));
     Assert.assertEquals(TeamColor.BLACK, hex2.getCurrentTurn());
     hex2.addPiece(TeamColor.BLACK, new HexPosition(-1,-1,2));
     //white's turn

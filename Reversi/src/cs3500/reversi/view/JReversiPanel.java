@@ -6,17 +6,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
-import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.text.Position;
+import javax.swing.JPanel;
 
 import cs3500.reversi.model.HexPosition;
-import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.TeamColor;
 
@@ -25,10 +20,9 @@ import static java.lang.Math.sqrt;
 /**
  * JReversiPanel is a Swing JPanel implementation designed for rendering and interacting with a
  * Reversi game board. It includes features for displaying the game state, handling user input
- * and providing board updates for moves made and selected cells.
- *
- * This panel relies on a ReadonlyReversiModel.Users can click on cells to select them, and key
- * presses trigger specific actions, such as making a move or passing.
+ * and providing board updates for moves made and selected cells. This panel relies on a
+ * ReadonlyReversiModel. Users can click on cells to select them, and key presses trigger specific
+ * actions, such as making a move or passing.
  **/
 public class JReversiPanel extends JPanel {
 
@@ -102,7 +96,7 @@ public class JReversiPanel extends JPanel {
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     //scales hexagon size based on bounds
-    this.hexagonSize = Math.min(this.getWidth()/ (5 * this.modelRadius),
+    this.hexagonSize = Math.min(this.getWidth() / (5 * this.modelRadius),
             this.getHeight() / (5 * this.modelRadius));
 
     Graphics2D g2d = (Graphics2D) g.create();
@@ -125,7 +119,7 @@ public class JReversiPanel extends JPanel {
    * @param r The given cell's r coordinate.
    */
   private void drawCell(Graphics2D g2d, int q, int r) {
-    HexPosition currPosn = new HexPosition(q,r,-(q+r));
+    HexPosition currPosn = new HexPosition(q,r,-(q + r));
     Point currPoint = hexToPixel(q,r);
     Polygon hexagon = createHexagon(currPoint);
     TeamColor piece = model.getPieceAt(currPosn);
@@ -162,8 +156,8 @@ public class JReversiPanel extends JPanel {
    * @param size  The size of the piece.
    */
   private void drawCenteredPiece(Graphics2D g2d, int x, int y, int size) {
-    x = x - (size/2);
-    y = y - (size/2);
+    x = x - (size / 2);
+    y = y - (size / 2);
     g2d.fillOval(x, y, size, size);
   }
 
@@ -176,8 +170,8 @@ public class JReversiPanel extends JPanel {
    * @return the corresponding HexPosition
    */
   private HexPosition pixelToHex(int x, int y) {
-    double q = (sqrt(3)/3 * (x - this.getWidth()/2)  -  1./3 * (y - this.getHeight()/2)) / this.hexagonSize;
-    double r = (2./3 * (y - this.getHeight()/2)) / this.hexagonSize;
+    double q = (sqrt(3)/3 * (x - this.getWidth() / 2)  -  1./3 * (y - this.getHeight() / 2)) / this.hexagonSize;
+    double r = (2./3 * (y - this.getHeight() / 2)) / this.hexagonSize;
 
     return roundHex(q,r);
   }
@@ -210,8 +204,8 @@ public class JReversiPanel extends JPanel {
    * @return the corrisponding coordinate
    */
   private Point hexToPixel(int q, int r) {
-    int x = this.getWidth()/2 + (int)(this.hexagonSize * (sqrt(3) * q  +  sqrt(3)/2 * r));
-    int y = this.getHeight()/2 + (int)(this.hexagonSize * (3./2 * r));
+    int x = this.getWidth() / 2 + (int)(this.hexagonSize * (sqrt(3) * q  +  sqrt(3) / 2 * r));
+    int y = this.getHeight() / 2 + (int)(this.hexagonSize * (3. / 2 * r));
 
     return new Point(x,y);
   }

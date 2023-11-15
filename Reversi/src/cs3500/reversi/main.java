@@ -2,12 +2,8 @@ package cs3500.reversi;
 
 import java.util.Scanner;
 
-import cs3500.reversi.controller.TextualController;
-import cs3500.reversi.controller.HexReversiController;
 import cs3500.reversi.controller.Player;
 import cs3500.reversi.controller.PlayerImpl;
-import cs3500.reversi.controller.VisualController;
-import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReversiModel;
