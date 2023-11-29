@@ -138,4 +138,14 @@ public class HexReversiMock implements ReversiModel {
       throw new IllegalStateException("Could not read data");
     }
   }
+
+  @Override
+  public void addFeatureListener(IModelFeatures features) {
+
+  }
+
+  @Override
+  public void startGame() {
+
+  }
 }

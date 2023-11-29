@@ -76,6 +76,6 @@ public interface ReadonlyReversiModel {
    * @return the number of pieces that will be flipped if a piece is placed at posn
    * @throws IllegalArgumentException if the position is of bounds
    */
-  public int flipCount(HexPosition posn);
+  int flipCount(HexPosition posn);
 
 }

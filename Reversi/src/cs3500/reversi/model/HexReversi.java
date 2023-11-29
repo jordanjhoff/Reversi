@@ -3,6 +3,7 @@ package cs3500.reversi.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * A model to play a generic version of HexReversi.
@@ -19,6 +20,11 @@ public class HexReversi implements ReversiModel {
   private TeamColor currentTurn;
   //records if the previous move made was a pass. used in determining two passes in a row
   private boolean lastPass;
+  private boolean started;
+
+
+  private List<IModelFeatures> featuresListeners;
+
 
   /**
    * A map of hexagonal positions represeting the board. The central coordinate is
@@ -67,6 +73,39 @@ public class HexReversi implements ReversiModel {
     updateValidMoves(TeamColor.BLACK);
     updateValidMoves(TeamColor.WHITE);
     lastPass = false;
+
+    featuresListeners = new ArrayList<>();
+    this.started = false;
+  }
+
+
+
+  @Override
+  public void startGame() {
+    if (featuresListeners.size() != 2) {
+      throw new IllegalStateException("Game needs 2 players");
+    }
+    if (started) {
+      throw new IllegalStateException("Game has already been started.");
+    }
+    this.started = true;
+    this.notifyStartGame();
+    this.notifyCurrentTurns();
+  }
+
+  /**
+   * Notifies game state for all listeners
+   */
+  private void notifyStartGame() {
+    for (IModelFeatures listener : this.featuresListeners) {
+      listener.startGame();
+    }
+  }
+
+  private void notifyCurrentTurns() {
+    for (IModelFeatures listener : this.featuresListeners) {
+      listener.notifyCurrentTurn(this.currentTurn);
+    }
   }
 
   /**
@@ -97,7 +136,7 @@ public class HexReversi implements ReversiModel {
    */
   public int flipCount(HexPosition posn) {
     if (isGameOver()) {
-      throw new IllegalStateException("Game is over!");
+      throw new IllegalStateException("Game is over!!!");
     }
     validatePosition(posn);
     LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap =
@@ -248,24 +287,25 @@ public class HexReversi implements ReversiModel {
   @Override
   public void addPiece(TeamColor color, HexPosition posn) {
     if (isGameOver()) {
-      throw new IllegalStateException("Game is over!");
+      throw new IllegalStateException("Game is over!!!");
     }
     validatePosition(posn);
     if (!color.equals(currentTurn)) {
-      throw new IllegalStateException("Wrong turn");
+      throw new IllegalStateException("Not your turn");
+      //notifyCurrentColorListener("Not your turn");
     }
 
     LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap = color.equals(TeamColor.WHITE) ?
             this.validWhiteMoves : this.validBlackMoves;
     validatePosition(posn);
     if (validityMap.isEmpty()) {
-      throw new IllegalStateException("No legal moves, player must pass");
+      throw new IllegalStateException("No valid moves. You must pass");
+      //notifyCurrentColorListener("No valid moves. You must pass");
     }
     else if (!validityMap.containsKey(posn)) {
       throw new IllegalStateException("Invalid move");
+      //notifyCurrentColorListener("Invalid move");
     }
-
-    lastPass = false;
 
     this.board.put(posn, currentTurn);
     setColor(currentTurn, validityMap.get(posn));
@@ -273,6 +313,22 @@ public class HexReversi implements ReversiModel {
     this.currentTurn = this.currentTurn.cycle();
     updateValidMoves(TeamColor.BLACK);
     updateValidMoves(TeamColor.WHITE);
+    if (isGameOver()) {
+      notifyGameOver();
+    }
+    else {
+      lastPass = false;
+      notifyCurrentColorListener("It's your turn");
+      notifyUpdateViews();
+      notifyCurrentTurns();
+    }
+
+  }
+
+  private void notifyUpdateViews() {
+    for (IModelFeatures listener : this.featuresListeners) {
+      listener.notifyUpdateView();
+    }
   }
 
   /**
@@ -316,12 +372,30 @@ public class HexReversi implements ReversiModel {
     if (!this.lastPass) {
       this.currentTurn = this.currentTurn.cycle();
       this.lastPass = true;
-    } else {
+    }
+    else {
       validBlackMoves = new LinkedHashMap<>();
       validWhiteMoves = new LinkedHashMap<>();
+      this.lastPass = false;
+      notifyGameOver();
       //makes it so gameover would flip
     }
+    if (!isGameOver()) {
+      notifyCurrentColorListener("It's your turn");
+      notifyUpdateViews();
+      notifyCurrentTurns();
+    }
+  }
 
+  @Override
+  public void addFeatureListener(IModelFeatures features) {
+    this.featuresListeners.add(features);
+  }
+
+  private void notifyCurrentColorListener(String message) {
+    for (IModelFeatures listener : this.featuresListeners) {
+      listener.notifyMessage(this.currentTurn, message);
+    }
   }
 
   @Override
@@ -376,5 +450,12 @@ public class HexReversi implements ReversiModel {
   @Override
   public int getSize() {
     return this.radius;
+  }
+
+  private void notifyGameOver() {
+    for (IModelFeatures listener : this.featuresListeners) {
+      notifyUpdateViews();
+      listener.notifyGameOver();
+    }
   }
 }

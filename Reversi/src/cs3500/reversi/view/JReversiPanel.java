@@ -1,11 +1,18 @@
 package cs3500.reversi.view;
 
-import java.awt.*;
+import java.awt.Polygon;
+import java.awt.Point;
+import java.awt.Graphics2D;
+import java.awt.Graphics;
+import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.swing.event.MouseInputAdapter;
@@ -30,7 +37,7 @@ public class JReversiPanel extends JPanel {
   private int modelRadius;
 
   //The ReadonlyReversiModel instance providing game state information.
-  private final ReadonlyReversiModel model;
+  protected ReadonlyReversiModel gameState;
 
 
   //The currently selected hexagon position.
@@ -39,25 +46,32 @@ public class JReversiPanel extends JPanel {
   //The size of each hexagon cell.
   private int hexagonSize;
 
+  //determines if clicking and making moves are allowed
+  protected boolean enableMoves;
+
+  protected TeamColor thisPlayer;
+
+
+  private final List<IViewFeatures> featuresListeners;
+
+
   /**
    * Constructs a new JReversiPanel with the specified ReadonlyReversiModel.
    *
-   * @param model the ReadonlyReversiModel representing the game state
    * @throws IllegalArgumentException iff the provided model is null
    */
   public JReversiPanel(ReadonlyReversiModel model) {
-    if (model == null) {
-      throw new IllegalArgumentException("Model cannot be null!");
-    }
-    this.model = model;
     MouseListener mouselistener = new MyMouseListener();
     KeyListener keylistener = new MyKeyListener();
+    this.featuresListeners = new ArrayList<>();
     this.addMouseListener(mouselistener);
     this.addKeyListener(keylistener);
     this.setFocusable(true);
     this.requestFocusInWindow();
-    this.modelRadius = model.getSize();
     this.selectedHex = Optional.empty();
+    this.enableMoves = false;
+    this.gameState = model;
+    this.modelRadius = model.getSize();
   }
 
   /**
@@ -100,6 +114,7 @@ public class JReversiPanel extends JPanel {
             this.getHeight() / (5 * this.modelRadius));
 
     Graphics2D g2d = (Graphics2D) g.create();
+    drawStats(g2d);
     //iterates through the board, top to bottom, left to right
     for (int r = -this.modelRadius; r <= this.modelRadius; r++) {
       int rMin = Math.max(-this.modelRadius, -r - this.modelRadius);
@@ -122,7 +137,7 @@ public class JReversiPanel extends JPanel {
     HexPosition currPosn = new HexPosition(q,r,-(q + r));
     Point currPoint = hexToPixel(q,r);
     Polygon hexagon = createHexagon(currPoint);
-    TeamColor piece = model.getPieceAt(currPosn);
+    TeamColor piece = gameState.getPieceAt(currPosn);
     //change color to grey if selected
     if (selectedHex.isPresent() && currPosn.equals(selectedHex.get()) && piece == null) {
       g2d.setColor(Color.gray);
@@ -140,7 +155,7 @@ public class JReversiPanel extends JPanel {
       g2d.setColor(team);
       drawCenteredPiece(g2d,currPoint.x,currPoint.y, (int)(this.hexagonSize * 1.2));
     }
-    else if (model.getValidMoves().contains(currPosn)) {
+    else if (gameState.getValidMoves().contains(currPosn)) {
       g2d.setColor(Color.yellow);
       drawCenteredPiece(g2d,currPoint.x,currPoint.y, (int)(this.hexagonSize * .3));
     }
@@ -161,6 +176,12 @@ public class JReversiPanel extends JPanel {
     g2d.fillOval(x, y, size, size);
   }
 
+  protected void drawStats(Graphics2D g2d) {
+    if (thisPlayer != null) {
+      g2d.drawString("Player: " + thisPlayer,10,10);
+    }
+  }
+
 
   /**
    * Converts an x and a y to the nearest hexagonal position. Implementation inspiration taken
@@ -170,8 +191,9 @@ public class JReversiPanel extends JPanel {
    * @return the corresponding HexPosition
    */
   private HexPosition pixelToHex(int x, int y) {
-    double q = (sqrt(3)/3 * (x - this.getWidth() / 2)  -  1./3 * (y - this.getHeight() / 2)) / this.hexagonSize;
-    double r = (2./3 * (y - this.getHeight() / 2)) / this.hexagonSize;
+    double q = (sqrt(3) / 3 * (x - this.getWidth() / 2)  -  1. / 3 * (y - this.getHeight() / 2)) /
+            this.hexagonSize;
+    double r = (2. / 3 * (y - this.getHeight() / 2)) / this.hexagonSize;
 
     return roundHex(q,r);
   }
@@ -210,29 +232,36 @@ public class JReversiPanel extends JPanel {
     return new Point(x,y);
   }
 
+  public void addFeatureListener(IViewFeatures features) {
+    this.featuresListeners.add(features);
+  }
+
   /**
    * Private inner class for handling mouse events within the Reversi panel.
    */
   private class MyMouseListener extends MouseInputAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
-      int x = e.getX();
-      int y = e.getY();
-      HexPosition clickedHex = pixelToHex(x,y);
-      System.out.println("Clicked cell " + clickedHex);
-      if (selectedHex.isPresent() && clickedHex.equals(selectedHex.get())) {
-        selectedHex = Optional.empty();
+
+      //if the view is allowed to make moves
+      if (enableMoves) {
+        int x = e.getX();
+        int y = e.getY();
+        HexPosition clickedHex = pixelToHex(x,y);
+        if (selectedHex.isPresent() && clickedHex.equals(selectedHex.get())) {
+          selectedHex = Optional.empty();
+        }
+        else if (Math.abs(clickedHex.getQPosition()) <= modelRadius &&
+                Math.abs(clickedHex.getRPosition()) <= modelRadius &&
+                Math.abs(clickedHex.getSPosition()) <= modelRadius &&
+                gameState.getPieceAt(clickedHex) == null) {
+          selectedHex = Optional.of(clickedHex);
+        }
+        else {
+          selectedHex = Optional.empty();
+        }
+        repaint();
       }
-      else if (Math.abs(clickedHex.getQPosition()) <= modelRadius &&
-              Math.abs(clickedHex.getRPosition()) <= modelRadius &&
-              Math.abs(clickedHex.getSPosition()) <= modelRadius &&
-              model.getPieceAt(clickedHex) == null) {
-        selectedHex = Optional.of(clickedHex);
-      }
-      else {
-        selectedHex = Optional.empty();
-      }
-      repaint();
     }
 
   }
@@ -243,13 +272,23 @@ public class JReversiPanel extends JPanel {
   private class MyKeyListener extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
-      if (e.getKeyChar() == 'p') {
-        System.out.println("Pass");
+      //if the view is allowed to make moves
+      if (enableMoves) {
+        if (e.getKeyChar() == 'p') {
+          for (IViewFeatures listener : JReversiPanel.this.featuresListeners) {
+            listener.passTurn();
+            selectedHex = Optional.empty();
+          }
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_ENTER && selectedHex.isPresent()) {
+          for (IViewFeatures listener : JReversiPanel.this.featuresListeners) {
+            listener.makeMove(selectedHex.get());
+          }
+        }
+
 
       }
-      else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-        System.out.println("Make move" + selectedHex);
-      }
+
     }
   }
 }

@@ -59,13 +59,8 @@ public class ReadonlyHexReversiModel implements ReadonlyReversiModel {
   }
 
   @Override
-  public int getWhiteScore() {
-    return this.adaptee.getWhiteScore();
-  }
-
-  @Override
-  public int getBlackScore() {
-    return this.adaptee.getBlackScore();
+  public int getScoreColor(TeamColor scoreColor) {
+    return this.adaptee.getScoreColor(scoreColor);
   }
 
   @Override

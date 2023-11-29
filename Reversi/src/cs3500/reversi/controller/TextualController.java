@@ -64,8 +64,4 @@ public class TextualController implements HexReversiController {
     }
   }
 
-  @Override
-  public void handleInput(HexPosition pos) {
-
-  }
 }

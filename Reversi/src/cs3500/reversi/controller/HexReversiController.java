@@ -8,5 +8,4 @@ public interface HexReversiController {
 
   void play();
 
-  void handleInput(HexPosition pos);
 }

@@ -1,5 +1,7 @@
 package cs3500.reversi.model;
 
+import cs3500.reversi.view.IViewFeatures;
+
 /**
  * Interface for the representing a generic game of Hexagonal Reversi,
  * able to interface with both the view and controller to provide a
@@ -20,6 +22,8 @@ public interface ReversiModel extends ReadonlyReversiModel {
    */
   void pass();
 
+  void addFeatureListener(IModelFeatures features);
 
+  void startGame();
 
 }
