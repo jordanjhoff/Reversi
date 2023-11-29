@@ -41,7 +41,7 @@ public class Main {
     IReversiView viewPlayer1 = new ReversiGUIView(model);
     IReversiView viewPlayer2 = new ReversiGUIView(model);
     Player player1 = new PlayerImpl(TeamColor.BLACK, new CaptureMost());
-    Player player2 = new PlayerImpl(TeamColor.WHITE, new CaptureMost());
+    Player player2 = new PlayerImpl(TeamColor.WHITE, new VisualUserStrat());
     HexReversiController controller1 = new VisualController(model, viewPlayer1, player1);
     HexReversiController controller2 = new VisualController(model, viewPlayer2, player2);
     model.startGame();

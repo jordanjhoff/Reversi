@@ -111,6 +111,7 @@ public class VisualController implements HexReversiController, IViewFeatures, IM
   @Override
   public void notifyGameOver() {
     this.myTurn = false;
+    this.view.enableMoves(false);
     this.view.displayMessage("Game over! " + model.getWinner() + " WINS!!");
   }
 

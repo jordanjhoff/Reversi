@@ -49,6 +49,7 @@ public class JReversiPanel extends JPanel {
   //determines if clicking and making moves are allowed
   protected boolean enableMoves;
 
+  //represents the player's color of this view
   protected TeamColor thisPlayer;
 
 
@@ -155,7 +156,7 @@ public class JReversiPanel extends JPanel {
       g2d.setColor(team);
       drawCenteredPiece(g2d,currPoint.x,currPoint.y, (int)(this.hexagonSize * 1.2));
     }
-    else if (gameState.getValidMoves().contains(currPosn)) {
+    else if (gameState.getValidMoves().contains(currPosn) && enableMoves) {
       g2d.setColor(Color.yellow);
       drawCenteredPiece(g2d,currPoint.x,currPoint.y, (int)(this.hexagonSize * .3));
     }

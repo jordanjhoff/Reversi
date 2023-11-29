@@ -48,6 +48,7 @@ public class ReversiGUIView extends JFrame implements IReversiView {
   @Override
   public void enableMoves(boolean enable) {
     this.mainPanel.enableMoves = enable;
+    this.repaint();
   }
 
   @Override
