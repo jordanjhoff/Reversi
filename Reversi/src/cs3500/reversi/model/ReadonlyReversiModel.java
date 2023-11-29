@@ -58,16 +58,10 @@ public interface ReadonlyReversiModel {
   HashMap<HexPosition, TeamColor> getBoard();
 
   /**
-   * What is white's score.
+   * What is the score of the passed color.
    * @return natural number of the count of whites pieces
    */
-  int getWhiteScore();
-
-  /**
-   * What is black's score.
-   * @return natural number of the count of black pieces
-   */
-  int getBlackScore();
+  int getScoreColor(TeamColor scoreColor);
 
   /**
    * Returns the number of pieces a move will flip for the current player at a given

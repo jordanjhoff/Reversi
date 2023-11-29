@@ -4,6 +4,7 @@ import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.strategy.ReversiStrategy;
+import cs3500.reversi.strategy.VisualUserStrat;
 
 /**
  * Implementation of the Player interface representing a player in a HexReversi game.
@@ -46,5 +47,11 @@ public class PlayerImpl implements Player {
   @Override
   public TeamColor getColor() {
     return this.color;
+  }
+
+
+  @Override
+  public boolean isAI() {
+    return !(this.strategy instanceof VisualUserStrat);
   }
 }

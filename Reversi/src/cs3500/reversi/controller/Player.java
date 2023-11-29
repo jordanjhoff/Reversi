@@ -24,4 +24,6 @@ public interface Player {
    */
   TeamColor getColor();
 
+  boolean isAI();
+
 }

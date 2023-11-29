@@ -89,23 +89,13 @@ public class HexReversiMock implements ReversiModel {
 
 
   @Override
-  public int getWhiteScore() {
+  public int getScoreColor(TeamColor scoreColor) {
     try {
-      out.append("\ngetWhiteScore");
+      out.append("\ngetScoreColor: " + scoreColor);
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    return adaptee.getWhiteScore();
-  }
-
-  @Override
-  public int getBlackScore() {
-    try {
-      out.append("\ngetBlackScore");
-    } catch (IOException e) {
-      throw new IllegalStateException("Could not read data");
-    }
-    return adaptee.getBlackScore();
+    return adaptee.getScoreColor(scoreColor);
   }
 
   @Override

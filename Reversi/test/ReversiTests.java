@@ -376,20 +376,20 @@ public class ReversiTests {
   //test score updates after move
   @Test
   public void getScore() {
-    Assert.assertEquals(3, hex5.getWhiteScore());
-    Assert.assertEquals(3, hex5read.getWhiteScore());
-    Assert.assertEquals(3, hex5.getBlackScore());
-    Assert.assertEquals(3, hex5read.getBlackScore());
+    Assert.assertEquals(3, hex5.getScoreColor(TeamColor.WHITE));
+    Assert.assertEquals(3, hex5read.getScoreColor(TeamColor.WHITE));
+    Assert.assertEquals(3, hex5.getScoreColor(TeamColor.BLACK));
+    Assert.assertEquals(3, hex5read.getScoreColor(TeamColor.BLACK));
     hex5.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));
-    Assert.assertEquals(2, hex5.getWhiteScore());
-    Assert.assertEquals(2, hex5read.getWhiteScore());
-    Assert.assertEquals(5, hex5.getBlackScore());
-    Assert.assertEquals(5, hex5read.getBlackScore());
+    Assert.assertEquals(2, hex5.getScoreColor(TeamColor.WHITE));
+    Assert.assertEquals(2, hex5read.getScoreColor(TeamColor.WHITE));
+    Assert.assertEquals(5, hex5.getScoreColor(TeamColor.BLACK));
+    Assert.assertEquals(5, hex5read.getScoreColor(TeamColor.BLACK));
     hex5.addPiece(TeamColor.WHITE, new HexPosition(2,-1,-1));
-    Assert.assertEquals(4, hex5.getWhiteScore());
-    Assert.assertEquals(4, hex5read.getWhiteScore());
-    Assert.assertEquals(4, hex5.getBlackScore());
-    Assert.assertEquals(4, hex5read.getBlackScore());
+    Assert.assertEquals(4, hex5.getScoreColor(TeamColor.WHITE));
+    Assert.assertEquals(4, hex5read.getScoreColor(TeamColor.WHITE));
+    Assert.assertEquals(4, hex5.getScoreColor(TeamColor.BLACK));
+    Assert.assertEquals(4, hex5read.getScoreColor(TeamColor.BLACK));
   }
 
   //test flipCount works

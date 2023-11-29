@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class HexReversi implements ReversiModel {
 
+
+
   //the radius from the center in either q, r, or s axis
   private final int radius;
   //the teamcolor of the current player's turn
@@ -286,6 +288,9 @@ public class HexReversi implements ReversiModel {
    */
   @Override
   public void addPiece(TeamColor color, HexPosition posn) {
+    if (!started) {
+      throw new IllegalStateException("Game has not been started");
+    }
     if (isGameOver()) {
       throw new IllegalStateException("Game is over!!!");
     }
@@ -365,6 +370,9 @@ public class HexReversi implements ReversiModel {
    */
   @Override
   public void pass() {
+    if (!started) {
+      throw new IllegalStateException("Game has not been started!");
+    }
     if (isGameOver()) {
       throw new IllegalStateException("Game is over!");
     }
@@ -404,27 +412,16 @@ public class HexReversi implements ReversiModel {
   }
 
   @Override
-  public int getWhiteScore() {
-    int whiteCount = 0;
+  public int getScoreColor(TeamColor scoreColor) {
+    int score = 0;
 
     for (TeamColor color : board.values()) {
-      if (color.equals(TeamColor.WHITE)) {
-        whiteCount = whiteCount + 1;
+      if (color.equals(scoreColor)) {
+        score = score + 1;
       }
     }
 
-    return whiteCount;
-  }
-
-  @Override
-  public int getBlackScore() {
-    int blackCount = 0;
-    for (TeamColor color : board.values()) {
-      if (color.equals(TeamColor.BLACK)) {
-        blackCount = blackCount + 1;
-      }
-    }
-    return blackCount;
+    return score;
   }
 
   @Override
@@ -433,8 +430,8 @@ public class HexReversi implements ReversiModel {
       throw new IllegalStateException("Game is not over!");
     }
 
-    int blackCount = getBlackScore();
-    int whiteCount = getWhiteScore();
+    int blackCount = getScoreColor(TeamColor.BLACK);
+    int whiteCount = getScoreColor(TeamColor.WHITE);
 
     if (blackCount == whiteCount) {
       return null;

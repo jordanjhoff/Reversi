@@ -14,10 +14,11 @@ import cs3500.reversi.view.IViewFeatures;
 public class VisualController implements HexReversiController, IViewFeatures, IModelFeatures {
   private final ReversiModel model;
   private final IReversiView view;
-  private final List<Player> players;
-  private int playerIndex;
+  private final Player player;
 
-  public VisualController(ReversiModel model, IReversiView view) {
+  private boolean myTurn;
+
+  public VisualController(ReversiModel model, IReversiView view, Player player) {
     this.model = model;
     this.view = view;
     this.player = player;
@@ -32,16 +33,17 @@ public class VisualController implements HexReversiController, IViewFeatures, IM
 
   @Override
   public void play() {
-    this.playerIndex = 0;
     this.view.setVisible(true);
     while (!this.model.isGameOver() && myTurn) {
       try {
-        HexPosition pos = this.players.get(this.playerIndex).play(new ReadonlyHexReversiModel(this.model));
-        if (pos == null) {
+        HexPosition pos = this.player.play(new ReadonlyHexReversiModel(this.model));
+        if (pos == null && !this.model.isGameOver()) {
           this.model.pass();
         }
-        this.model.addPiece(this.players.get(this.playerIndex).getColor(), pos);
-        this.playerIndex = (this.playerIndex + 1) % this.players.size();
+        else if (!this.model.isGameOver()) {
+          this.model.addPiece(this.player.getColor(), pos);
+        }
+
       } catch (Exception e) {
         if (e instanceof IOException) {
           throw new IllegalStateException("Unable to print");

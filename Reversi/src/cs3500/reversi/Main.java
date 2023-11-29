@@ -3,8 +3,10 @@ package cs3500.reversi;
 import java.util.Calendar;
 import java.util.Scanner;
 
+import cs3500.reversi.controller.HexReversiController;
 import cs3500.reversi.controller.Player;
 import cs3500.reversi.controller.PlayerImpl;
+import cs3500.reversi.controller.VisualController;
 import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReversiModel;
@@ -12,6 +14,7 @@ import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.strategy.CaptureMost;
 import cs3500.reversi.strategy.ReversiStrategy;
 import cs3500.reversi.strategy.UserTextInput;
+import cs3500.reversi.strategy.VisualUserStrat;
 import cs3500.reversi.view.IReversiView;
 import cs3500.reversi.view.ReversiGUIView;
 import cs3500.reversi.view.ReversiTextualView;
@@ -26,6 +29,7 @@ public class Main {
    * A main method to execute and view a HexReversi game.
    */
   public static void main(String[] args) {
+    /*
     ReversiStrategy textStrat = new UserTextInput(new Scanner(System.in));
     Appendable out = System.out;
     Player white = new PlayerImpl(TeamColor.WHITE, new CaptureMost());
