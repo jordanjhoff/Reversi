@@ -1,6 +1,5 @@
 package cs3500.reversi.view;
 
-import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.TeamColor;
 
 /**
@@ -17,7 +16,7 @@ public interface IReversiView {
 
   void renderView(TeamColor color);
 
-  void addFeatureListener(IViewFeatures features);
+  void addFeatureListener(IPlayerFeatures features);
 
   void enableMoves(boolean enable);
 

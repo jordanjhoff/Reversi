@@ -91,22 +91,42 @@ public class HexReversi implements ReversiModel {
       throw new IllegalStateException("Game has already been started.");
     }
     this.started = true;
-    this.notifyStartGame();
-    this.notifyCurrentTurns();
+    this.notifyListenersStartGame();
+    this.notifyListenersAdvanceTurn();
+    this.notifyListenersUpdateGamestate();
+
   }
 
   /**
    * Notifies game state for all listeners
    */
-  private void notifyStartGame() {
+  private void notifyListenersStartGame() {
     for (IModelFeatures listener : this.featuresListeners) {
       listener.startGame();
     }
   }
 
-  private void notifyCurrentTurns() {
+  /**
+   * Notifies the listeners that the board has changed
+   */
+  private void notifyListenersUpdateGamestate() {
     for (IModelFeatures listener : this.featuresListeners) {
-      listener.notifyCurrentTurn(this.currentTurn);
+      listener.notifyUpdatedGamestate();
+    }
+  }
+
+  /**
+   * Notifies the listeners that the turn has advanced.
+   */
+  private void notifyListenersAdvanceTurn() {
+    LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap =
+            this.currentTurn.equals(TeamColor.WHITE)
+                    ? this.validWhiteMoves : this.validBlackMoves;
+    for (IModelFeatures listener : this.featuresListeners) {
+      if (validityMap.isEmpty()) {
+        listener.notifyMessage(currentTurn, "No available moves. You must pass.");
+      }
+      listener.notifyAdvanceTurn(this.currentTurn);
     }
   }
 
@@ -123,8 +143,9 @@ public class HexReversi implements ReversiModel {
       return new ArrayList<>();
     }
     ArrayList<HexPosition> result = new ArrayList<>();
-    validityMap.entrySet().forEach(entry -> {
-      result.add(entry.getKey()); });
+    for (HexPosition key : validityMap.keySet()) {
+      result.add(key);
+    }
 
     return result;
   }
@@ -297,7 +318,6 @@ public class HexReversi implements ReversiModel {
     validatePosition(posn);
     if (!color.equals(currentTurn)) {
       throw new IllegalStateException("Not your turn");
-      //notifyCurrentColorListener("Not your turn");
     }
 
     LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap = color.equals(TeamColor.WHITE) ?
@@ -324,16 +344,11 @@ public class HexReversi implements ReversiModel {
     else {
       lastPass = false;
       notifyCurrentColorListener("It's your turn");
-      notifyUpdateViews();
-      notifyCurrentTurns();
+      notifyListenersUpdateGamestate();
+      notifyListenersAdvanceTurn();
+
     }
 
-  }
-
-  private void notifyUpdateViews() {
-    for (IModelFeatures listener : this.featuresListeners) {
-      listener.notifyUpdateView();
-    }
   }
 
   /**
@@ -390,8 +405,8 @@ public class HexReversi implements ReversiModel {
     }
     if (!isGameOver()) {
       notifyCurrentColorListener("It's your turn");
-      notifyUpdateViews();
-      notifyCurrentTurns();
+      notifyListenersUpdateGamestate();
+      notifyListenersAdvanceTurn();
     }
   }
 
@@ -400,6 +415,10 @@ public class HexReversi implements ReversiModel {
     this.featuresListeners.add(features);
   }
 
+  /**
+   * Notifies the listeners the current turn and message.
+   * @param message message to be sent to listener whose turn it is
+   */
   private void notifyCurrentColorListener(String message) {
     for (IModelFeatures listener : this.featuresListeners) {
       listener.notifyMessage(this.currentTurn, message);
@@ -451,7 +470,7 @@ public class HexReversi implements ReversiModel {
 
   private void notifyGameOver() {
     for (IModelFeatures listener : this.featuresListeners) {
-      notifyUpdateViews();
+      notifyListenersUpdateGamestate();
       listener.notifyGameOver();
     }
   }

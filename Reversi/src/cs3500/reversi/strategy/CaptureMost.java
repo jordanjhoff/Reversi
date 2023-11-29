@@ -3,7 +3,7 @@ package cs3500.reversi.strategy;
 import java.util.ArrayList;
 
 import cs3500.reversi.model.HexPosition;
-import cs3500.reversi.model.ReadonlyHexReversiModel;
+import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.TeamColor;
 
 /**
@@ -14,7 +14,7 @@ import cs3500.reversi.model.TeamColor;
  */
 public class CaptureMost implements ReversiStrategy {
   @Override
-  public HexPosition choosePosn(ReadonlyHexReversiModel model, TeamColor color) {
+  public HexPosition choosePosn(ReadonlyReversiModel model, TeamColor color) {
     ArrayList<HexPosition> posList = model.getValidMoves();
     if (posList.isEmpty()) {
       return null;

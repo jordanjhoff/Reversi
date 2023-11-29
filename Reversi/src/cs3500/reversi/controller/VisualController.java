@@ -1,17 +1,13 @@
 package cs3500.reversi.controller;
 
-import java.io.IOException;
-
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.IModelFeatures;
-import cs3500.reversi.model.ReadonlyHexReversiModel;
-import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.view.IReversiView;
-import cs3500.reversi.view.IViewFeatures;
+import cs3500.reversi.view.IPlayerFeatures;
 
-public class VisualController implements HexReversiController, IViewFeatures, IModelFeatures {
+public class VisualController implements IPlayerFeatures, IModelFeatures {
   private final ReversiModel model;
   private final IReversiView view;
   private final Player player;
@@ -24,56 +20,16 @@ public class VisualController implements HexReversiController, IViewFeatures, IM
     this.player = player;
     this.view.addFeatureListener(this);
     this.model.addFeatureListener(this);
-  }
-
-  @Override
-  public void addPlayer(Player player) {
-
-  }
-
-  @Override
-  public void play() {
-    this.view.setVisible(true);
-    while (!this.model.isGameOver() && myTurn) {
-      try {
-        HexPosition pos = this.player.play(new ReadonlyHexReversiModel(this.model));
-        if (pos == null && !this.model.isGameOver()) {
-          this.model.pass();
-        }
-        else if (!this.model.isGameOver()) {
-          this.model.addPiece(this.player.getColor(), pos);
-        }
-
-      } catch (Exception e) {
-        if (e instanceof IOException) {
-          throw new IllegalStateException("Unable to print");
-        }
-        if (e instanceof IllegalStateException) {
-          System.out.println(e.getMessage());
-        }
-      }
-    }
+    this.player.addFeatureListener(this);
   }
 
   @Override
   public void makeMove(HexPosition posn) {
-    if (!player.isAI()) {
-      try {
-        this.model.addPiece(this.player.getColor(), posn);
-      } catch (IllegalStateException e) {
-        this.notifyMessage(this.player.getColor(), e.getMessage());
-      }
-
+    try {
+      this.model.addPiece(this.player.getColor(), posn);
     }
-    else {
-      HexPosition chosenPosn = this.player.play(new ReadonlyHexReversiModel(model));
-      if (chosenPosn == null) {
-        this.model.pass();
-      }
-      else {
-        this.model.addPiece(this.player.getColor(), chosenPosn);
-      }
-
+    catch (IllegalStateException e) {
+      this.notifyMessage(this.player.getColor(), e.getMessage());
     }
   }
 
@@ -82,10 +38,6 @@ public class VisualController implements HexReversiController, IViewFeatures, IM
     this.model.pass();
   }
 
-  @Override
-  public void quit() {
-    System.exit(0);
-  }
 
   @Override
   public void notifyUpdateView() {
@@ -98,12 +50,11 @@ public class VisualController implements HexReversiController, IViewFeatures, IM
     if (myTurn) {
       displayToNonAI("Welcome to Reversi! You start");
     }
-
   }
 
   @Override
   public void notifyMessage(TeamColor color, String message) {
-    if (this.player.getColor().equals(color) && !player.isAI()) {
+    if (this.player.getColor().equals(color)) {
       displayToNonAI(message);
     }
   }
@@ -112,26 +63,34 @@ public class VisualController implements HexReversiController, IViewFeatures, IM
   public void notifyGameOver() {
     this.myTurn = false;
     this.view.enableMoves(false);
-    this.view.displayMessage("Game over! " + model.getWinner() + " WINS!!");
+    if (model.getWinner() == null) {
+      this.view.displayMessage("Game over! Tie!");
+    }
+    else {
+      this.view.displayMessage("Game over! " + model.getWinner() + " WINS!!");
+    }
+
   }
 
   @Override
-  public void notifyCurrentTurn(TeamColor color) {
-    this.myTurn = this.player.getColor().equals(color);
-    if (!player.isAI()) {
-      this.view.enableMoves(myTurn);
-    }
-    else if (player.isAI() && myTurn){
-      this.play();
+  public void notifyUpdatedGamestate() {
+    this.view.renderView(this.player.getColor());
+  }
+
+  @Override
+  public void notifyAdvanceTurn(TeamColor currentTurn) {
+    this.myTurn = this.player.getColor().equals(currentTurn);
+    this.view.enableMoves(myTurn);
+    if (myTurn) {
+      this.player.promptMove();
     }
 
   }
 
   private void displayToNonAI(String message) {
-    if (!player.isAI()) {
+    if (!(player instanceof AIPlayer)) {
       this.view.displayMessage(message);
     }
   }
-
 
 }

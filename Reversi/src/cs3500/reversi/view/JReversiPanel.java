@@ -53,7 +53,7 @@ public class JReversiPanel extends JPanel {
   protected TeamColor thisPlayer;
 
 
-  private final List<IViewFeatures> featuresListeners;
+  private final List<IPlayerFeatures> featuresListeners;
 
 
   /**
@@ -110,19 +110,20 @@ public class JReversiPanel extends JPanel {
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
+    ArrayList<HexPosition> currValidMoves = gameState.getValidMoves();
     //scales hexagon size based on bounds
     this.hexagonSize = Math.min(this.getWidth() / (5 * this.modelRadius),
             this.getHeight() / (5 * this.modelRadius));
 
     Graphics2D g2d = (Graphics2D) g.create();
-    drawStats(g2d);
+    drawCurrentPlayer(g2d);
     //iterates through the board, top to bottom, left to right
     for (int r = -this.modelRadius; r <= this.modelRadius; r++) {
       int rMin = Math.max(-this.modelRadius, -r - this.modelRadius);
       int rMax = Math.min(this.modelRadius, -r + this.modelRadius);
 
       for (int q = rMin; q <= rMax; q++) {
-        drawCell(g2d, q, r);
+        drawCell(g2d, q, r, currValidMoves);
 
       }
     }
@@ -133,8 +134,10 @@ public class JReversiPanel extends JPanel {
    * @param g2d The graphics object to draw the cell on.
    * @param q The given cell's q coordinate.
    * @param r The given cell's r coordinate.
+   * @param validMoves the currently available valid moves
    */
-  private void drawCell(Graphics2D g2d, int q, int r) {
+  private void drawCell(Graphics2D g2d, int q, int r, ArrayList<HexPosition> validMoves) {
+
     HexPosition currPosn = new HexPosition(q,r,-(q + r));
     Point currPoint = hexToPixel(q,r);
     Polygon hexagon = createHexagon(currPoint);
@@ -156,7 +159,8 @@ public class JReversiPanel extends JPanel {
       g2d.setColor(team);
       drawCenteredPiece(g2d,currPoint.x,currPoint.y, (int)(this.hexagonSize * 1.2));
     }
-    else if (gameState.getValidMoves().contains(currPosn) && enableMoves) {
+    else if (validMoves.contains(currPosn) && enableMoves) {
+      //adds a small yellow indicator to indicate legal moves
       g2d.setColor(Color.yellow);
       drawCenteredPiece(g2d,currPoint.x,currPoint.y, (int)(this.hexagonSize * .3));
     }
@@ -177,7 +181,11 @@ public class JReversiPanel extends JPanel {
     g2d.fillOval(x, y, size, size);
   }
 
-  protected void drawStats(Graphics2D g2d) {
+  /**
+   * Prints the current player at the top left of the board
+   * @param g2d
+   */
+  private void drawCurrentPlayer(Graphics2D g2d) {
     if (thisPlayer != null) {
       g2d.drawString("Player: " + thisPlayer,10,10);
     }
@@ -233,7 +241,7 @@ public class JReversiPanel extends JPanel {
     return new Point(x,y);
   }
 
-  public void addFeatureListener(IViewFeatures features) {
+  public void addFeatureListener(IPlayerFeatures features) {
     this.featuresListeners.add(features);
   }
 
@@ -276,13 +284,13 @@ public class JReversiPanel extends JPanel {
       //if the view is allowed to make moves
       if (enableMoves) {
         if (e.getKeyChar() == 'p') {
-          for (IViewFeatures listener : JReversiPanel.this.featuresListeners) {
+          for (IPlayerFeatures listener : JReversiPanel.this.featuresListeners) {
             listener.passTurn();
             selectedHex = Optional.empty();
           }
         }
         else if (e.getKeyCode() == KeyEvent.VK_ENTER && selectedHex.isPresent()) {
-          for (IViewFeatures listener : JReversiPanel.this.featuresListeners) {
+          for (IPlayerFeatures listener : JReversiPanel.this.featuresListeners) {
             listener.makeMove(selectedHex.get());
           }
         }

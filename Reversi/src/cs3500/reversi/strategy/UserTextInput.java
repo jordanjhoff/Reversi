@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import cs3500.reversi.model.HexPosition;
-import cs3500.reversi.model.ReadonlyHexReversiModel;
+import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.TeamColor;
 
 /**
@@ -25,7 +25,7 @@ public class UserTextInput implements ReversiStrategy {
   }
 
   @Override
-  public HexPosition choosePosn(ReadonlyHexReversiModel model, TeamColor color) {
+  public HexPosition choosePosn(ReadonlyReversiModel model, TeamColor color) {
     System.out.println("Enter q, r, and s coordinates");
     try {
       return new HexPosition(input.nextInt(), input.nextInt(), input.nextInt());

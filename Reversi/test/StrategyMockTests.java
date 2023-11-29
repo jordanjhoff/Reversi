@@ -3,7 +3,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs3500.reversi.controller.Player;
-import cs3500.reversi.controller.PlayerImpl;
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.HexReversiMock;
@@ -36,8 +35,8 @@ public class StrategyMockTests {
     captureMost = new CaptureMost();
     viewOut = new StringBuilder();
     view = new ReversiTextualView(new ReadonlyHexReversiModel(mock), viewOut);
-    player1 = new PlayerImpl(TeamColor.BLACK, captureMost);
-    player2 = new PlayerImpl(TeamColor.WHITE, captureMost);
+    //player1 = new PlayerImpl(TeamColor.BLACK, captureMost);
+    //player2 = new PlayerImpl(TeamColor.WHITE, captureMost);
   }
 
   @Test

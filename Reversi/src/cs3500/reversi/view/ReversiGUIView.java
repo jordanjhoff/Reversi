@@ -41,7 +41,7 @@ public class ReversiGUIView extends JFrame implements IReversiView {
   }
 
   @Override
-  public void addFeatureListener(IViewFeatures features) {
+  public void addFeatureListener(IPlayerFeatures features) {
     this.mainPanel.addFeatureListener(Objects.requireNonNull(features));
   }
 

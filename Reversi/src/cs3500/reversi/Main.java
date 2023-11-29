@@ -1,24 +1,17 @@
 package cs3500.reversi;
 
-import java.util.Calendar;
-import java.util.Scanner;
-
-import cs3500.reversi.controller.HexReversiController;
+import cs3500.reversi.controller.AIPlayer;
+import cs3500.reversi.controller.HumanPlayer;
 import cs3500.reversi.controller.Player;
-import cs3500.reversi.controller.PlayerImpl;
 import cs3500.reversi.controller.VisualController;
 import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.strategy.CaptureMost;
-import cs3500.reversi.strategy.ReversiStrategy;
-import cs3500.reversi.strategy.UserTextInput;
 import cs3500.reversi.strategy.VisualUserStrat;
 import cs3500.reversi.view.IReversiView;
 import cs3500.reversi.view.ReversiGUIView;
-import cs3500.reversi.view.ReversiTextualView;
-import cs3500.reversi.view.ReversiView;
 
 /**
  * A main class to execute and view a HexReversi game.
@@ -40,10 +33,16 @@ public class Main {
     ReversiModel model = new HexReversi(3);
     IReversiView viewPlayer1 = new ReversiGUIView(model);
     IReversiView viewPlayer2 = new ReversiGUIView(model);
-    Player player1 = new PlayerImpl(TeamColor.BLACK, new CaptureMost());
-    Player player2 = new PlayerImpl(TeamColor.WHITE, new VisualUserStrat());
-    HexReversiController controller1 = new VisualController(model, viewPlayer1, player1);
-    HexReversiController controller2 = new VisualController(model, viewPlayer2, player2);
+    Player AIplayer1 = new AIPlayer(TeamColor.BLACK,
+            new CaptureMost(),
+            new ReadonlyHexReversiModel(model));
+    Player AIplayer2 = new AIPlayer(TeamColor.WHITE,
+            new CaptureMost(),
+            new ReadonlyHexReversiModel(model));
+    Player player1 = new HumanPlayer(TeamColor.WHITE);
+    Player player2 = new HumanPlayer(TeamColor.BLACK);
+    VisualController controller1 = new VisualController(model, viewPlayer1, AIplayer1);
+    VisualController controller2 = new VisualController(model, viewPlayer2, AIplayer2);
     model.startGame();
 
 
