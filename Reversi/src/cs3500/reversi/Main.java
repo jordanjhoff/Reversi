@@ -35,7 +35,7 @@ public class Main {
         // FIRST NUMBER IS BOARD SIZE
         ReversiModel model = new HexReversi(Integer.parseInt(args[0]));
         Player player1 = parsePlayer(args[1], TeamColor.BLACK, new ReadonlyHexReversiModel(model));
-        Player player2 = parsePlayer(args[1], TeamColor.WHITE, new ReadonlyHexReversiModel(model));
+        Player player2 = parsePlayer(args[2], TeamColor.WHITE, new ReadonlyHexReversiModel(model));
         IReversiView viewPlayer1 = new ReversiGUIView(model);
         IReversiView viewPlayer2 = new ReversiGUIView(model);
         VisualController controller1 = new VisualController(model, viewPlayer1, player1);
