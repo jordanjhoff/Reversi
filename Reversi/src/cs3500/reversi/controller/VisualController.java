@@ -45,9 +45,9 @@ public class VisualController implements IPlayerFeatures, IModelFeatures {
   }
 
   @Override
-  public void startGame() {
+  public void startGame(TeamColor startingTurn) {
     this.view.setVisible(true);
-    if (myTurn) {
+    if (this.player.getColor().equals(startingTurn)) {
       displayToNonAI("Welcome to Reversi! You start");
     }
   }

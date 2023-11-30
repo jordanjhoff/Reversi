@@ -102,7 +102,7 @@ public class HexReversi implements ReversiModel {
    */
   private void notifyListenersStartGame() {
     for (IModelFeatures listener : this.featuresListeners) {
-      listener.startGame();
+      listener.startGame(currentTurn);
     }
   }
 
@@ -123,9 +123,6 @@ public class HexReversi implements ReversiModel {
             this.currentTurn.equals(TeamColor.WHITE)
                     ? this.validWhiteMoves : this.validBlackMoves;
     for (IModelFeatures listener : this.featuresListeners) {
-      if (validityMap.isEmpty()) {
-        listener.notifyMessage(currentTurn, "No available moves. You must pass.");
-      }
       listener.notifyAdvanceTurn(this.currentTurn);
     }
   }

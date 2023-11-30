@@ -9,8 +9,9 @@ public interface IModelFeatures {
 
   /**
    * Notify listener that the game has begun.
+   * @param startingPlayer the player color who goes first.
    */
-  void startGame();
+  void startGame(TeamColor startingPlayer);
 
   /**
    * Notify listener that a message needs to be displayed.
@@ -26,7 +27,6 @@ public interface IModelFeatures {
 
   /**
    * Notify the listener that the state of the game has changed, and the board needs to be updated.
-   * @param currentTurn the current turn in this new game state.
    */
   void notifyUpdatedGamestate();
 
