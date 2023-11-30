@@ -24,6 +24,7 @@ public class HumanPlayer implements Player {
 
   @Override
   public void promptMove() {
+    return;
     //does nothing
   }
 

@@ -9,8 +9,8 @@ import java.util.HashMap;
  * This class delegates calls to an adaptee HexReversi instance and logs method invocations.
  */
 public class HexReversiMock implements ReversiModel {
-  Appendable out;
-  HexReversi adaptee;
+  private Appendable out;
+  private HexReversi adaptee;
 
   public HexReversiMock(Appendable out, HexReversi adaptee) {
     this.out = out;
