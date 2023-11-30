@@ -5,12 +5,23 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+
+import cs3500.reversi.controller.AIPlayer;
+import cs3500.reversi.controller.HexReversiController;
+import cs3500.reversi.controller.Player;
+import cs3500.reversi.controller.PlayerMock;
+import cs3500.reversi.controller.VisualController;
+import cs3500.reversi.controller.VisualControllerMock;
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
+import cs3500.reversi.strategy.CaptureMost;
+import cs3500.reversi.view.IReversiView;
+import cs3500.reversi.view.ReversiGUIView;
+import cs3500.reversi.view.ReversiGUIViewMock;
 
 /**
  * Class for testing the hexreversi model implementation of reversimodel.
@@ -24,6 +35,12 @@ public class ReversiTests {
 
   ReadonlyReversiModel hex5read;
 
+  Player player1;
+  Player player2;
+
+  Appendable out;
+  Appendable out2;
+
   @Before
   public void init() {
     hex5 = new HexReversi(5);
@@ -31,6 +48,43 @@ public class ReversiTests {
     hex2read = new ReadonlyHexReversiModel(hex2);
     hex5read = new ReadonlyHexReversiModel(hex5);
 
+    // for a hexgame of size 5
+
+    out = new StringBuilder();
+    Player mock1 = new PlayerMock(out, new AIPlayer(TeamColor.BLACK, new CaptureMost(), hex5read));
+    Player mock2 = new PlayerMock(out, new AIPlayer(TeamColor.WHITE, new CaptureMost(), hex5read));
+
+
+    IReversiView view1mock = new ReversiGUIViewMock(out);
+
+    IReversiView view2mock = new ReversiGUIViewMock(out);
+
+    HexReversiController controller1 = new VisualController(hex5, view1mock, mock1);
+    HexReversiController controllerMock1 = new VisualControllerMock(out, controller1);
+
+    HexReversiController controller2 = new VisualController(hex5, view2mock, mock2);
+    HexReversiController controllerMock2 = new VisualControllerMock(out, controller2);
+
+    hex5.startGame();
+
+    //for a hexgame of size 2
+
+    out2 = new StringBuilder();
+    Player mockTwo1 = new PlayerMock(out, new AIPlayer(TeamColor.BLACK, new CaptureMost(), hex2read));
+    Player mockTwo2 = new PlayerMock(out, new AIPlayer(TeamColor.WHITE, new CaptureMost(), hex2read));
+
+
+    IReversiView viewTwo1mock = new ReversiGUIViewMock(out2);
+
+    IReversiView viewTwo2mock = new ReversiGUIViewMock(out2);
+
+    HexReversiController controllerTwo1 = new VisualController(hex2, viewTwo1mock, mockTwo1);
+    HexReversiController controllerMockTwo1 = new VisualControllerMock(out2, controllerTwo1);
+
+    HexReversiController controllerTwo2 = new VisualController(hex2, viewTwo2mock, mockTwo2);
+    HexReversiController controllerMockTwo2 = new VisualControllerMock(out2, controllerTwo2);
+
+    hex2.startGame();
   }
 
   //test getsize works
@@ -322,7 +376,7 @@ public class ReversiTests {
       hex2.addPiece(TeamColor.WHITE, new HexPosition(-2,2,0));
     }
     catch (Exception e) {
-      Assert.assertEquals("No legal moves, player must pass", e.getMessage());
+      Assert.assertEquals("No valid moves. You must pass", e.getMessage());
     }
   }
 

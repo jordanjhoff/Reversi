@@ -11,9 +11,9 @@ import java.io.IOException;
  */
 public class VisualControllerMock implements HexReversiController {
   private Appendable out;
-  private VisualController adaptee;
+  private HexReversiController adaptee;
 
-  public VisualControllerMock(Appendable out, VisualController adaptee) {
+  public VisualControllerMock(Appendable out, HexReversiController adaptee) {
     this.out = out;
     this.adaptee = adaptee;
   }
