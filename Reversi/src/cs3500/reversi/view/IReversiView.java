@@ -16,7 +16,7 @@ public interface IReversiView {
 
   void renderView(TeamColor color);
 
-  void addFeatureListener(IPlayerFeatures features);
+  void addFeatureListener(MoveFeatures features);
 
   void enableMoves(boolean enable);
 

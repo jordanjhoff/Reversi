@@ -1,13 +1,11 @@
 package cs3500.reversi.controller;
 
 import cs3500.reversi.model.HexPosition;
-import cs3500.reversi.model.IModelFeatures;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.view.IReversiView;
-import cs3500.reversi.view.IPlayerFeatures;
 
-public class VisualController implements IPlayerFeatures, IModelFeatures {
+public class VisualController implements HexReversiController {
   private final ReversiModel model;
   private final IReversiView view;
   private final Player player;
@@ -19,12 +17,12 @@ public class VisualController implements IPlayerFeatures, IModelFeatures {
     this.view = view;
     this.player = player;
     this.view.addFeatureListener(this);
-    this.model.addFeatureListener(this);
+    this.model.addFeatureObserver(this);
     this.player.addFeatureListener(this);
   }
 
   @Override
-  public void makeMove(HexPosition posn) {
+  public void notifyMakeMove(HexPosition posn) {
     try {
       this.model.addPiece(this.player.getColor(), posn);
     }
@@ -34,7 +32,7 @@ public class VisualController implements IPlayerFeatures, IModelFeatures {
   }
 
   @Override
-  public void passTurn() {
+  public void notifyPassTurn() {
     this.model.pass();
   }
 
@@ -45,7 +43,7 @@ public class VisualController implements IPlayerFeatures, IModelFeatures {
   }
 
   @Override
-  public void startGame(TeamColor startingTurn) {
+  public void notifyStartGame(TeamColor startingTurn) {
     this.view.setVisible(true);
     if (this.player.getColor().equals(startingTurn)) {
       displayToNonAI("Welcome to Reversi! You start");

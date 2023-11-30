@@ -1,11 +1,10 @@
 package cs3500.reversi.controller;
 
-import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.TeamColor;
-import cs3500.reversi.view.IPlayerFeatures;
+import cs3500.reversi.view.MoveFeatures;
 
 public class HumanPlayer implements Player {
-  private IPlayerFeatures listener;
+  private MoveFeatures observer;
 
   private TeamColor color;
   public HumanPlayer(TeamColor color) {
@@ -13,8 +12,8 @@ public class HumanPlayer implements Player {
   }
 
   @Override
-  public void addFeatureListener(IPlayerFeatures features) {
-    listener = features;
+  public void addFeatureListener(MoveFeatures features) {
+    observer = features;
   }
 
   @Override

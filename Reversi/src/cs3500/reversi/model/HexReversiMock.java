@@ -130,7 +130,7 @@ public class HexReversiMock implements ReversiModel {
   }
 
   @Override
-  public void addFeatureListener(IModelFeatures features) {
+  public void addFeatureObserver(ModelFeatures features) {
 
   }
 

@@ -1,11 +1,7 @@
 package cs3500.reversi.controller;
 
 import cs3500.reversi.model.HexPosition;
-import cs3500.reversi.model.IModelFeatures;
-import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
-import cs3500.reversi.view.IReversiView;
-import cs3500.reversi.view.IPlayerFeatures;
 
 import java.io.IOException;
 
@@ -13,7 +9,7 @@ import java.io.IOException;
  * A mock implementation of the VisualController class for testing and logging purposes.
  * This class logs method invocations and delegates calls to an adaptee VisualController instance.
  */
-public class VisualControllerMock implements IPlayerFeatures, IModelFeatures {
+public class VisualControllerMock implements HexReversiController {
   private Appendable out;
   private VisualController adaptee;
 
@@ -23,23 +19,23 @@ public class VisualControllerMock implements IPlayerFeatures, IModelFeatures {
   }
 
   @Override
-  public void makeMove(HexPosition posn) {
+  public void notifyMakeMove(HexPosition posn) {
     try {
       out.append("\nmakeMove: " + posn.toString());
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    adaptee.makeMove(posn);
+    adaptee.notifyMakeMove(posn);
   }
 
   @Override
-  public void passTurn() {
+  public void notifyPassTurn() {
     try {
       out.append("\npassTurn");
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    adaptee.passTurn();
+    adaptee.notifyPassTurn();
   }
 
   @Override
@@ -53,13 +49,13 @@ public class VisualControllerMock implements IPlayerFeatures, IModelFeatures {
   }
 
   @Override
-  public void startGame(TeamColor startingTurn) {
+  public void notifyStartGame(TeamColor startingTurn) {
     try {
       out.append("\nstartGame: " + startingTurn);
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    adaptee.startGame(startingTurn);
+    adaptee.notifyStartGame(startingTurn);
   }
 
   @Override

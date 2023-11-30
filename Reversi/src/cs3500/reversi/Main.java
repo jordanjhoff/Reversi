@@ -30,19 +30,22 @@ public class Main {
     else if (args == null || args.length != 3) {
       throw new IllegalArgumentException("Code 1");
     }
-    try {
-      // FIRST NUMBER IS BOARD SIZE
-      ReversiModel model = new HexReversi(Integer.parseInt(args[0]));
-      Player player1 = parsePlayer(args[1], TeamColor.BLACK, new ReadonlyHexReversiModel(model));
-      Player player2 = parsePlayer(args[1], TeamColor.WHITE, new ReadonlyHexReversiModel(model));
-      IReversiView viewPlayer1 = new ReversiGUIView(model);
-      IReversiView viewPlayer2 = new ReversiGUIView(model);
-      VisualController controller1 = new VisualController(model, viewPlayer1, player1);
-      VisualController controller2 = new VisualController(model, viewPlayer2, player2);
-      model.startGame();
-    } catch (NumberFormatException e) {
-      throw new IllegalArgumentException("invalid input");
+    else {
+      try {
+        // FIRST NUMBER IS BOARD SIZE
+        ReversiModel model = new HexReversi(Integer.parseInt(args[0]));
+        Player player1 = parsePlayer(args[1], TeamColor.BLACK, new ReadonlyHexReversiModel(model));
+        Player player2 = parsePlayer(args[1], TeamColor.WHITE, new ReadonlyHexReversiModel(model));
+        IReversiView viewPlayer1 = new ReversiGUIView(model);
+        IReversiView viewPlayer2 = new ReversiGUIView(model);
+        VisualController controller1 = new VisualController(model, viewPlayer1, player1);
+        VisualController controller2 = new VisualController(model, viewPlayer2, player2);
+        model.startGame();
+      } catch (NumberFormatException e) {
+        throw new IllegalArgumentException("invalid input");
+      }
     }
+
 
     /*
     ReversiModel model = new HexReversi(3);
@@ -54,10 +57,10 @@ public class Main {
     Player AIplayer2 = new AIPlayer(TeamColor.WHITE,
             new CaptureMost(),
             new ReadonlyHexReversiModel(model));
-    Player player1 = new HumanPlayer(TeamColor.WHITE);
-    Player player2 = new HumanPlayer(TeamColor.BLACK);
+    Player player1 = new HumanPlayer(TeamColor.BLACK);
+    Player player2 = new HumanPlayer(TeamColor.WHITE);
     VisualController controller1 = new VisualController(model, viewPlayer1, AIplayer1);
-    VisualController controller2 = new VisualController(model, viewPlayer2, AIplayer2);
+    VisualController controller2 = new VisualController(model, viewPlayer2, player2);
     model.startGame();
 
      */

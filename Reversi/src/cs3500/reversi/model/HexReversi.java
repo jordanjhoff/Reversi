@@ -25,7 +25,7 @@ public class HexReversi implements ReversiModel {
   private boolean started;
 
 
-  private List<IModelFeatures> featuresListeners;
+  private List<ModelFeatures> featuresListeners;
 
 
   /**
@@ -101,8 +101,8 @@ public class HexReversi implements ReversiModel {
    * Notifies game state for all listeners
    */
   private void notifyListenersStartGame() {
-    for (IModelFeatures listener : this.featuresListeners) {
-      listener.startGame(currentTurn);
+    for (ModelFeatures listener : this.featuresListeners) {
+      listener.notifyStartGame(currentTurn);
     }
   }
 
@@ -110,7 +110,7 @@ public class HexReversi implements ReversiModel {
    * Notifies the listeners that the board has changed
    */
   private void notifyListenersUpdateGamestate() {
-    for (IModelFeatures listener : this.featuresListeners) {
+    for (ModelFeatures listener : this.featuresListeners) {
       listener.notifyUpdatedGamestate();
     }
   }
@@ -122,7 +122,7 @@ public class HexReversi implements ReversiModel {
     LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap =
             this.currentTurn.equals(TeamColor.WHITE)
                     ? this.validWhiteMoves : this.validBlackMoves;
-    for (IModelFeatures listener : this.featuresListeners) {
+    for (ModelFeatures listener : this.featuresListeners) {
       listener.notifyAdvanceTurn(this.currentTurn);
     }
   }
@@ -408,7 +408,7 @@ public class HexReversi implements ReversiModel {
   }
 
   @Override
-  public void addFeatureListener(IModelFeatures features) {
+  public void addFeatureObserver(ModelFeatures features) {
     this.featuresListeners.add(features);
   }
 
@@ -417,7 +417,7 @@ public class HexReversi implements ReversiModel {
    * @param message message to be sent to listener whose turn it is
    */
   private void notifyCurrentColorListener(String message) {
-    for (IModelFeatures listener : this.featuresListeners) {
+    for (ModelFeatures listener : this.featuresListeners) {
       listener.notifyMessage(this.currentTurn, message);
     }
   }
@@ -466,7 +466,7 @@ public class HexReversi implements ReversiModel {
   }
 
   private void notifyGameOver() {
-    for (IModelFeatures listener : this.featuresListeners) {
+    for (ModelFeatures listener : this.featuresListeners) {
       notifyListenersUpdateGamestate();
       listener.notifyGameOver();
     }

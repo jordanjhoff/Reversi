@@ -20,7 +20,7 @@ public interface ReversiModel extends ReadonlyReversiModel {
    */
   void pass();
 
-  void addFeatureListener(IModelFeatures features);
+  void addFeatureObserver(ModelFeatures features);
 
   void startGame();
 

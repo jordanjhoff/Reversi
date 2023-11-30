@@ -53,7 +53,7 @@ public class JReversiPanel extends JPanel {
   protected TeamColor thisPlayer;
 
 
-  private final List<IPlayerFeatures> featuresListeners;
+  private final List<MoveFeatures> featuresListeners;
 
 
   /**
@@ -241,7 +241,7 @@ public class JReversiPanel extends JPanel {
     return new Point(x,y);
   }
 
-  public void addFeatureListener(IPlayerFeatures features) {
+  public void addFeatureListener(MoveFeatures features) {
     this.featuresListeners.add(features);
   }
 
@@ -284,14 +284,14 @@ public class JReversiPanel extends JPanel {
       //if the view is allowed to make moves
       if (enableMoves) {
         if (e.getKeyChar() == 'p') {
-          for (IPlayerFeatures listener : JReversiPanel.this.featuresListeners) {
-            listener.passTurn();
+          for (MoveFeatures listener : JReversiPanel.this.featuresListeners) {
+            listener.notifyPassTurn();
             selectedHex = Optional.empty();
           }
         }
         else if (e.getKeyCode() == KeyEvent.VK_ENTER && selectedHex.isPresent()) {
-          for (IPlayerFeatures listener : JReversiPanel.this.featuresListeners) {
-            listener.makeMove(selectedHex.get());
+          for (MoveFeatures listener : JReversiPanel.this.featuresListeners) {
+            listener.notifyMakeMove(selectedHex.get());
           }
         }
 

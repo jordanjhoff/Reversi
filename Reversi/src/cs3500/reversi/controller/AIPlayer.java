@@ -4,10 +4,10 @@ import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.strategy.ReversiStrategy;
-import cs3500.reversi.view.IPlayerFeatures;
+import cs3500.reversi.view.MoveFeatures;
 
 public class AIPlayer implements Player {
-  private IPlayerFeatures listener;
+  private MoveFeatures observer;
   private ReversiStrategy strategy;
 
   private ReadonlyReversiModel model;
@@ -20,8 +20,8 @@ public class AIPlayer implements Player {
   }
 
   @Override
-  public void addFeatureListener(IPlayerFeatures features) {
-    listener = features;
+  public void addFeatureListener(MoveFeatures features) {
+    observer = features;
   }
 
   @Override
@@ -33,10 +33,10 @@ public class AIPlayer implements Player {
   public void promptMove() {
     HexPosition chosenMove = this.strategy.choosePosn(model, this.color);
     if (chosenMove != null) {
-      listener.makeMove(chosenMove);
+      observer.notifyMakeMove(chosenMove);
     }
     else {
-      listener.passTurn();
+      observer.notifyPassTurn();
     }
   }
 }
