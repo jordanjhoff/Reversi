@@ -64,10 +64,12 @@ public class VisualController implements IPlayerFeatures, IModelFeatures {
     this.myTurn = false;
     this.view.enableMoves(false);
     if (model.getWinner() == null) {
-      this.view.displayMessage("Game over! Tie!");
+      this.view.displayMessage("Game over! Tie!\n"
+              + model.getScoreColor(TeamColor.BLACK) + " to " + model.getScoreColor(TeamColor.WHITE));
     }
     else {
-      this.view.displayMessage("Game over! " + model.getWinner() + " WINS!!");
+      this.view.displayMessage("Game over! " + model.getWinner() + " WINS!!\n"
+              + model.getScoreColor(TeamColor.BLACK) + " to " + model.getScoreColor(TeamColor.WHITE));
     }
 
   }
