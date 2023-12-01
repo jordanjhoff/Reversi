@@ -2,7 +2,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import cs3500.reversi.controller.AIPlayer;
+import cs3500.reversi.controller.HexReversiController;
 import cs3500.reversi.controller.Player;
+import cs3500.reversi.controller.PlayerMock;
+import cs3500.reversi.controller.VisualController;
+import cs3500.reversi.controller.VisualControllerMock;
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.HexReversiMock;
@@ -11,6 +16,8 @@ import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.strategy.CaptureMost;
 import cs3500.reversi.strategy.ReversiStrategy;
+import cs3500.reversi.view.IReversiView;
+import cs3500.reversi.view.ReversiGUIViewMock;
 import cs3500.reversi.view.ReversiTextualView;
 import cs3500.reversi.view.ReversiView;
 
@@ -23,9 +30,19 @@ public class StrategyMockTests {
   Appendable mockOut;
   Appendable viewOut;
   ReversiStrategy captureMost;
-  ReversiView view;
-  Player player1;
-  Player player2;
+
+  Player mock1;
+  Player mock2;
+
+  IReversiView view1mock;
+  IReversiView view2mock;
+
+  HexReversiController controller1;
+  HexReversiController controllerMock1;
+
+  HexReversiController controller2;
+  HexReversiController controllerMock2;
+
 
 
   @Before
@@ -34,9 +51,21 @@ public class StrategyMockTests {
     mock = new HexReversiMock(mockOut, new HexReversi(2));
     captureMost = new CaptureMost();
     viewOut = new StringBuilder();
-    view = new ReversiTextualView(new ReadonlyHexReversiModel(mock), viewOut);
-    //player1 = new PlayerImpl(TeamColor.BLACK, captureMost);
-    //player2 = new PlayerImpl(TeamColor.WHITE, captureMost);
+
+    mock1 = new PlayerMock(viewOut, new AIPlayer(TeamColor.BLACK, new CaptureMost(), mock));
+    mock2 = new PlayerMock(viewOut, new AIPlayer(TeamColor.WHITE, new CaptureMost(), mock));
+
+
+    view1mock = new ReversiGUIViewMock(viewOut);
+    view2mock = new ReversiGUIViewMock(viewOut);
+
+    controller1 = new VisualController(mock, view1mock, mock1);
+    controllerMock1 = new VisualControllerMock(viewOut, controller1);
+
+    controller2 = new VisualController(mock, view2mock, mock2);
+    controllerMock2 = new VisualControllerMock(viewOut, controller2);
+
+    mock.startGame();
   }
 
   @Test
@@ -97,6 +126,8 @@ public class StrategyMockTests {
             "flipCount: [-2,1,1], value: 3\n" +
             "addPiece: [-2,1,1]"));
     // one valid move picks it
+
+    System.out.println(mockOut);
   }
 
   @Test
