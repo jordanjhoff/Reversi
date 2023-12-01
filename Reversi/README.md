@@ -212,7 +212,20 @@ If you choose source, follow this map to be guided.
 - added mock HexReversi class for testing
 - possible valid moves are highlighted by tiny dot in gui
 
-## GUI Interaction
+
+# Changes to PART II
+- Changed the model to add observers 
+- Changed the player interface to better distinct between AI and humans
+- Deprecated the usertextinput strategy, as it is no longer in use
+
+# Additions for PART III
+- Added features interfaces and implementations for both the model and the view
+- Created mocks for the controller and view to test
+- Create a controller, which is an observer in model and view. 
+  - There is a controller and a view for each player.
+
+
+## GUI Interaction Tutorial
 When the GUI is open and in focus, the following behavior is implemented:
 To resize the view, drag and resize the frame. The GUI will scale accordingly. To click on a cell,
 click with the mouse cursor on a cell. The cell coordinates will be printed in the system console.
@@ -236,6 +249,15 @@ game will tell you so and force you to pass.
 
 ![img.png](img.png)
 
+Below is a given example of what the game should look like
+early into gameplay. 
+
+![img_2.png](img_2.png)
+
+When the game is over, the game will make a popup telling
+who whe winner is as well as the score. 
+
+![img_3.png](img_3.png)
 
 
 # References

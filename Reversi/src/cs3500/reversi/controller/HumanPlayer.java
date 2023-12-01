@@ -8,7 +8,6 @@ import cs3500.reversi.view.MoveFeatures;
  * can be registered.
  */
 public class HumanPlayer implements Player {
-  //this player's color
   private TeamColor color;
 
   /**
@@ -22,7 +21,7 @@ public class HumanPlayer implements Player {
   @Override
   public void addFeatureListener(MoveFeatures features) {
     return;
-    //does nothing
+    // does nothing
   }
 
   @Override
