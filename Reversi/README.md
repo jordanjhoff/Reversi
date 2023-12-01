@@ -127,7 +127,7 @@ This was just a little exercise to get the ball rolling for anyone who is intere
 
 ---
 
-## Heirarchy
+## Hierarchy
 
 ### Key Components
 
@@ -138,19 +138,24 @@ pattern. Quickly, the model is the one that models the entire game board, handli
 moves, which piece is where, what is legal, as well as making changes when commands are inputted.
 
 #### View
-The view listens to the model to represent it, in whichever way it is implemented.
-Currently, our only representation is the textual version,
-but it could represent the exact same game as a GUI.
+Our GUI view represents the Hex Reversi Board as a GUI that can be interacted with. When moves are made, it
+notifies its observer (the controller) that a move was made so that the controller can update the
+model accordingly. The GUI allows for clicking, and when it is not your current turn, the view
+disables clicking. When it is your turn, the view displays possible moves as a small yellow indicator.
+The view displays messages that are helpful to the user (such as when it's your turn, when the game ends
+when you must pass). The view only displays messages if the user is not an AI.
 
 #### Controller
-The controller, albeit not implemented, will be for communicating between the user,
-the model, and the view. It will take inputs and make sure that the changes happen,
-and are represented by the view so the player can have a seamless experience while playing
-hexagonal reversi.
+The controller acts as a intermediary between the view and the model. To do this, the controller
+acts as an observer to two different sets of features (defined in our features interfaces). It first
+observes for any model changes, such as the board updating, or whose turn it is, which is then
+passed to the view. It also observers for any moves made, which can be done by the Players 
+(in the case of an AI player), or by the view (in the case of a human player). For moves, the
+controller processes player and view moves identically.
 
 ### Key Subcomponents
 Our main subcomponents, besides being our implementations of our interfaces for the explained
-hexagonal version of reversi as well as textual view, would be our classes for the hexagonal positions
+hexagonal version of reversi as well as the view, would be our classes for the hexagonal positions
 as well as teamcolor.
 
 #### HexPosition
@@ -171,25 +176,27 @@ If you choose source, follow this map to be guided.
                         Source
                           |
                           |
-                    cs3500.reversi
-                    /     |      \
-                   /      |       \
-              model   controller   view
-                /         |          \ 
-               /          |           \
-              |   CONTROLLER IMPL TBD  \                        JPanel
-              |                         \         JFrame          |
-              |                     IReversiView   /              |
-          ReversiModel (interface)        \       /               |
-              |                       ReversiGUIView (has a JReversiPanel)
-              |                                
-              |                              
-              |
-              |
-    HexPosition (hexagonal implementation of ReversiModel
-             /                             \
-            /                               \
-           /                                 \
+                    cs3500.reversi ---------------------------------
+                    /     |                                          \
+                   /      |                                           \
+              model   controller                                      view 
+                 /     |                                               /
+                /      |  ModelFeatures, PlayerFeatures (interfaces)  /    
+               /       |         \           /                       /
+              |   HexReversiController (interface)                  /                    
+              |                         \                          /     JFrame       JPanel
+              |                          \                 IReversiView   /             |
+          ReversiModel (interface)       |                        |      /              |
+              |                          |                ReversiGUIView (has a JReversiPanel)
+              |                          |     
+              |                  VisualController (has a Player (interface))   
+              |                                             /     \
+              |                                       HumanPlayer  \  
+              |                                                     \ 
+    HexPosition (hexagonal implementation of ReversiModel)           \
+             /                             \              AIPlayer (has a strategy (interface)
+            /                               \                                           |
+           /                                 \                                      ChooseMost
     HexPosition (hex coords)          TeamColor (enum of possible types)
 
 
