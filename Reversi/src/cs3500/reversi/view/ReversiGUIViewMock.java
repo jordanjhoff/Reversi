@@ -8,16 +8,15 @@ import java.util.Objects;
 
 /**
  * A mock implementation of the ReversiGUIView class for testing and logging purposes.
- * This class delegates calls to an adaptee ReversiGUIView instance and logs method invocations.
  */
 public class ReversiGUIViewMock implements IReversiView {
 
   private Appendable out;
 
   /**
-   * Constructs a ReversiGUIViewMock with the given Appendable and adaptee.
+   * Constructs a ReversiGUIViewMock with the given Appendable.
    *
-   * @param out    The Appendable for logging method invocations.
+   * @param out The Appendable for logging method invocations.
    */
   public ReversiGUIViewMock(Appendable out) {
     this.out = out;

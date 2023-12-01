@@ -6,13 +6,22 @@ import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.strategy.ReversiStrategy;
 import cs3500.reversi.view.MoveFeatures;
 
+/**
+ * Class to represent an AI player of hexreversi. Has a color and observer which
+ * can be registered. Additionally, contains a strategy by which the moves are chosen.
+ */
 public class AIPlayer implements Player {
   private MoveFeatures observer;
   private ReversiStrategy strategy;
-
   private ReadonlyReversiModel model;
-
   private TeamColor color;
+
+  /**
+   *
+   * @param color team color of the ai
+   * @param strategy the stategy by which ai chooses their moves
+   * @param model the model of the game played on
+   */
   public AIPlayer(TeamColor color, ReversiStrategy strategy, ReadonlyReversiModel model) {
     this.color = color;
     this.strategy = strategy;

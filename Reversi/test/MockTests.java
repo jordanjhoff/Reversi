@@ -50,6 +50,21 @@ public class MockTests {
   HexReversiController controller1;
   HexReversiController controllerMock1;
 
+  HexReversiController controller2;
+  HexReversiController controllerMock2;
+
+  Player mockTwo1;
+  Player mockTwo2;
+
+  IReversiView viewTwo1mock;
+  IReversiView viewTwo2mock;
+
+  HexReversiController controllerTwo1;
+  HexReversiController controllerMockTwo1;
+
+  HexReversiController controllerTwo2;
+  HexReversiController controllerMockTwo2;
+
   @Before
   public void init() {
     hex5 = new HexReversi(5);
@@ -70,27 +85,27 @@ public class MockTests {
     controller1 = new VisualController(hex5, view1mock, mock1);
     controllerMock1 = new VisualControllerMock(out, controller1);
 
-    HexReversiController controller2 = new VisualController(hex5, view2mock, mock2);
-    HexReversiController controllerMock2 = new VisualControllerMock(out, controller2);
+    controller2 = new VisualController(hex5, view2mock, mock2);
+    controllerMock2 = new VisualControllerMock(out, controller2);
 
     hex5.startGame();
 
     //for a hexgame of size 2
 
     out2 = new StringBuilder();
-    Player mockTwo1 = new PlayerMock(out, new AIPlayer(TeamColor.BLACK, new CaptureMost(), hex2read));
-    Player mockTwo2 = new PlayerMock(out, new AIPlayer(TeamColor.WHITE, new CaptureMost(), hex2read));
+    mockTwo1 = new PlayerMock(out, new AIPlayer(TeamColor.BLACK, new CaptureMost(), hex2read));
+    mockTwo2 = new PlayerMock(out, new AIPlayer(TeamColor.WHITE, new CaptureMost(), hex2read));
 
 
-    IReversiView viewTwo1mock = new ReversiGUIViewMock(out2);
+    viewTwo1mock = new ReversiGUIViewMock(out2);
 
-    IReversiView viewTwo2mock = new ReversiGUIViewMock(out2);
+    viewTwo2mock = new ReversiGUIViewMock(out2);
 
-    HexReversiController controllerTwo1 = new VisualController(hex2, viewTwo1mock, mockTwo1);
-    HexReversiController controllerMockTwo1 = new VisualControllerMock(out2, controllerTwo1);
+    controllerTwo1 = new VisualController(hex2, viewTwo1mock, mockTwo1);
+    controllerMockTwo1 = new VisualControllerMock(out2, controllerTwo1);
 
-    HexReversiController controllerTwo2 = new VisualController(hex2, viewTwo2mock, mockTwo2);
-    HexReversiController controllerMockTwo2 = new VisualControllerMock(out2, controllerTwo2);
+    controllerTwo2 = new VisualController(hex2, viewTwo2mock, mockTwo2);
+    controllerMockTwo2 = new VisualControllerMock(out2, controllerTwo2);
 
     hex2.startGame();
   }

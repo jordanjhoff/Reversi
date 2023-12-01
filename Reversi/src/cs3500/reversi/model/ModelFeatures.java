@@ -32,7 +32,7 @@ public interface ModelFeatures {
   /**
    * Notify the observer that the state of the game has changed, and the board needs to be updated.
    */
-  void notifyUpdatedGamestate();
+  void notifyUpdatedGameState();
 
   /**
    * Notify the observer that a player made a move, and the turn advanced.

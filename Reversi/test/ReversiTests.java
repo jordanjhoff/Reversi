@@ -28,6 +28,7 @@ import cs3500.reversi.view.ReversiGUIViewMock;
  */
 public class ReversiTests {
 
+
   ReversiModel hex5;
   ReversiModel hex2;
 
@@ -41,6 +42,30 @@ public class ReversiTests {
   Appendable out;
   Appendable out2;
 
+  Player mock1;
+  Player mock2;
+
+  IReversiView view1mock;
+  IReversiView view2mock;
+
+  HexReversiController controller1;
+  HexReversiController controllerMock1;
+
+  HexReversiController controller2;
+  HexReversiController controllerMock2;
+
+  Player mockTwo1;
+  Player mockTwo2;
+
+  IReversiView viewTwo1mock;
+  IReversiView viewTwo2mock;
+
+  HexReversiController controllerTwo1;
+  HexReversiController controllerMockTwo1;
+
+  HexReversiController controllerTwo2;
+  HexReversiController controllerMockTwo2;
+
   @Before
   public void init() {
     hex5 = new HexReversi(5);
@@ -51,41 +76,41 @@ public class ReversiTests {
     // for a hexgame of size 5
 
     out = new StringBuilder();
-    Player mock1 = new PlayerMock(out, new AIPlayer(TeamColor.BLACK, new CaptureMost(), hex5read));
-    Player mock2 = new PlayerMock(out, new AIPlayer(TeamColor.WHITE, new CaptureMost(), hex5read));
+    mock1 = new PlayerMock(out, new AIPlayer(TeamColor.BLACK, new CaptureMost(), hex5read));
+    mock2 = new PlayerMock(out, new AIPlayer(TeamColor.WHITE, new CaptureMost(), hex5read));
 
 
-    IReversiView view1mock = new ReversiGUIViewMock(out);
+    view1mock = new ReversiGUIViewMock(out);
+    view2mock = new ReversiGUIViewMock(out);
 
-    IReversiView view2mock = new ReversiGUIViewMock(out);
+    controller1 = new VisualController(hex5, view1mock, mock1);
+    controllerMock1 = new VisualControllerMock(out, controller1);
 
-    HexReversiController controller1 = new VisualController(hex5, view1mock, mock1);
-    HexReversiController controllerMock1 = new VisualControllerMock(out, controller1);
-
-    HexReversiController controller2 = new VisualController(hex5, view2mock, mock2);
-    HexReversiController controllerMock2 = new VisualControllerMock(out, controller2);
+    controller2 = new VisualController(hex5, view2mock, mock2);
+    controllerMock2 = new VisualControllerMock(out, controller2);
 
     hex5.startGame();
 
     //for a hexgame of size 2
 
     out2 = new StringBuilder();
-    Player mockTwo1 = new PlayerMock(out, new AIPlayer(TeamColor.BLACK, new CaptureMost(), hex2read));
-    Player mockTwo2 = new PlayerMock(out, new AIPlayer(TeamColor.WHITE, new CaptureMost(), hex2read));
+    mockTwo1 = new PlayerMock(out, new AIPlayer(TeamColor.BLACK, new CaptureMost(), hex2read));
+    mockTwo2 = new PlayerMock(out, new AIPlayer(TeamColor.WHITE, new CaptureMost(), hex2read));
 
 
-    IReversiView viewTwo1mock = new ReversiGUIViewMock(out2);
+    viewTwo1mock = new ReversiGUIViewMock(out2);
 
-    IReversiView viewTwo2mock = new ReversiGUIViewMock(out2);
+    viewTwo2mock = new ReversiGUIViewMock(out2);
 
-    HexReversiController controllerTwo1 = new VisualController(hex2, viewTwo1mock, mockTwo1);
-    HexReversiController controllerMockTwo1 = new VisualControllerMock(out2, controllerTwo1);
+    controllerTwo1 = new VisualController(hex2, viewTwo1mock, mockTwo1);
+    controllerMockTwo1 = new VisualControllerMock(out2, controllerTwo1);
 
-    HexReversiController controllerTwo2 = new VisualController(hex2, viewTwo2mock, mockTwo2);
-    HexReversiController controllerMockTwo2 = new VisualControllerMock(out2, controllerTwo2);
+    controllerTwo2 = new VisualController(hex2, viewTwo2mock, mockTwo2);
+    controllerMockTwo2 = new VisualControllerMock(out2, controllerTwo2);
 
     hex2.startGame();
   }
+
 
   //test getsize works
   @Test
@@ -264,6 +289,7 @@ public class ReversiTests {
     hex2.addPiece(TeamColor.WHITE, new HexPosition(-1,-1,2));
     Assert.assertTrue(hex2.isGameOver());
     Assert.assertTrue(hex2read.isGameOver());
+    System.out.println(out.toString());
   }
 
   //test valid moves are correct before adding any pieces (current turn is black)

@@ -13,6 +13,12 @@ public class VisualControllerMock implements HexReversiController {
   private Appendable out;
   private HexReversiController adaptee;
 
+  /**
+   * Constructs a VisualControllerMock with the given Appendable and adaptee.
+   *
+   * @param out The Appendable for logging method invocations.
+   * @param adaptee functional class to make the moves
+   */
   public VisualControllerMock(Appendable out, HexReversiController adaptee) {
     this.out = out;
     this.adaptee = adaptee;
@@ -79,13 +85,13 @@ public class VisualControllerMock implements HexReversiController {
   }
 
   @Override
-  public void notifyUpdatedGamestate() {
+  public void notifyUpdatedGameState() {
     try {
       out.append("\nnotifyUpdatedGamestate");
     } catch (IOException e) {
       throw new IllegalStateException("Could not read data");
     }
-    adaptee.notifyUpdatedGamestate();
+    adaptee.notifyUpdatedGameState();
   }
 
   @Override

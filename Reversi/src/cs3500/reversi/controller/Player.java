@@ -8,10 +8,22 @@ import cs3500.reversi.view.MoveFeatures;
  */
 public interface Player {
 
+  /**
+   * Registers an observer to this class
+   *
+   * @param features the observer to listen in
+   */
   void addFeatureListener(MoveFeatures features);
 
+  /**
+   * What color is the player.
+   * @return the color of the player
+   */
   public TeamColor getColor();
 
+  /**
+   * Notifies the observer of a desired move. Does nothing if player is a human.
+   */
   void promptMove();
 
 }

@@ -14,12 +14,31 @@ public interface IReversiView {
    */
   void setVisible(boolean show);
 
+  /**
+   *
+   * @param color
+   */
   void renderView(TeamColor color);
 
+  /**
+   * Register the given listner to the view.
+   *
+   * @param features Feature listener
+   */
   void addFeatureListener(MoveFeatures features);
 
+  /**
+   * Enables/disables moves for a given view.
+   *
+   * @param enable true/false to enable/disable interaction with board
+   */
   void enableMoves(boolean enable);
 
+  /**
+   * Display out a given message.
+   *
+   * @param message to be displayed
+   */
   void displayMessage(String message);
 
 }

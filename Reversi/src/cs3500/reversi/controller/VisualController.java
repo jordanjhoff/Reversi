@@ -5,13 +5,26 @@ import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.view.IReversiView;
 
+/**
+ * A controller for HexReversi to be used in tandem with the GUI.
+ * Has a player (which can either be a human/ai) as well as the model
+ * of the game and the view for the given player to be controlled.
+ */
 public class VisualController implements HexReversiController {
-  private final ReversiModel model;
-  private final IReversiView view;
-  private final Player player;
+  private final ReversiModel model; // the model the game is played on
+  private final IReversiView view; // the view of the player
+  private final Player player; // the player to be controlled
 
-  private boolean myTurn;
+  private boolean myTurn; //is this players turn or not
 
+  /**
+   * Constructs a VisualController due the model of the game as well as
+   * the Player to be controlled and their respective view.
+   *
+   * @param model of the game
+   * @param view of the player  
+   * @param player the player themselves
+   */
   public VisualController(ReversiModel model, IReversiView view, Player player) {
     this.model = model;
     this.view = view;
@@ -73,7 +86,7 @@ public class VisualController implements HexReversiController {
   }
 
   @Override
-  public void notifyUpdatedGamestate() {
+  public void notifyUpdatedGameState() {
     this.view.renderView(this.player.getColor());
   }
 
@@ -87,6 +100,11 @@ public class VisualController implements HexReversiController {
 
   }
 
+  /**
+   * Only print out if the player is not an AI
+   *
+   * @param message message to be printed
+   */
   private void displayToNonAI(String message) {
     if (!(player instanceof AIPlayer)) {
       this.view.displayMessage(message);

@@ -13,6 +13,7 @@ import cs3500.reversi.model.TeamColor;
  * It prompts to the terminal and will respond with the position its given.
  * There is also error handling for when there are issues interpreting coordinates.
  */
+@Deprecated
 public class UserTextInput implements ReversiStrategy {
   Scanner input; //where the inputs are from
 

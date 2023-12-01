@@ -12,6 +12,12 @@ public class HexReversiMock implements ReversiModel {
   private Appendable out;
   private HexReversi adaptee;
 
+  /**
+   * Constructs a HexReversiMock with the given Appendable and adaptee.
+   *
+   * @param out The Appendable for logging method invocations.
+   * @param adaptee functional class to make the moves
+   */
   public HexReversiMock(Appendable out, HexReversi adaptee) {
     this.out = out;
     this.adaptee = adaptee;

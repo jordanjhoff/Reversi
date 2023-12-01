@@ -22,9 +22,10 @@ public class HexReversi implements ReversiModel {
   private TeamColor currentTurn;
   //records if the previous move made was a pass. used in determining two passes in a row
   private boolean lastPass;
-  private boolean started;
+  private boolean started; //has the game been started?
 
 
+  //these are the listeners to the game, (i.e. the controllers and players)
   private List<ModelFeatures> featuresListeners;
 
 
@@ -111,7 +112,7 @@ public class HexReversi implements ReversiModel {
    */
   private void notifyListenersUpdateGamestate() {
     for (ModelFeatures listener : this.featuresListeners) {
-      listener.notifyUpdatedGamestate();
+      listener.notifyUpdatedGameState();
     }
   }
 
@@ -409,6 +410,10 @@ public class HexReversi implements ReversiModel {
 
   @Override
   public void addFeatureObserver(ModelFeatures features) {
+    if (started) {
+      throw new IllegalStateException("Game has already been started!");
+    }
+
     this.featuresListeners.add(features);
   }
 

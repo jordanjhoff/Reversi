@@ -10,7 +10,6 @@ import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.strategy.CaptureMost;
-import cs3500.reversi.strategy.VisualUserStrat;
 import cs3500.reversi.view.IReversiView;
 import cs3500.reversi.view.ReversiGUIView;
 
@@ -68,7 +67,7 @@ public class Main {
 
 
   private static Player parsePlayer(String arg, TeamColor color, ReadonlyReversiModel rorModel) {
-    if (arg.toLowerCase().equals("player")) {
+    if (arg.toLowerCase().equals("human")) {
       return new HumanPlayer(color);
     }
     else if (arg.toLowerCase().equals("ai")){

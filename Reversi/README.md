@@ -220,8 +220,19 @@ To make a move, select a cell and press enter. The move made will be printed in 
 To pass, press p. An indicator will be printed in the system console. Possible valid moves for the
 current turn are highlighted by the tiny yellow sot.
 
+# How To Play HEXREVERSI
+Run the jar with the commandline arguments to determine 
+the size of the board (equal to the radius of the board) as well as two arguments to pick whether you
+want a HUMAN or AI for each respective player. For example, if you wanted a game of size 5,
+where a human was player 1 and an ai was player 2, run
 
+    java -jar reversi.jar 5 human ai
 
+in the terminal.
+
+Two windows will pop up, one for each respective player. Available moves are 
+highlighted by the small dot. If you are incapable of playing a move, the 
+game will tell you so and force you to pass. 
 
 
 
