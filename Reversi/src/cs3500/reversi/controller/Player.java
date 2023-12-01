@@ -19,7 +19,7 @@ public interface Player {
    * What color is the player.
    * @return the color of the player
    */
-  public TeamColor getColor();
+  TeamColor getColor();
 
   /**
    * Notifies the observer of a desired move. Does nothing if player is a human.

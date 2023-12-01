@@ -7,7 +7,9 @@ import cs3500.reversi.view.MoveFeatures;
  * This class logs method invocations and delegates calls to an adaptee HumanPlayer instance.
  */
 public class PlayerMock implements Player {
+  //the output stream to record moves
   private Appendable out;
+  //adaptee to handle player impl
   private Player adaptee;
 
   /**

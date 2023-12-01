@@ -9,4 +9,5 @@ import cs3500.reversi.view.MoveFeatures;
  * HexReversiController needs both.
  */
 public interface HexReversiController extends MoveFeatures, ModelFeatures {
+  //no additional features
 }

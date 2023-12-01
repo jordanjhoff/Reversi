@@ -16,7 +16,6 @@ public class ReversiGUIView extends JFrame implements IReversiView {
 
   private final JReversiPanel mainPanel;
 
-
   /**
    * Constructs a ReversiGUIView with the given ReadonlyReversiModel.
    *
