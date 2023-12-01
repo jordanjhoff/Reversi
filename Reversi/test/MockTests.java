@@ -2,10 +2,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-
 import cs3500.reversi.controller.AIPlayer;
 import cs3500.reversi.controller.HexReversiController;
 import cs3500.reversi.controller.Player;
