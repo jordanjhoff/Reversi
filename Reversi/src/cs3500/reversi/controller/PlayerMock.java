@@ -7,12 +7,11 @@ import cs3500.reversi.view.MoveFeatures;
  * This class logs method invocations and delegates calls to an adaptee HumanPlayer instance.
  */
 public class PlayerMock implements Player {
-
   private Appendable out;
   private Player adaptee;
 
   /**
-   * Constructs a HumanPlayerMock with the given Appendable and TeamColor.
+   * Constructs a PlayerMock with the given Appendable and TeamColor.
    *
    * @param out   The Appendable for logging method invocations.
    * @param player The player to be mocked

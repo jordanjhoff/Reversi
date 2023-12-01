@@ -137,11 +137,21 @@ public class HexReversiMock implements ReversiModel {
 
   @Override
   public void addFeatureObserver(ModelFeatures features) {
-
+    adaptee.addFeatureObserver(features);
+    try {
+      out.append("\naddFeatureObserver");
+    } catch (IOException e) {
+      throw new IllegalStateException("Could not read data");
+    }
   }
 
   @Override
   public void startGame() {
-
+    adaptee.startGame();
+    try {
+      out.append("\nstartGame");
+    } catch (IOException e) {
+      throw new IllegalStateException("Could not read data");
+    }
   }
 }

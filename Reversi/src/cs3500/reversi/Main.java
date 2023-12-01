@@ -70,7 +70,7 @@ public class Main {
     if (arg.toLowerCase().equals("human")) {
       return new HumanPlayer(color);
     }
-    else if (arg.toLowerCase().equals("ai")){
+    else if (arg.toLowerCase().equals("ai")) {
       return  new AIPlayer(color, new CaptureMost(), rorModel);
     }
     else {

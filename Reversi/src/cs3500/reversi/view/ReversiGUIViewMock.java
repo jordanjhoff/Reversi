@@ -2,9 +2,7 @@ package cs3500.reversi.view;
 
 import cs3500.reversi.model.TeamColor;
 
-import javax.swing.*;
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * A mock implementation of the ReversiGUIView class for testing and logging purposes.

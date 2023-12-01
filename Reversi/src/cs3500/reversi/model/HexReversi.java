@@ -13,9 +13,6 @@ import java.util.List;
  * INVARIANT: no coordinate will ever be greater than the radius (checked by validatePositions).
  */
 public class HexReversi implements ReversiModel {
-
-
-
   //the radius from the center in either q, r, or s axis
   private final int radius;
   //the teamcolor of the current player's turn
@@ -99,7 +96,7 @@ public class HexReversi implements ReversiModel {
   }
 
   /**
-   * Notifies game state for all listeners
+   * Notifies game state for all listeners.
    */
   private void notifyListenersStartGame() {
     for (ModelFeatures listener : this.featuresListeners) {
@@ -108,7 +105,7 @@ public class HexReversi implements ReversiModel {
   }
 
   /**
-   * Notifies the listeners that the board has changed
+   * Notifies the listeners that the board has changed.
    */
   private void notifyListenersUpdateGamestate() {
     for (ModelFeatures listener : this.featuresListeners) {

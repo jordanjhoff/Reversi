@@ -17,6 +17,7 @@ public class AIPlayer implements Player {
   private TeamColor color;
 
   /**
+   * Constructs an AI player due to their team color as well as strategy and board of the game.
    *
    * @param color team color of the ai
    * @param strategy the stategy by which ai chooses their moves

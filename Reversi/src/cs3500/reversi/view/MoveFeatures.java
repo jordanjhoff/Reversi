@@ -3,8 +3,9 @@ package cs3500.reversi.view;
 import cs3500.reversi.model.HexPosition;
 
 /**
- * This observer interface represents features that allow manipulation of moves within a Reversi game.
- * A class that implements these methods would process these actions.
+ * This observer interface represents features that allow manipulation
+ * of moves within a Reversi game. A class that implements these
+ * methods would process these actions.
  */
 public interface MoveFeatures {
 

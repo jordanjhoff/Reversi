@@ -15,8 +15,9 @@ public interface IReversiView {
   void setVisible(boolean show);
 
   /**
+   * Renders the view of the given player.
    *
-   * @param color
+   * @param color the color of the player.
    */
   void renderView(TeamColor color);
 

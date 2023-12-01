@@ -20,7 +20,6 @@ import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.strategy.CaptureMost;
 import cs3500.reversi.view.IReversiView;
-import cs3500.reversi.view.ReversiGUIView;
 import cs3500.reversi.view.ReversiGUIViewMock;
 
 /**

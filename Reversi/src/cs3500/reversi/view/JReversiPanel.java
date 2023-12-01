@@ -182,8 +182,9 @@ public class JReversiPanel extends JPanel {
   }
 
   /**
-   * Prints the current player at the top left of the board
-   * @param g2d
+   * Prints the current player at the top left of the board.
+   *
+   * @param g2d The graphics object to draw the cell on.
    */
   private void drawCurrentPlayer(Graphics2D g2d) {
     if (thisPlayer != null) {

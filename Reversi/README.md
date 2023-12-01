@@ -234,6 +234,8 @@ Two windows will pop up, one for each respective player. Available moves are
 highlighted by the small dot. If you are incapable of playing a move, the 
 game will tell you so and force you to pass. 
 
+![img.png](img.png)
+
 
 
 # References

@@ -22,7 +22,7 @@ public class VisualController implements HexReversiController {
    * the Player to be controlled and their respective view.
    *
    * @param model of the game
-   * @param view of the player  
+   * @param view of the player
    * @param player the player themselves
    */
   public VisualController(ReversiModel model, IReversiView view, Player player) {
@@ -76,11 +76,13 @@ public class VisualController implements HexReversiController {
     this.view.enableMoves(false);
     if (model.getWinner() == null) {
       this.view.displayMessage("Game over! Tie!\n"
-              + model.getScoreColor(TeamColor.BLACK) + " to " + model.getScoreColor(TeamColor.WHITE));
+              + model.getScoreColor(TeamColor.BLACK) +
+              " to " + model.getScoreColor(TeamColor.WHITE));
     }
     else {
       this.view.displayMessage("Game over! " + model.getWinner() + " WINS!!\n"
-              + model.getScoreColor(TeamColor.BLACK) + " to " + model.getScoreColor(TeamColor.WHITE));
+              + model.getScoreColor(TeamColor.BLACK) +
+              " to " + model.getScoreColor(TeamColor.WHITE));
     }
 
   }
@@ -101,7 +103,7 @@ public class VisualController implements HexReversiController {
   }
 
   /**
-   * Only print out if the player is not an AI
+   * Only print out if the player is not an AI.
    *
    * @param message message to be printed
    */
