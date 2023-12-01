@@ -45,16 +45,6 @@ public class VisualControllerMock implements HexReversiController {
   }
 
   @Override
-  public void notifyUpdateView() {
-    try {
-      out.append("\nnotifyUpdateView");
-    } catch (IOException e) {
-      throw new IllegalStateException("Could not read data");
-    }
-    adaptee.notifyUpdateView();
-  }
-
-  @Override
   public void notifyStartGame(TeamColor startingTurn) {
     try {
       out.append("\nstartGame: " + startingTurn);

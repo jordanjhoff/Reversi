@@ -7,11 +7,6 @@ package cs3500.reversi.model;
 public interface ModelFeatures {
 
   /**
-   * Notify the observer that the board has changed.
-   */
-  void notifyUpdateView();
-
-  /**
    * Notify observer that the game has begun.
    * @param startingPlayer the player color who goes first.
    */
