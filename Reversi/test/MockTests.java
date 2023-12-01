@@ -507,6 +507,45 @@ public class MockTests {
     Assert.assertTrue(hex2.isGameOver());
   }
 
+  @Test
+  public void testControllerObservesMove() {
+    controllerMock1.notifyMakeMove(new HexPosition(1,1,-2));
+    Assert.assertTrue(out.toString().contains("makeMove: [1,1,-2]"));
+    controllerMock1.notifyMakeMove(new HexPosition(1,1,-2));
+    Assert.assertTrue(out.toString().contains("makeMove: [1,1,-2]"));
+    Assert.assertTrue(out.toString().contains("Not your turn"));
+  }
+
+  @Test
+  public void testControllerObservesPassTurn() {
+    controllerMock1.notifyPassTurn();
+    Assert.assertTrue(out.toString().contains("pass"));
+    controllerMock1.notifyPassTurn();
+    Assert.assertTrue(out.toString().contains("pass"));
+    Assert.assertTrue(out.toString().contains("Game over"));
+  }
+
+  @Test
+  public void testControllerObservesModelFeatures() {
+    controllerMock1.notifyStartGame(TeamColor.BLACK);
+    Assert.assertTrue(out.toString().contains("displayMessage: Welcome to Reversi!"));
+
+    controllerMock1.notifyUpdatedGameState();
+    Assert.assertTrue(out.toString().contains("notifyUpdatedGamestate"));
+    Assert.assertTrue(out.toString().contains("renderView: BLACK"));
+
+    controllerMock1.notifyMessage(TeamColor.BLACK, "Testing");
+    Assert.assertTrue(out.toString().contains("notifyMessage: BLACK, Testing"));
+    Assert.assertTrue(out.toString().contains("displayMessage: Testing"));
+    Assert.assertTrue(out.toString().contains("renderView: BLACK"));
+
+    controllerMock1.notifyAdvanceTurn(TeamColor.WHITE);
+    Assert.assertTrue(out.toString().contains("notifyAdvanceTurn: WHITE"));
+    Assert.assertTrue(out.toString().contains("enableMoves: false"));
+  }
+
+
+
 
 
 }

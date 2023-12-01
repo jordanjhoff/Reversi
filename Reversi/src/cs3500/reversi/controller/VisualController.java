@@ -49,12 +49,6 @@ public class VisualController implements HexReversiController {
     this.model.pass();
   }
 
-
-  @Override
-  public void notifyUpdateView() {
-    this.view.renderView(this.player.getColor());
-  }
-
   @Override
   public void notifyStartGame(TeamColor startingTurn) {
     this.view.setVisible(true);
