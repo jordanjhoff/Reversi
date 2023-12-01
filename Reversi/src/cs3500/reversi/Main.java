@@ -23,10 +23,7 @@ public class Main {
    */
   public static void main(String[] args) {
 
-    if (args.length == 0) {
-      // default case to figure out
-    }
-    else if (args == null || args.length != 3) {
+    if (args == null || args.length != 3) {
       throw new IllegalArgumentException("Code 1");
     }
     else {
@@ -44,25 +41,6 @@ public class Main {
         throw new IllegalArgumentException("invalid input");
       }
     }
-
-
-    /*
-    ReversiModel model = new HexReversi(3);
-    IReversiView viewPlayer1 = new ReversiGUIView(model);
-    IReversiView viewPlayer2 = new ReversiGUIView(model);
-    Player AIplayer1 = new AIPlayer(TeamColor.BLACK,
-            new CaptureMost(),
-            new ReadonlyHexReversiModel(model));
-    Player AIplayer2 = new AIPlayer(TeamColor.WHITE,
-            new CaptureMost(),
-            new ReadonlyHexReversiModel(model));
-    Player player1 = new HumanPlayer(TeamColor.BLACK);
-    Player player2 = new HumanPlayer(TeamColor.WHITE);
-    VisualController controller1 = new VisualController(model, viewPlayer1, AIplayer1);
-    VisualController controller2 = new VisualController(model, viewPlayer2, player2);
-    model.startGame();
-
-     */
   }
 
 
