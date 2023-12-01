@@ -11,9 +11,13 @@ import cs3500.reversi.view.MoveFeatures;
  * can be registered. Additionally, contains a strategy by which the moves are chosen.
  */
 public class AIPlayer implements Player {
+  //the observer that needs to know when a move is made (the controller)
   private MoveFeatures observer;
+  //the strategy to determine the ai moves
   private ReversiStrategy strategy;
+  //the readonlymodel to base the strategies off of
   private ReadonlyReversiModel model;
+  //the color of this player
   private TeamColor color;
 
   /**

@@ -18,7 +18,7 @@ public class HexReversi implements ReversiModel {
   //the teamcolor of the current player's turn
   private TeamColor currentTurn;
   //records if the previous move made was a pass. used in determining two passes in a row
-  private boolean lastPass;
+  private boolean lastPass; //keeps track if the previous move made was a pass
   private boolean started; //has the game been started?
 
 
