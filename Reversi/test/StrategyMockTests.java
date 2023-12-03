@@ -18,8 +18,6 @@ import cs3500.reversi.strategy.CaptureMost;
 import cs3500.reversi.strategy.ReversiStrategy;
 import cs3500.reversi.view.IReversiView;
 import cs3500.reversi.view.ReversiGUIViewMock;
-import cs3500.reversi.view.ReversiTextualView;
-import cs3500.reversi.view.ReversiView;
 
 /**
  * A class to test the CaptureMost strategy implementation and its interaction

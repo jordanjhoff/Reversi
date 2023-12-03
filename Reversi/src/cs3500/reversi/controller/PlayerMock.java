@@ -6,6 +6,7 @@ import cs3500.reversi.view.MoveFeatures;
  * A mock implementation of the HumanPlayer class for testing and logging purposes.
  * This class logs method invocations and delegates calls to an adaptee HumanPlayer instance.
  */
+
 public class PlayerMock implements Player {
   //the output stream to record moves
   private Appendable out;
