@@ -5,14 +5,9 @@ import java.util.List;
 
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.TeamColor;
-import cs3500.reversi.provider.model.CellType;
-import cs3500.reversi.provider.model.Color;
-import cs3500.reversi.provider.model.ICell;
-import cs3500.reversi.provider.model.ReadonlyReversiModel;
-import cs3500.reversi.provider.view.AdaptedProviderFeatures;
 
 public class AdaptedProviderReadOnlyModel implements ReadonlyReversiModel {
-  private cs3500.reversi.model.ReadonlyReversiModel adaptee;
+  private final cs3500.reversi.model.ReadonlyReversiModel adaptee;
   public AdaptedProviderReadOnlyModel(cs3500.reversi.model.ReadonlyReversiModel ourModel) {
     this.adaptee = ourModel;
   }
@@ -83,7 +78,7 @@ public class AdaptedProviderReadOnlyModel implements ReadonlyReversiModel {
 
   @Override
   public int getScore(Color color) {
-    TeamColor ourColor = color.equals(CellType.WHITE) ? TeamColor.WHITE : TeamColor.BLACK;
+    TeamColor ourColor = color.equals(Color.WHITE) ? TeamColor.WHITE : TeamColor.BLACK;
     return adaptee.getScoreColor(ourColor);
   }
 
@@ -117,11 +112,30 @@ public class AdaptedProviderReadOnlyModel implements ReadonlyReversiModel {
   @Override
   public List<ICell> getEdgeCells(ICell cell) {
     List<ICell> result = new ArrayList<>();
-    int radius = this.adaptee.getSize();
+    int q = cell.getCoordinates()[0];
+    int r = cell.getCoordinates()[1];
+    int s = -q - r;
 
+    // The six neighbors of a hexagons in a hexagonal grid
+    int[][] directions = {{1, -1, 0}, {1, 0, -1}, {0, 1, -1}, {-1, 1, 0}, {-1, 0, 1}, {0, -1, 1}};
 
+    for (int[] direction : directions) {
+      int neighborQ = q + direction[0];
+      int neighborR = r + direction[1];
+      int neighborS = s + direction[2];
 
-
+      HexPosition neighborPos = new HexPosition(neighborQ, neighborR, neighborS);
+      if (adaptee.getBoard().containsKey(neighborPos)) {
+        ICell neighborCell = new Cell(neighborQ, neighborR);
+        TeamColor color = adaptee.getBoard().get(neighborPos);
+        if (color.equals(TeamColor.BLACK)) {
+          neighborCell.setColor(Color.BLACK);
+        } else if (color.equals(TeamColor.WHITE)) {
+          neighborCell.setColor(Color.WHITE);
+        }
+        result.add(neighborCell);
+      }
+    }
     return result;
   }
 
