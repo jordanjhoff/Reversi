@@ -29,10 +29,23 @@ public class AdaptedProviderReadOnlyModel implements ReadonlyReversiModel {
 
       for (int q = rMin; q <= rMax; q++) {
         int s = -r - q;
-        adaptee.getBoard(convertQR(q, r), )
-        //board.get(r + radius).add(new Cell(q, r))
+        TeamColor col = adaptee.getBoard().get(new HexPosition(q, r, s));
+        Cell curCell = new Cell(q, r);
+        if (col == null) {
+          board.get(r + radius).add(curCell);
+
+        }
+        else if (col.equals(TeamColor.BLACK)) {
+          curCell.setColor(Color.BLACK);
+          board.get(r + radius).add(curCell);
+        }
+        else {
+          curCell.setColor(Color.WHITE);
+          board.get(r + radius).add(curCell);
+        }
       }
     }
+    return board;
   }
 
   private HexPosition convertQR(int q, int r) {
@@ -91,7 +104,14 @@ public class AdaptedProviderReadOnlyModel implements ReadonlyReversiModel {
 
   @Override
   public ICell getCellAt(int column, int row) {
-    return
+    ICell cell = new Cell(column, row);
+    if (adaptee.getBoard().get(convertQR(column, row)).equals(TeamColor.BLACK)) {
+      cell.setColor(Color.BLACK);
+    } else if (adaptee.getBoard().get(convertQR(column, row)).equals(TeamColor.WHITE)) {
+      cell.setColor(Color.WHITE);
+    }
+
+    return cell;
   }
 
   @Override
