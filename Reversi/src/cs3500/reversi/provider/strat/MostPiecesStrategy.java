@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import cs3500.reversi.provider.model.ICell;
+import cs3500.reversi.provider.model.Cell;
 import cs3500.reversi.provider.model.ReadonlyReversiModel;
 import cs3500.reversi.provider.strat.Strategy;
 import java.util.Optional;
