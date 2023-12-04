@@ -6,7 +6,7 @@ import cs3500.reversi.provider.view.ModelFeatures;
 /**
  * An interface representing a Reversi game.
  */
-public interface IReversi extends ReadonlyReversiModel {
+public interface IReversi extends cs3500.reversi.provider.model.ReadonlyReversiModel {
   /**
    * Plays a valid move of the current player.
    * @param q the column coordinate of a cell you want to play
