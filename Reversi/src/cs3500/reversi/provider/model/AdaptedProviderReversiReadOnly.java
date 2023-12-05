@@ -6,10 +6,9 @@ import java.util.List;
 
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.TeamColor;
-import cs3500.reversi.provider.view.ModelFeatures;
 
-public class AdaptedProviderReversi implements IReversi {
-  private final cs3500.reversi.model.ReversiModel adaptee;
+public class AdaptedProviderReversiReadOnly implements ReadonlyReversiModel {
+  private final cs3500.reversi.model.ReadonlyReversiModel adaptee;
 
   public AdaptedProviderReversi(cs3500.reversi.model.ReversiModel ourModel) {
     this.adaptee = ourModel;
@@ -27,7 +26,7 @@ public class AdaptedProviderReversi implements IReversi {
 
       for (int q = rMin; q <= rMax; q++) {
         int s = -r - q;
-        TeamColor col = adaptee.getBoard().get(new HexPosition(q, r, s));
+        TeamColor col = adaptee.getPieceAt(new HexPosition(q, r, s));
         Cell curCell = new Cell(q, r);
         if (col == null) {
           board.get(r + radius).add(curCell);
@@ -51,28 +50,8 @@ public class AdaptedProviderReversi implements IReversi {
   }
 
   @Override
-  public void playMove(int q, int r) {
-    adaptee.addPiece(adaptee.getCurrentTurn(), convertQR(q,r));
-  }
-
-  @Override
-  public void passMove() {
-    adaptee.pass();
-  }
-
-  @Override
   public boolean isGameOver() {
     return adaptee.isGameOver();
-  }
-
-  @Override
-  public void startGame() {
-    adaptee.startGame();
-  }
-
-  @Override
-  public void addFeatures(ModelFeatures features) {
-    adaptee.addFeatureObserver(new AdaptedProviderFeatures(features));
   }
 
   @Override
@@ -132,6 +111,12 @@ public class AdaptedProviderReversi implements IReversi {
     return cell;
   }
 
+  private boolean validPosition(HexPosition pos) {
+    return (Math.abs(pos.getQPosition()) <= adaptee.getSize())
+            && (Math.abs(pos.getRPosition()) <= adaptee.getSize())
+            && (pos.getSPosition() == -pos.getQPosition() - pos.getRPosition());
+  }
+
   @Override
   public List<ICell> getEdgeCells(ICell cell) {
     List<ICell> result = new ArrayList<>();
@@ -146,18 +131,20 @@ public class AdaptedProviderReversi implements IReversi {
       int neighborQ = q + direction[0];
       int neighborR = r + direction[1];
       int neighborS = s + direction[2];
-
       HexPosition neighborPos = new HexPosition(neighborQ, neighborR, neighborS);
-      if (adaptee.getBoard().containsKey(neighborPos)) {
-        ICell neighborCell = new Cell(neighborQ, neighborR);
-        TeamColor color = adaptee.getBoard().get(neighborPos);
-        if (color.equals(TeamColor.BLACK)) {
-          neighborCell.setColor(Color.BLACK);
-        } else if (color.equals(TeamColor.WHITE)) {
-          neighborCell.setColor(Color.WHITE);
+      if (validPosition(neighborPos)) {
+        if (adaptee.getBoard().containsKey(neighborPos)) {
+          ICell neighborCell = new Cell(neighborQ, neighborR);
+          TeamColor color = adaptee.getBoard().get(neighborPos);
+          if (color.equals(TeamColor.BLACK)) {
+            neighborCell.setColor(Color.BLACK);
+          } else if (color.equals(TeamColor.WHITE)) {
+            neighborCell.setColor(Color.WHITE);
+          }
+          result.add(neighborCell);
         }
-        result.add(neighborCell);
       }
+
     }
     return result;
   }
