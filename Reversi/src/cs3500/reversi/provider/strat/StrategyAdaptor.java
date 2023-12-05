@@ -1,20 +1,24 @@
 package cs3500.reversi.provider.strat;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.provider.model.AdaptedProviderReversiReadOnly;
 import cs3500.reversi.provider.model.ICell;
-import cs3500.reversi.strategy.CaptureMost;
 import cs3500.reversi.strategy.ReversiStrategy;
 
+/**
+ * An adaptor to adapt our provider's strategy to our strategy interface.
+ */
 public class StrategyAdaptor implements ReversiStrategy {
 
-  Strategy adaptee;
+  private Strategy adaptee;
 
+  /**
+   * A constructor to adapt our provider's strategy.
+   * @param providedStrategy our provider's strategy.
+   */
   public StrategyAdaptor(Strategy providedStrategy) {
     this.adaptee = providedStrategy;
   }

@@ -4,6 +4,9 @@ import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.view.IReversiView;
 import cs3500.reversi.view.MoveFeatures;
 
+/**
+ * A class to adapt our provider's view to our ReversiView interface.
+ */
 public class AdaptedProviderView implements IReversiView {
 
   private IView adaptee;
@@ -11,6 +14,7 @@ public class AdaptedProviderView implements IReversiView {
   public AdaptedProviderView(IView adaptee) {
     this.adaptee = adaptee;
   }
+
   @Override
   public void setVisible(boolean show) {
     //does nothing

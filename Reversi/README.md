@@ -36,43 +36,6 @@ and knows how to make moves, and does the rest from there.
 - The game looked fun to play
 ***
 
-## Quick Start
-
-The following section will take the user through
-an example of making the game and playing a couple moves.
-
-
-The game can be initialized by the following code. We will define
-both our view and model:
-
-    Appendable out = new StringBuilder();   // output for textual view
-    ReversiModel model = new HexReversi(5); // create hexagonal reversi with radius 5
-    ReversiView view = new ReversiTextualView(model, out); // creates view due to output and model
-
-The game can be rendered and visualized by the following command:
-
-    view.render();
-    System.out.println(out.toString());
-
-We will observe the following output:
-
-         _ _ _ _ _ _
-        _ _ _ _ _ _ _
-       _ _ _ _ _ _ _ _
-      _ _ _ _ * _ _ _ _
-     _ _ _ * X O * _ _ _
-    _ _ _ _ O _ X _ _ _ _
-     _ _ _ * X O * _ _ _
-      _ _ _ _ * _ _ _ _
-       _ _ _ _ _ _ _ _
-        _ _ _ _ _ _ _
-         _ _ _ _ _ _
-
-#### Where X is BLACK, O is WHITE, and * are currently possible moves.
-To make a move in the current state, add a piece with the position.
-
-Before I show that, I'll do a brief dive into our coordinate system.
-
 ### HexPosition
 
 There are three coordinates, with the central coordinate is (q,r,s) = (0,0,0). In any given direction, two coordinates change while one stays the same.
@@ -96,34 +59,8 @@ The coordinates cannot just be any number, and it is ALWAYS true that:
 
     q = -r - s; // ( q + r + s will equal 0 )
 
-### Making a move
-Lastly, to make a move, just add the piece to the game board by the following:
-
-    model.addPiece(new HexPosition(1, -2, 1));
-    view.render(); //render the update
-    System.out.println(out.toString());
-
-This will result in the following.
-
-         _ _ _ _ _ _
-        _ _ _ _ _ _ _
-       _ _ _ _ * _ _ _
-      _ _ _ _ X _ _ _ _
-     _ _ _ _ X X * _ _ _
-    _ _ _ _ O _ X _ _ _ _
-     _ _ _ * X O _ _ _ _
-      _ _ _ _ * _ _ _ _
-       _ _ _ _ _ _ _ _
-        _ _ _ _ _ _ _
-         _ _ _ _ _ _
-
-Now, whites possible moves are highlighted by * .
-
----
-
 For a more in depth understanding of how to work our game,
 please observe the model's interface ReversiModel for additional methods with javadoc.
-This was just a little exercise to get the ball rolling for anyone who is interested.
 
 ---
 
