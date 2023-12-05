@@ -52,31 +52,21 @@ public class Main {
     }
   }
 
-
-  private static Player parsePlayer(String arg, TeamColor color, ReadonlyReversiModel rorModel) {
-    if (arg.toLowerCase().equals("human")) {
-      return new HumanPlayer(color);
-    }
-    else if (arg.toLowerCase().equals("ai")) {
-      return  new AIPlayer(color, new CaptureMost(), rorModel);
-    }
-    else {
-      throw new IllegalArgumentException("illegal arguments");
-    }
-  }
-
   private static Player parseProviderPlayer(String arg, TeamColor color, ReadonlyReversiModel rorModel) {
     if (arg.toLowerCase().equals("human")) {
       return new HumanPlayer(color);
     }
+    else if (arg.toLowerCase().equals("strategy1")) {
+      return new AIPlayer(color, new CaptureMost(), rorModel);
+    }
     else if (arg.toLowerCase().equals("providerstrategy1")) {
-      return  new AIPlayer(color, new StrategyAdaptor(new MostPiecesStrategy()), rorModel);
+      return new AIPlayer(color, new StrategyAdaptor(new MostPiecesStrategy()), rorModel);
     }
     else if (arg.toLowerCase().equals("providerstrategy2")) {
-      return  new AIPlayer(color, new StrategyAdaptor(new CornersStrategy()), rorModel);
+      return new AIPlayer(color, new StrategyAdaptor(new CornersStrategy()), rorModel);
     }
     else if (arg.toLowerCase().equals("providerstrategy3")) {
-      return  new AIPlayer(color, new StrategyAdaptor(new AvoidCornersStrategy()), rorModel);
+      return new AIPlayer(color, new StrategyAdaptor(new AvoidCornersStrategy()), rorModel);
     }
 
     else {

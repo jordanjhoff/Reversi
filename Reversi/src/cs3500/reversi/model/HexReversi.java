@@ -399,7 +399,7 @@ public class HexReversi implements ReversiModel {
       //makes it so gameover would flip
     }
     if (!isGameOver()) {
-      notifyCurrentColorListener("It's your turn");
+      notifyCurrentColorListener("Opponent passed. It's your turn");
       notifyListenersUpdateGamestate();
       notifyListenersAdvanceTurn();
     }

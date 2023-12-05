@@ -46,11 +46,13 @@ public class AIPlayer implements Player {
   @Override
   public void promptMove() {
     HexPosition chosenMove = this.strategy.choosePosn(model, this.color);
-    if (chosenMove != null) {
-      observer.notifyMakeMove(chosenMove);
-    }
-    else {
-      observer.notifyPassTurn();
+    if (!model.isGameOver()) {
+      if (chosenMove != null) {
+        observer.notifyMakeMove(chosenMove);
+      }
+      else {
+        observer.notifyPassTurn();
+      }
     }
   }
 }

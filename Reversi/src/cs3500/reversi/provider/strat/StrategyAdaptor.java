@@ -1,6 +1,7 @@
 package cs3500.reversi.provider.strat;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.ReadonlyReversiModel;
@@ -28,6 +29,7 @@ public class StrategyAdaptor implements ReversiStrategy {
     else {
       int q = moves.get(0).getCoordinates()[0];
       int r = moves.get(0).getCoordinates()[1];
+
       return new HexPosition(q, r, -q - r);
     }
   }
