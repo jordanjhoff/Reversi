@@ -55,7 +55,7 @@ public class AdaptedProviderReversiReadOnly implements ReadonlyReversiModel {
 
   @Override
   public int returnSize() {
-    return adaptee.getSize();
+    return adaptee.getSize() * 2 + 1;
   }
 
   @Override
