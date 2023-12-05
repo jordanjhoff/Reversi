@@ -1,7 +1,6 @@
 package cs3500.reversi.provider.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import cs3500.reversi.model.HexPosition;
@@ -10,7 +9,7 @@ import cs3500.reversi.model.TeamColor;
 public class AdaptedProviderReversiReadOnly implements ReadonlyReversiModel {
   private final cs3500.reversi.model.ReadonlyReversiModel adaptee;
 
-  public AdaptedProviderReversi(cs3500.reversi.model.ReversiModel ourModel) {
+  public AdaptedProviderReversiReadOnly(cs3500.reversi.model.ReadonlyReversiModel ourModel) {
     this.adaptee = ourModel;
   }
 
@@ -91,6 +90,7 @@ public class AdaptedProviderReversiReadOnly implements ReadonlyReversiModel {
 
   @Override
   public List<List<ICell>> getNeighbors(ICell cell) {
+    int[][] directions = {{1, -1, 0}, {1, 0, -1}, {0, 1, -1}, {-1, 1, 0}, {-1, 0, 1}, {0, -1, 1}};
     return null;
   }
 
@@ -104,7 +104,8 @@ public class AdaptedProviderReversiReadOnly implements ReadonlyReversiModel {
     ICell cell = new Cell(column, row);
     if (adaptee.getBoard().get(convertQR(column, row)).equals(TeamColor.BLACK)) {
       cell.setColor(Color.BLACK);
-    } else if (adaptee.getBoard().get(convertQR(column, row)).equals(TeamColor.WHITE)) {
+    }
+    else if (adaptee.getBoard().get(convertQR(column, row)).equals(TeamColor.WHITE)) {
       cell.setColor(Color.WHITE);
     }
 

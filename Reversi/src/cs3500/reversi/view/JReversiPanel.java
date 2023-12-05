@@ -1,11 +1,6 @@
 package cs3500.reversi.view;
 
-import java.awt.Polygon;
-import java.awt.Point;
-import java.awt.Graphics2D;
-import java.awt.Graphics;
-import java.awt.Dimension;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -110,12 +105,14 @@ public class JReversiPanel extends JPanel {
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
+
     ArrayList<HexPosition> currValidMoves = gameState.getValidMoves();
     //scales hexagon size based on bounds
     this.hexagonSize = Math.min(this.getWidth() / (5 * this.modelRadius),
             this.getHeight() / (5 * this.modelRadius));
 
     Graphics2D g2d = (Graphics2D) g.create();
+    g2d.setStroke(new BasicStroke(2));
     drawCurrentPlayer(g2d);
     //iterates through the board, top to bottom, left to right
     for (int r = -this.modelRadius; r <= this.modelRadius; r++) {
