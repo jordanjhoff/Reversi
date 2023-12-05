@@ -30,7 +30,6 @@ public class Main {
    * A main method to execute and view a HexReversi game.
    */
   public static void main(String[] args) {
-
     if (args == null || args.length != 3) {
       throw new IllegalArgumentException("Code 1");
     }
@@ -38,10 +37,13 @@ public class Main {
       try {
         // FIRST NUMBER IS BOARD SIZE
         ReversiModel model = new HexReversi(Integer.parseInt(args[0]));
-        Player player1 = parseProviderPlayer(args[1], TeamColor.BLACK, new ReadonlyHexReversiModel(model));
-        Player player2 = parseProviderPlayer(args[2], TeamColor.WHITE, new ReadonlyHexReversiModel(model));
+        Player player1 = parseProviderPlayer(args[1], TeamColor.BLACK,
+                new ReadonlyHexReversiModel(model));
+        Player player2 = parseProviderPlayer(args[2], TeamColor.WHITE,
+                new ReadonlyHexReversiModel(model));
         IReversiView viewPlayer1 = new ReversiGUIView(model);
-        IView viewPlayer2 = new View(new AdaptedProviderReversiReadOnly(new ReadonlyHexReversiModel(model)));
+        IView viewPlayer2 = new View(new AdaptedProviderReversiReadOnly(
+                new ReadonlyHexReversiModel(model)));
         IReversiView adaptedViewPlayer2 = new AdaptedProviderView(viewPlayer2);
         VisualController controller1 = new VisualController(model, viewPlayer1, player1);
         VisualController controller2 = new VisualController(model, adaptedViewPlayer2, player2);
@@ -52,7 +54,8 @@ public class Main {
     }
   }
 
-  private static Player parseProviderPlayer(String arg, TeamColor color, ReadonlyReversiModel rorModel) {
+  private static Player parseProviderPlayer(String arg, TeamColor color,
+                                            ReadonlyReversiModel rorModel) {
     if (arg.toLowerCase().equals("human")) {
       return new HumanPlayer(color);
     }
@@ -68,7 +71,6 @@ public class Main {
     else if (arg.toLowerCase().equals("providerstrategy3")) {
       return new AIPlayer(color, new StrategyAdaptor(new AvoidCornersStrategy()), rorModel);
     }
-
     else {
       throw new IllegalArgumentException("illegal arguments");
     }

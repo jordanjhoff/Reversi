@@ -1,6 +1,5 @@
 package cs3500.reversi.provider.model;
 
-import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.provider.view.ModelFeatures;
 
 /**

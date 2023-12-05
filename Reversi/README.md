@@ -38,7 +38,8 @@ and knows how to make moves, and does the rest from there.
 
 ### HexPosition
 
-There are three coordinates, with the central coordinate is (q,r,s) = (0,0,0). In any given direction, two coordinates change while one stays the same.
+There are three coordinates, with the central coordinate is (q,r,s) = (0,0,0). 
+In any given direction, two coordinates change while one stays the same.
 The corresponding coordinate increases in each direction are:
 
          q,-r,+s    +q,-r,s
@@ -75,12 +76,12 @@ pattern. Quickly, the model is the one that models the entire game board, handli
 moves, which piece is where, what is legal, as well as making changes when commands are inputted.
 
 #### View
-Our GUI view represents the Hex Reversi Board as a GUI that can be interacted with. When moves are made, it
-notifies its observer (the controller) that a move was made so that the controller can update the
-model accordingly. The GUI allows for clicking, and when it is not your current turn, the view
-disables clicking. When it is your turn, the view displays possible moves as a small yellow indicator.
-The view displays messages that are helpful to the user (such as when it's your turn, when the game ends
-when you must pass). The view only displays messages if the user is not an AI.
+Our GUI view represents the Hex Reversi Board as a GUI that can be interacted with. When moves are 
+made, it notifies its observer (the controller) that a move was made so that the controller can 
+update the model accordingly. The GUI allows for clicking, and when it is not your current turn, the
+view disables clicking. When it is your turn, the view displays possible moves as a small yellow 
+indicator. The view displays messages that are helpful to the user (such as when it's your turn, 
+when the game ends when you must pass). The view only displays messages if the user is not an AI.
 
 #### Controller
 The controller acts as a intermediary between the view and the model. To do this, the controller
@@ -102,8 +103,8 @@ getters, as well as equals and hashcode.
 
 #### TeamColor
 TeamColor is our enumerated type for representing every team playing the game, as well as
-their desired textual representation. It also contains the information about cycling through the teams:
-if it is one colors turn, who goes next?
+their desired textual representation. It also contains the information about cycling through the 
+teams: if it is one colors turn, who goes next?
 
 ### Source Organization
 Our codebase is first split into source and tests. Tests is just for our
@@ -136,8 +137,9 @@ If you choose source, follow this map to be guided.
            /                                 \                                      ChooseMost
     HexPosition (hex coords)          TeamColor (enum of possible types)
 
+# Changelog
 
-# Changes to PART I
+## Changes to PART I
 
 - added additional observer methods
     - getBoard, flipCount, getWhiteScore, getBlackScore
@@ -147,7 +149,7 @@ If you choose source, follow this map to be guided.
 - fixed TeamColor accessibility
     - private field
 
-# Additions for PART II
+## Additions for PART II
 - added GUIView
 - added strategies interface and implementations
     - userInput, captureMost
@@ -156,20 +158,19 @@ If you choose source, follow this map to be guided.
 - added mock HexReversi class for testing
 - possible valid moves are highlighted by tiny dot in gui
 
-
-# Changes to PART II
+## Changes to PART II
 - Changed the model to add observers 
 - Changed the player interface to better distinct between AI and humans
 - Deprecated the usertextinput strategy, as it is no longer in use
 
-# Additions for PART III
+## Additions for PART III
 - Added features interfaces and implementations for both the model and the view
 - Created mocks for the controller and view to test
 - Create a controller, which is an observer in model and view. 
   - There is a controller and a view for each player.
 
 
-## GUI Interaction Tutorial
+# GUI Interaction Tutorial
 When the GUI is open and in focus, the following behavior is implemented:
 To resize the view, drag and resize the frame. The GUI will scale accordingly. To click on a cell,
 click with the mouse cursor on a cell. The cell coordinates will be printed in the system console.
@@ -179,8 +180,8 @@ current turn are highlighted by the tiny yellow sot.
 
 # How To Play HEXREVERSI
 Run the jar with the commandline arguments to determine 
-the size of the board (equal to the radius of the board) as well as two arguments to pick whether you
-want a HUMAN or AI for each respective player. For example, if you wanted a game of size 5,
+the size of the board (equal to the radius of the board) as well as two arguments to pick whether 
+you want a HUMAN or AI for each respective player. For example, if you wanted a game of size 5,
 where a human was player 1 and an ai was player 2, run
 
     java -jar reversi.jar 5 human ai
@@ -203,6 +204,23 @@ who whe winner is as well as the score.
 
 ![img_3.png](img_3.png)
 
+
+
+
+# Part IV: Code Swap
+
+## What we got working
+
+We, due to the great work of our providers, were actually able to get all of the functionality
+requested by the assignment to work. The second view will now always be our providers view, and
+our commandline now supports the following operations to play with their strategies:
+
+    java -jar reversi.jar SIZE ____ ____
+
+The size is the size of the board in reference to the radius of the hexagons.
+The blanks spots can be filled with the keywords "human", "strategy1", "providerstrategy1", 
+"providerstrategy2", and finally "providerstrategy3" to play with the respective strategies and 
+players. 
 
 # References
 

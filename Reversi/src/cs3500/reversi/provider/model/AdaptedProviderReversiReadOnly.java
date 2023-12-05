@@ -8,9 +8,18 @@ import java.util.List;
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.TeamColor;
 
+/**
+ * This class adapts our model of read only model of reversi to our providers
+ * read only model of reversi via an adaptee. It imports their interface and is composed
+ * of our model.
+ */
 public class AdaptedProviderReversiReadOnly implements ReadonlyReversiModel {
-  private final cs3500.reversi.model.ReadonlyReversiModel adaptee;
+  private final cs3500.reversi.model.ReadonlyReversiModel adaptee; //our model
 
+  /**
+   * Constructs an adaptor between our model and the providers model of hexreversi.
+   * @param ourModel our model to be adapted
+   */
   public AdaptedProviderReversiReadOnly(cs3500.reversi.model.ReadonlyReversiModel ourModel) {
     this.adaptee = ourModel;
   }
@@ -66,7 +75,7 @@ public class AdaptedProviderReversiReadOnly implements ReadonlyReversiModel {
     if (color.equals(TeamColor.BLACK)) {
       return CellType.BLACK;
     }
-    else if (color.equals(TeamColor.WHITE)){
+    else if (color.equals(TeamColor.WHITE)) {
       return CellType.WHITE;
     }
     else {
@@ -161,6 +170,7 @@ public class AdaptedProviderReversiReadOnly implements ReadonlyReversiModel {
     }
     return vectors;
   }
+
   @Override
   public ICell getCellAt(int column, int row) {
     ICell cell = new Cell(column, row);

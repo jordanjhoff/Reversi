@@ -1,0 +1,20 @@
+Submit a second, smaller review of your experience of this exercise. This review should include the
+following two aspects:
+
+What do you wish you had done differently in your design/implementation? Did you learn any lessons
+from the code given to you, or the updates you had to make for your customers?
+What was your experience like with your providers?
+Name this file SelfReview.txt and put it in the same directory as your README file.
+
+
+We enjoyed this exercise of the code swap. This assignment was a useful exercise in reading and
+implementing external code into your codebase, a commonly used skill. We thought the design of our
+providers made the implementation straightforward. What we noticed was that even though they had
+comments explaining something that was probably so intuitive to them, it was still quite
+confusing to us coming in blind. From this assignment I have learned that you can never be too
+thorough in documentation, as should definitely err on the side of too much detail rather than not
+enough.
+
+At the time of writing this, our customers have not reached out to us yet regarding updates
+or clarification, which is a good sign. And when we asked our providers for clarification, they
+promptly responded in detail with clarification, which was very appreciated.

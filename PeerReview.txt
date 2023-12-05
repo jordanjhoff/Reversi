@@ -1,0 +1,40 @@
+Design critique:
+
+We were very pleased with our providers code. The interfaces they supplied made sense
+and did not depend on concrete classes, making it flexible for us to use. They provided us with any
+enums that were needed. The structure and design of their code made sense to us. It was easy to
+understand which interfaces needed to be used, and the observer and listener patterns they used for
+their view were well-designed and easy to understand.
+
+Implementation critique:
+
+We didn't run into any issues with their implemented classes. For the view, we followed and adapted
+their interfaces, and converted them to classes our model and controller could use. They
+implemented very similar functions, and implemented the same observer features as us, which made
+adapting straightforward and uncomplicated. Though we had different notions of strategy, adapting
+wasn't too difficult, and their strategy patterns were thoughtfully designed.
+
+Documentation critique:
+
+In regard to the documentation, for the most part it was well documented. We had some questions
+about some methods that were documented, but we were still quite confused on. Specifically, methods
+returned nested lists, but didn't have documentation of the format of these lists
+(getBoard, extendNeighbors in ReadonlyReversiModel). For these methods, we needed to request more
+explanation into the return signature, to which the providers thoroughly elaborated on.
+There were additionally methods in some interfaces that lacked all documentation,
+like in ModelFeatures. Fortunately, we never had to figures those out, as they weren't relevant
+to our adaptions. Other complex private helper methods within classes lacked some documentation,
+which made their code less readable. Other than that, the documentation was great.
+
+Design/code limitations:
+
+In the sense of its capability, the view was lacking some features which we had implemented,
+including the ability to resize the board as well as disabling out of turn interactions. For any
+additional features that we had that their view didn't, our adaptor did nothing since our features
+were not critical and didn't impact overall functionality. However, it was easy to adapt around and
+certainly did the job of representing reversi.
+
+Suggestions:
+There were not any real limitations on the code regarding the design or structure as we thought
+it was implemented well. They clearly had a similar thought process to us, and implemented a
+similar control flow to our code.
