@@ -1,6 +1,7 @@
 package cs3500.reversi.controller;
 
 import cs3500.reversi.model.HexPosition;
+import cs3500.reversi.model.Position;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.view.IReversiView;
@@ -35,7 +36,7 @@ public class VisualController implements HexReversiController {
   }
 
   @Override
-  public void notifyMakeMove(HexPosition posn) {
+  public void notifyMakeMove(Position posn) {
     try {
       this.model.addPiece(this.player.getColor(), posn);
     }

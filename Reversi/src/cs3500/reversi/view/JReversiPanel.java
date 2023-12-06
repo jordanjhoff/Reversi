@@ -20,6 +20,7 @@ import javax.swing.event.MouseInputAdapter;
 import javax.swing.JPanel;
 
 import cs3500.reversi.model.HexPosition;
+import cs3500.reversi.model.Position;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.TeamColor;
 
@@ -112,7 +113,7 @@ public class JReversiPanel extends JPanel {
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
 
-    ArrayList<HexPosition> currValidMoves = gameState.getValidMoves();
+    ArrayList<Position> currValidMoves = gameState.getValidMoves();
     //scales hexagon size based on bounds
     this.hexagonSize = Math.min(this.getWidth() / (5 * this.modelRadius),
             this.getHeight() / (5 * this.modelRadius));
@@ -139,9 +140,9 @@ public class JReversiPanel extends JPanel {
    * @param r The given cell's r coordinate.
    * @param validMoves the currently available valid moves
    */
-  private void drawCell(Graphics2D g2d, int q, int r, ArrayList<HexPosition> validMoves) {
+  private void drawCell(Graphics2D g2d, int q, int r, ArrayList<Position> validMoves) {
 
-    HexPosition currPosn = new HexPosition(q,r,-(q + r));
+    HexPosition currPosn = new HexPosition(q,r);
     Point currPoint = hexToPixel(q,r);
     Polygon hexagon = createHexagon(currPoint);
     TeamColor piece = gameState.getPieceAt(currPosn);
@@ -228,7 +229,7 @@ public class JReversiPanel extends JPanel {
     // remainder
     int dx = (int) Math.round(x + 0.5 * y) * (x * x >= y * y ? 1 : 0);
     int dy = (int) Math.round(y + 0.5 * x) * (x * x < y * y ? 1 : 0);
-    return new HexPosition(xgrid + dx,ygrid + dy, -(xgrid + dx + ygrid + dy));
+    return new HexPosition(xgrid + dx,ygrid + dy);
   }
 
   /**
@@ -264,9 +265,8 @@ public class JReversiPanel extends JPanel {
         if (selectedHex.isPresent() && clickedHex.equals(selectedHex.get())) {
           selectedHex = Optional.empty();
         }
-        else if (Math.abs(clickedHex.getQPosition()) <= modelRadius &&
-                Math.abs(clickedHex.getRPosition()) <= modelRadius &&
-                Math.abs(clickedHex.getSPosition()) <= modelRadius &&
+        else if (Math.abs(clickedHex.getFirstCoordinate()) <= modelRadius &&
+                Math.abs(clickedHex.getSecondCoordinate()) <= modelRadius &&
                 gameState.getPieceAt(clickedHex) == null) {
           selectedHex = Optional.of(clickedHex);
         }

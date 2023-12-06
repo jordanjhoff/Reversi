@@ -7,9 +7,9 @@ import java.util.Objects;
  * three coordinates q, r, and s.
  * A position is invalid solely if s != -q - r.
  */
-public class HexPosition implements Position {
-  private final int q;
-  private final int r;
+public class SquarePos implements Position {
+  private final int x;
+  private final int y;
 
   /**
    * Constructs a new position due to the three inputs, where s must equal
@@ -18,9 +18,9 @@ public class HexPosition implements Position {
    * @param r r coordinate
    * @throws IllegalArgumentException if position is invalid/illegal
    */
-  public HexPosition(int q, int r) {
-    this.q = q;
-    this.r = r;
+  public SquarePos(int q, int r) {
+    this.x = q;
+    this.y = r;
   }
 
   /**
@@ -28,42 +28,41 @@ public class HexPosition implements Position {
    * with the same values as the parameter to avoid aliasing issues.
    * @param pos to be copied.
    */
-  public HexPosition(HexPosition pos) {
-    this.q = pos.q;
-    this.r = pos.r;
+  public SquarePos(SquarePos pos) {
+    this.x = pos.q;
+    this.y = pos.r;
   }
 
   @Override
   public int getFirstCoordinate() {
-    return this.q;
+    return this.x;
   }
 
   @Override
   public int getSecondCoordinate() {
-    return this.r;
+    return this.y;
   }
 
   @Override
   public boolean equals(Object other) {
-    if (!(other instanceof HexPosition)) {
+    if (!(other instanceof SquarePos)) {
       return false;
     }
     else {
-      HexPosition that = (HexPosition) other;
-      return this.q == that.q
-              && this.r == that.r;
+      SquarePos that = (SquarePos) other;
+      return this.x == that.x
+              && this.y == that.y;
     }
   }
 
   @Override
   public String toString() {
-    int s = -q - r;
-    return "[" + this.q + "," + this.r + "," + s + "]";
+    return "[" + this.x + "," + this.y + "]";
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.q, this.r);
+    return Objects.hash(this.x, this.y);
   }
 
 }

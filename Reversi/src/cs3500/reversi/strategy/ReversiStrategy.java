@@ -1,6 +1,7 @@
 package cs3500.reversi.strategy;
 
 import cs3500.reversi.model.HexPosition;
+import cs3500.reversi.model.Position;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.TeamColor;
 
@@ -17,5 +18,5 @@ public interface ReversiStrategy {
    * @param color the team color to choose for
    * @return the chosen position to make
    */
-  HexPosition choosePosn(ReadonlyReversiModel model, TeamColor color);
+  Position choosePosn(ReadonlyReversiModel model, TeamColor color);
 }

@@ -12,10 +12,10 @@ public interface ReadonlyReversiModel {
 
   /**
    * Gets the color of the piece at a given position.
-   * @param posn a HexPosition to check
+   * @param posn a Position to check
    * @return the color of the piece at the position or null if there is no piece
    */
-  TeamColor getPieceAt(HexPosition posn);
+  TeamColor getPieceAt(Position posn);
 
   /**
    * Returns whose turn it is.
@@ -48,14 +48,14 @@ public interface ReadonlyReversiModel {
    * Returns valid positions that can be played for the current turn in top-leftmost order.
    * @return a list of valid positions that color can move to.
    */
-  ArrayList<HexPosition> getValidMoves();
+  ArrayList<Position> getValidMoves();
 
 
   /**
    * Returns a copy of the board.
    * @return a copy of the board
    */
-  HashMap<HexPosition, TeamColor> getBoard();
+  HashMap<Position, TeamColor> getBoard();
 
   /**
    * What is the score of the passed color.
@@ -70,6 +70,6 @@ public interface ReadonlyReversiModel {
    * @return the number of pieces that will be flipped if a piece is placed at posn
    * @throws IllegalArgumentException if the position is of bounds
    */
-  int flipCount(HexPosition posn);
+  int flipCount(Position posn);
 
 }

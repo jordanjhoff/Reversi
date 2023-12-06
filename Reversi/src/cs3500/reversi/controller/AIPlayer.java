@@ -1,6 +1,7 @@
 package cs3500.reversi.controller;
 
 import cs3500.reversi.model.HexPosition;
+import cs3500.reversi.model.Position;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.strategy.ReversiStrategy;
@@ -45,7 +46,7 @@ public class AIPlayer implements Player {
 
   @Override
   public void promptMove() {
-    HexPosition chosenMove = this.strategy.choosePosn(model, this.color);
+    Position chosenMove = this.strategy.choosePosn(model, this.color);
     if (!model.isGameOver()) {
       if (chosenMove != null) {
         observer.notifyMakeMove(chosenMove);

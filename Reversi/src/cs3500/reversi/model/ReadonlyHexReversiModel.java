@@ -24,7 +24,7 @@ public class ReadonlyHexReversiModel implements ReadonlyReversiModel {
   }
 
   @Override
-  public TeamColor getPieceAt(HexPosition posn) {
+  public TeamColor getPieceAt(Position posn) {
     return this.adaptee.getPieceAt(posn);
   }
 
@@ -49,12 +49,12 @@ public class ReadonlyHexReversiModel implements ReadonlyReversiModel {
   }
 
   @Override
-  public ArrayList<HexPosition> getValidMoves() {
+  public ArrayList<Position> getValidMoves() {
     return this.adaptee.getValidMoves();
   }
 
   @Override
-  public HashMap<HexPosition, TeamColor> getBoard() {
+  public HashMap<Position, TeamColor> getBoard() {
     return this.adaptee.getBoard();
   }
 
@@ -64,7 +64,7 @@ public class ReadonlyHexReversiModel implements ReadonlyReversiModel {
   }
 
   @Override
-  public int flipCount(HexPosition posn) {
+  public int flipCount(Position posn) {
     return this.adaptee.flipCount(posn);
   }
 }

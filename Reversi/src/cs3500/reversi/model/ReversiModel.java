@@ -13,7 +13,7 @@ public interface ReversiModel extends ReadonlyReversiModel {
    * @throws IllegalStateException if game is over, or if its not the right color
    * @throws IllegalStateException if game is not started
    */
-  void addPiece(TeamColor color, HexPosition posn);
+  void addPiece(TeamColor color, Position posn);
 
   /**
    * Skips the current players turn.

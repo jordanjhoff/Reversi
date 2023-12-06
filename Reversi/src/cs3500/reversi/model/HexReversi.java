@@ -14,16 +14,16 @@ import java.util.List;
  */
 public class HexReversi implements ReversiModel {
   //the radius from the center in either q, r, or s axis
-  private final int radius;
+  protected final int size;
   //the teamcolor of the current player's turn
-  private TeamColor currentTurn;
+  protected TeamColor currentTurn;
   //records if the previous move made was a pass. used in determining two passes in a row
-  private boolean lastPass; //keeps track if the previous move made was a pass
-  private boolean started; //has the game been started?
+  protected boolean lastPass; //keeps track if the previous move made was a pass
+  protected boolean started; //has the game been started?
 
 
   //these are the listeners to the game, (i.e. the controllers and players)
-  private List<ModelFeatures> featuresListeners;
+  protected List<ModelFeatures> featuresListeners;
 
 
   /**
@@ -43,14 +43,14 @@ public class HexReversi implements ReversiModel {
    *    \    /
    *   s
    */
-  private HashMap<HexPosition, TeamColor> board;
+  protected HashMap<Position, TeamColor> board;
 
   /**
    * Represents valid moves, where the key is the position, and the value is the list of
-   * HexPositions that need to be updated if that move is played.
+   * Positions that need to be updated if that move is played.
    */
-  private LinkedHashMap<HexPosition, ArrayList<HexPosition>> validBlackMoves;
-  private LinkedHashMap<HexPosition, ArrayList<HexPosition>> validWhiteMoves;
+  protected LinkedHashMap<Position, ArrayList<Position>> validBlackMoves;
+  protected LinkedHashMap<Position, ArrayList<Position>> validWhiteMoves;
 
 
   /**
@@ -58,16 +58,16 @@ public class HexReversi implements ReversiModel {
    * starts the game by dealing out the board and
    * updating valid moves. Initial move goes to black.
    *
-   * @param radius size of the game board to be played.
+   * @param size size of the game board to be played.
    */
-  public HexReversi(int radius) {
+  public HexReversi(int size) {
     this.board = new HashMap<>();
     this.validWhiteMoves = new LinkedHashMap<>();
     this.validBlackMoves = new LinkedHashMap<>();
-    if (radius < 2) {
-      throw new IllegalArgumentException("radius must be greater than 2!");
+    if (size < 2) {
+      throw new IllegalArgumentException("size must be greater than 2!");
     }
-    this.radius = radius;
+    this.size = size;
     dealBoard();
     this.currentTurn = TeamColor.BLACK;
     updateValidMoves(TeamColor.BLACK);
@@ -117,7 +117,7 @@ public class HexReversi implements ReversiModel {
    * Notifies the listeners that the turn has advanced.
    */
   private void notifyListenersAdvanceTurn() {
-    LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap =
+    LinkedHashMap<Position, ArrayList<Position>> validityMap =
             this.currentTurn.equals(TeamColor.WHITE)
                     ? this.validWhiteMoves : this.validBlackMoves;
     for (ModelFeatures listener : this.featuresListeners) {
@@ -130,15 +130,15 @@ public class HexReversi implements ReversiModel {
    * @return a list of valid positions that color can move to.
    */
   @Override
-  public ArrayList<HexPosition> getValidMoves() {
-    LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap =
+  public ArrayList<Position> getValidMoves() {
+    LinkedHashMap<Position, ArrayList<Position>> validityMap =
             this.currentTurn.equals(TeamColor.WHITE)
                     ? this.validWhiteMoves : this.validBlackMoves;
     if (isGameOver()) {
       return new ArrayList<>();
     }
-    ArrayList<HexPosition> result = new ArrayList<>();
-    for (HexPosition key : validityMap.keySet()) {
+    ArrayList<Position> result = new ArrayList<>();
+    for (Position key : validityMap.keySet()) {
       result.add(key);
     }
 
@@ -152,12 +152,12 @@ public class HexReversi implements ReversiModel {
    * @return the number of pieces that will be flipped if a piece is placed at posn
    * @throws IllegalArgumentException if the position is of bounds
    */
-  public int flipCount(HexPosition posn) {
+  public int flipCount(Position posn) {
     if (isGameOver()) {
       throw new IllegalStateException("Game is over!!!");
     }
     validatePosition(posn);
-    LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap =
+    LinkedHashMap<Position, ArrayList<Position>> validityMap =
             this.currentTurn.equals(TeamColor.WHITE)
                     ? this.validWhiteMoves : this.validBlackMoves;
     if (!validityMap.containsKey(posn)) {
@@ -173,7 +173,7 @@ public class HexReversi implements ReversiModel {
    * Method to initialize the gameboard, putting the original circle
    * around the origin of cycling colors.
    */
-  private void dealBoard() {
+  protected void dealBoard() {
     int[][] circle = {{1, -1}, {0, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 0}};
     TeamColor color = TeamColor.BLACK;
     int q;
@@ -183,7 +183,7 @@ public class HexReversi implements ReversiModel {
       q = circle[i][1];
       r = circle[i][0];
       s = -q - r;
-      board.put(new HexPosition(q, r, s), color);
+      board.put(new HexPosition(q, r), color);
       color = color.cycle();
     }
   }
@@ -195,18 +195,17 @@ public class HexReversi implements ReversiModel {
    * @param vector the [q,r,s] direction vector to iterate in
    * @return the list of pieces that need to be flipped for a given move.
    */
-  private ArrayList<HexPosition> toFlip(TeamColor color, HexPosition posn, int[] vector) {
+  protected ArrayList<Position> toFlip(TeamColor color, Position posn, int[] vector) {
     if (vector.length != 3) {
       throw new IllegalArgumentException("Invalid position vector");
     }
-    ArrayList<HexPosition> toBeFlipped = new ArrayList<>();
-    HexPosition currPosn = posn;
-    while (Math.abs(posn.getQPosition()) <= radius + 1 &&
-            Math.abs(posn.getRPosition()) <= radius + 1 &&
-            Math.abs(posn.getSPosition()) <= radius + 1) {
-      currPosn = new HexPosition(currPosn.getQPosition() + vector[0],
-              currPosn.getRPosition() + vector[1],
-              currPosn.getSPosition() + vector[2]);
+    ArrayList<Position> toBeFlipped = new ArrayList<>();
+    Position currPosn = posn;
+    while (Math.abs(posn.getFirstCoordinate()) <= size + 1 &&
+            Math.abs(posn.getSecondCoordinate()) <= size + 1 &&
+            Math.abs(getSPosition(posn)) <= size + 1) {
+      currPosn = new HexPosition(currPosn.getFirstCoordinate() + vector[0],
+              currPosn.getSecondCoordinate() + vector[1]);
       if (!this.board.containsKey(currPosn) || !validPosition(currPosn)) {
         toBeFlipped.clear();
         break;
@@ -222,6 +221,9 @@ public class HexReversi implements ReversiModel {
     return toBeFlipped;
   }
 
+  private int getSPosition(Position pos) {
+    return -pos.getFirstCoordinate() - pos.getSecondCoordinate();
+  }
 
 
   /**
@@ -230,10 +232,9 @@ public class HexReversi implements ReversiModel {
    * @param pos position to validate
    * @return true if valid position
    */
-  private boolean validPosition(HexPosition pos) {
-    return (Math.abs(pos.getQPosition()) <= this.radius)
-            && (Math.abs(pos.getRPosition()) <= this.radius)
-            && (pos.getSPosition() == -pos.getQPosition() - pos.getRPosition());
+  protected boolean validPosition(Position pos) {
+    return (Math.abs(pos.getFirstCoordinate()) <= this.size)
+            && (Math.abs(pos.getSecondCoordinate()) <= this.size);
   }
 
   /**
@@ -242,8 +243,8 @@ public class HexReversi implements ReversiModel {
    * @param color the color to set at each position
    * @param posns the list of positions to set to color
    */
-  private void setColor(TeamColor color, ArrayList<HexPosition> posns) {
-    for (HexPosition posn : posns) {
+  private void setColor(TeamColor color, ArrayList<Position> posns) {
+    for (Position posn : posns) {
       this.board.put(posn, color);
     }
   }
@@ -251,22 +252,22 @@ public class HexReversi implements ReversiModel {
   /**
    * Updates the validity maps to contain all available moves for a specific team color.
    */
-  private void updateValidMoves(TeamColor color) {
-    LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap = color == TeamColor.WHITE ?
+  protected void updateValidMoves(TeamColor color) {
+    LinkedHashMap<Position, ArrayList<Position>> validityMap = color == TeamColor.WHITE ?
             this.validWhiteMoves :
             this.validBlackMoves;
     validityMap.clear();
 
-    for (int r = -this.radius; r <= this.radius; r++) {
-      int rMin = Math.max(-this.radius, -r - this.radius);
-      int rMax = Math.min(this.radius, -r + this.radius);
+    for (int r = -this.size; r <= this.size; r++) {
+      int rMin = Math.max(-this.size, -r - this.size);
+      int rMax = Math.min(this.size, -r + this.size);
 
       for (int q = rMin; q <= rMax; q++) {
         int s = -r - q;
-        HexPosition currPos = new HexPosition(q,r,s);
+        Position currPos = new HexPosition(q,r);
         if (!this.board.containsKey(currPos)) {
 
-          ArrayList<HexPosition> toBeFlipped = new ArrayList<>();
+          ArrayList<Position> toBeFlipped = new ArrayList<>();
           toBeFlipped.addAll(toFlip(color,currPos, new int[]{0,1,-1}));
           toBeFlipped.addAll(toFlip(color,currPos, new int[]{0,-1,1}));
           toBeFlipped.addAll(toFlip(color,currPos, new int[]{1,0,-1}));
@@ -289,7 +290,7 @@ public class HexReversi implements ReversiModel {
    * @param posn the posn
    * @throws IllegalArgumentException if given posn is ot of bounds
    */
-  private void validatePosition(HexPosition posn) {
+  private void validatePosition(Position posn) {
     if (!validPosition(posn)) {
       throw new IllegalArgumentException("Invalid position, out of bounds");
     }
@@ -303,7 +304,7 @@ public class HexReversi implements ReversiModel {
    *
    */
   @Override
-  public void addPiece(TeamColor color, HexPosition posn) {
+  public void addPiece(TeamColor color, Position posn) {
     if (!started) {
       throw new IllegalStateException("Game has not been started");
     }
@@ -315,7 +316,7 @@ public class HexReversi implements ReversiModel {
       throw new IllegalStateException("Not your turn");
     }
 
-    LinkedHashMap<HexPosition, ArrayList<HexPosition>> validityMap = color.equals(TeamColor.WHITE) ?
+    LinkedHashMap<Position, ArrayList<Position>> validityMap = color.equals(TeamColor.WHITE) ?
             this.validWhiteMoves : this.validBlackMoves;
     validatePosition(posn);
     if (validityMap.isEmpty()) {
@@ -348,17 +349,17 @@ public class HexReversi implements ReversiModel {
 
   /**
    * Gets the color of the piece at a given position.
-   * @param posn a HexPosition to check
+   * @param posn a Position to check
    * @return the color of the piece at the position or null if there is no piece
    */
   @Override
-  public TeamColor getPieceAt(HexPosition posn) {
+  public TeamColor getPieceAt(Position posn) {
     validatePosition(posn);
     if (!board.containsKey(posn)) {
       return null;
     }
 
-    return this.board.get(new HexPosition(posn));
+    return this.board.get(posn);
   }
 
   /**
@@ -425,7 +426,7 @@ public class HexReversi implements ReversiModel {
   }
 
   @Override
-  public HashMap<HexPosition, TeamColor> getBoard() {
+  public HashMap<Position, TeamColor> getBoard() {
     return new HashMap<>(board);
   }
 
@@ -464,7 +465,7 @@ public class HexReversi implements ReversiModel {
 
   @Override
   public int getSize() {
-    return this.radius;
+    return this.size;
   }
 
   private void notifyGameOver() {

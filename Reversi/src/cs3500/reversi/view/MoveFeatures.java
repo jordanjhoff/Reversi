@@ -1,6 +1,7 @@
 package cs3500.reversi.view;
 
 import cs3500.reversi.model.HexPosition;
+import cs3500.reversi.model.Position;
 
 /**
  * This observer interface represents features that allow manipulation
@@ -14,7 +15,7 @@ public interface MoveFeatures {
    *
    * @param posn the position for the move to be made
    */
-  void notifyMakeMove(HexPosition posn);
+  void notifyMakeMove(Position posn);
 
   /**
    * Notify the observer that a turn was passed.
