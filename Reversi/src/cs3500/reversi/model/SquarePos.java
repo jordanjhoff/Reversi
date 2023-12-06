@@ -12,15 +12,17 @@ public class SquarePos implements Position {
   private final int y;
 
   /**
-   * Constructs a new position due to the three inputs, where s must equal
-   * -q - r.
-   * @param q q coordinate
-   * @param r r coordinate
+   * Constructs a new position due to two inputs
+   * @param x x coordinate
+   * @param y y coordinate
    * @throws IllegalArgumentException if position is invalid/illegal
    */
-  public SquarePos(int q, int r) {
-    this.x = q;
-    this.y = r;
+  public SquarePos(int x, int y) {
+    if (x < 0 || y < 0) {
+      throw new IllegalArgumentException("Coordinates for square must be positive");
+    }
+    this.x = x;
+    this.y = y;
   }
 
   /**
@@ -29,8 +31,8 @@ public class SquarePos implements Position {
    * @param pos to be copied.
    */
   public SquarePos(SquarePos pos) {
-    this.x = pos.q;
-    this.y = pos.r;
+    this.x = pos.getFirstCoordinate();
+    this.y = pos.getSecondCoordinate();
   }
 
   @Override

@@ -1,7 +1,7 @@
 package cs3500.reversi.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class SquareReversi extends HexReversi {
   /**
@@ -29,16 +29,49 @@ public class SquareReversi extends HexReversi {
 
   @Override
   protected ArrayList<Position> toFlip(TeamColor color, Position posn, int[] vector) {
-    return null;
+    ArrayList<Position> toBeFlipped = new ArrayList<>();
+    Position currPosn = posn;
+    while (posn.getFirstCoordinate() <= size + 1 &&
+            posn.getSecondCoordinate() <= size + 1 &&
+            posn.getSecondCoordinate() <= size + 1 &&
+            posn.getSecondCoordinate() <= size + 1) {
+
+
+    }
+    return toBeFlipped;
   }
 
   @Override
   protected boolean validPosition(Position pos) {
-
+    return (pos.getFirstCoordinate() < size) && (pos.getSecondCoordinate() < size);
   }
 
   @Override
   protected void updateValidMoves(TeamColor color) {
+    LinkedHashMap<Position, ArrayList<Position>> validityMap = color == TeamColor.WHITE ?
+            this.validWhiteMoves :
+            this.validBlackMoves;
+    validityMap.clear();
+
+    for (int r = 0; r < size; r++) {
+
+
+      for (int c = 0; c < size; c++) {
+        Position currPos = new SquarePos(r, c);
+        if (!this.board.containsKey(currPos)) {
+          ArrayList<Position> toBeFlipped = new ArrayList<>();
+          toBeFlipped.addAll(toFlip(color, currPos, new int[]{0,1}));
+          toBeFlipped.addAll(toFlip(color, currPos, new int[]{1,0}));
+          toBeFlipped.addAll(toFlip(color, currPos, new int[]{-1,0}));
+          toBeFlipped.addAll(toFlip(color, currPos, new int[]{0,-1}));
+
+          if (!toBeFlipped.isEmpty()) {
+            validityMap.put(currPos,toBeFlipped);
+          }
+        }
+
+      }
+    }
 
   }
 }
