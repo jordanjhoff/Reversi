@@ -1,5 +1,6 @@
 package cs3500.reversi.model;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -14,7 +15,7 @@ public class SquareReversi extends HexReversi {
   public SquareReversi(int size) {
     super(size);
     if (size % 2 != 0) {
-      throw new IllegalArgumentException("Radius must be even");
+      throw new IllegalArgumentException("size must be even");
     }
   }
 
@@ -31,12 +32,18 @@ public class SquareReversi extends HexReversi {
   protected ArrayList<Position> toFlip(TeamColor color, Position posn, int[] vector) {
     ArrayList<Position> toBeFlipped = new ArrayList<>();
     Position currPosn = posn;
-    while (posn.getFirstCoordinate() <= size + 1 &&
-            posn.getSecondCoordinate() <= size + 1 &&
-            posn.getSecondCoordinate() <= size + 1 &&
-            posn.getSecondCoordinate() <= size + 1) {
-
-
+    while (validPosition(currPosn)) {
+      currPosn = new SquarePos(currPosn.getFirstCoordinate() + vector[0],
+              currPosn.getSecondCoordinate() + vector[1]);
+      if (!this.board.containsKey(currPosn) || !validPosition(currPosn)) {
+        return new ArrayList<>();
+      }
+      else if (this.board.get(currPosn).equals(color)) {
+        return toBeFlipped;
+      }
+      else if (!this.board.get(currPosn).equals(color)) {
+        toBeFlipped.add(currPosn);
+      }
     }
     return toBeFlipped;
   }

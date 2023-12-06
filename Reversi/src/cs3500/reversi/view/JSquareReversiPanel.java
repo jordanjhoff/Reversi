@@ -16,7 +16,10 @@ import javax.swing.event.MouseInputAdapter;
 import cs3500.reversi.model.Position;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.SquarePos;
+import cs3500.reversi.model.SquareReversi;
 import cs3500.reversi.model.TeamColor;
+
+import static java.lang.Math.sqrt;
 
 /**
  * JReversiPanel is a Swing JPanel implementation designed for rendering and interacting with a
@@ -141,12 +144,27 @@ public class JSquareReversiPanel extends JPanel {
     }
   }
 
+
   private Point squareToPixel(int r, int c) {
-    int x = 0;
-    int y = 0;
-    return new Point(x,y);
+    int x = c * this.squareSize;
+    int y = r * this.squareSize;
+
+    return new Point(x, y);
   }
 
+  private SquarePos pixelToSquare(int x, int y) {
+    double r = y / this.squareSize;
+    double c = x / this.squareSize;
+
+    return roundSquare(r, c);
+  }
+
+  private SquarePos roundSquare(double x, double y) {
+    int r = (int) Math.round(x);
+    int c = (int) Math.round(y);
+
+    return new SquarePos(r, c);
+  }
 
   public void addFeatureListener(MoveFeatures features) {
     this.featuresListeners.add(features);
@@ -166,6 +184,7 @@ public class JSquareReversiPanel extends JPanel {
 
     }
   }
+
 
   private class MyKeyListener extends KeyAdapter {
     @Override

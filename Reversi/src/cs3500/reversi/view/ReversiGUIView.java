@@ -21,9 +21,14 @@ public class ReversiGUIView extends JFrame implements IReversiView {
    *
    * @param model The ReadonlyReversiModel representing the game state.
    */
-  public ReversiGUIView(ReadonlyReversiModel model) {
+  public ReversiGUIView(ReadonlyReversiModel model, boolean hints, boolean square) {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.mainPanel = new JReversiPanel(model);
+    if (square) {
+      this.mainPanel = new JSquareReversiPanel(model, hints);
+    }
+    else {
+      this.mainPanel = new JReversiPanel(model, hints);
+    }
     this.add(this.mainPanel);
     this.pack();
   }

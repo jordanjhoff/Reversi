@@ -38,6 +38,8 @@ public class JReversiPanel extends JPanel {
   //The radius of the Reversi game board.
   private int modelRadius;
 
+  private final boolean hints;
+
   //The ReadonlyReversiModel instance providing game state information.
   protected ReadonlyReversiModel gameState;
 
@@ -63,7 +65,7 @@ public class JReversiPanel extends JPanel {
    *
    * @throws IllegalArgumentException iff the provided model is null
    */
-  public JReversiPanel(ReadonlyReversiModel model) {
+  public JReversiPanel(ReadonlyReversiModel model, boolean hints) {
     MouseListener mouselistener = new MyMouseListener();
     KeyListener keylistener = new MyKeyListener();
     this.featuresListeners = new ArrayList<>();
@@ -75,6 +77,7 @@ public class JReversiPanel extends JPanel {
     this.enableMoves = false;
     this.gameState = model;
     this.modelRadius = model.getSize();
+    this.hints = hints;
   }
 
   /**

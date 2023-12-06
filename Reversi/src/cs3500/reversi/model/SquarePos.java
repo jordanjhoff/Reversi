@@ -18,9 +18,6 @@ public class SquarePos implements Position {
    * @throws IllegalArgumentException if position is invalid/illegal
    */
   public SquarePos(int x, int y) {
-    if (x < 0 || y < 0) {
-      throw new IllegalArgumentException("Coordinates for square must be positive");
-    }
     this.x = x;
     this.y = y;
   }
