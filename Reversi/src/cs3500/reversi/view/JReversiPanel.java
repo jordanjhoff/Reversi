@@ -160,6 +160,11 @@ public class JReversiPanel extends JPanel {
     g2d.setColor(Color.black);
     g2d.drawPolygon(hexagon);
 
+    if (this.hints && selectedHex.isPresent() && currPosn.equals(selectedHex.get()) && piece == null) {
+      g2d.drawString(gameState.flipCount(currPosn) + "",
+              currPoint.x - (int) (this.hexagonSize * .3),
+              currPoint.y - (int) (this.hexagonSize * .3));
+    }
     if (piece != null) {
       Color team = piece.equals(TeamColor.WHITE)
               ? Color.white : Color.black;
@@ -170,6 +175,7 @@ public class JReversiPanel extends JPanel {
       //adds a small yellow indicator to indicate legal moves
       g2d.setColor(Color.yellow);
       drawCenteredPiece(g2d,currPoint.x,currPoint.y, (int)(this.hexagonSize * .3));
+
     }
   }
 

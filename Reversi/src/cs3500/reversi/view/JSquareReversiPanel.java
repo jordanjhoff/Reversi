@@ -13,6 +13,7 @@ import java.util.Optional;
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 
+import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.Position;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.SquarePos;
@@ -50,6 +51,8 @@ public class JSquareReversiPanel extends JPanel {
   protected TeamColor thisPlayer;
 
 
+  private boolean hints;
+
   private final List<MoveFeatures> featuresListeners;
 
 
@@ -58,7 +61,7 @@ public class JSquareReversiPanel extends JPanel {
    *
    * @throws IllegalArgumentException iff the provided model is null
    */
-  public JSquareReversiPanel(ReadonlyReversiModel model) {
+  public JSquareReversiPanel(ReadonlyReversiModel model, boolean hints) {
     MouseListener mouselistener = new MyMouseListener();
     KeyListener keylistener = new MyKeyListener();
     this.featuresListeners = new ArrayList<>();
@@ -93,29 +96,63 @@ public class JSquareReversiPanel extends JPanel {
 
     ArrayList<Position> currValidMoves = gameState.getValidMoves();
     //scales hexagon size based on bounds
-    this.squareSize = Math.min(this.getWidth() / (5 * this.modelSize),
-            this.getHeight() / (5 * this.modelSize));
+    this.squareSize = Math.min(this.getWidth() / this.modelSize,
+            this.getHeight() / this.modelSize);
 
+    int offset = squareSize/2;
+    Graphics2D g2d = (Graphics2D) g.create();
+    g2d.setStroke(new BasicStroke(2));
     for (int r = 0; r < modelSize; r++) {
 
-
-
       for (int c = 0; c < modelSize; c++) {
-
+        drawCell(g2d, r, c, currValidMoves);
       }
     }
 
   }
 
   /**
-   * Draws a single hexagonal cell based on the game state.
+   * Draws a single square cell based on the game state.
    * @param g2d The graphics object to draw the cell on.
-   * @param q The given cell's q coordinate.
    * @param r The given cell's r coordinate.
+   * @param c The given cell's c coordinate.
    * @param validMoves the currently available valid moves
    */
-  private void drawCell(Graphics2D g2d, int q, int r, ArrayList<Position> validMoves) {
+  private void drawCell(Graphics2D g2d, int r, int c, ArrayList<Position> validMoves) {
+    Position currPosn = new SquarePos(r,c);
+    Point currPoint = squareToPixel(r,c);
+    TeamColor piece = gameState.getPieceAt(currPosn);
+    //change color to grey if selected
+    if (selectedPos.isPresent() && currPosn.equals(selectedPos.get()) && piece == null) {
+      g2d.setColor(Color.gray);
+    }
+    else {
+      g2d.setColor(new Color(255,204,0));
+    }
+    //draw here
+    int x = (getWidth() - squareSize) / 2;
+    int y = (getHeight() - squareSize) / 2;
 
+    // Draw the square
+    g2d.drawRect(x, y, squareSize, squareSize);
+
+    if (piece != null) {
+      Color team = piece.equals(TeamColor.WHITE)
+              ? Color.white : Color.black;
+      g2d.setColor(team);
+      drawCenteredPiece(g2d,currPoint.x,currPoint.y, (int)(this.squareSize * .7));
+    }
+    else if (this.hints && selectedPos.isPresent() && currPosn.equals(selectedPos.get()) && piece == null) {
+      g2d.drawString(gameState.flipCount(currPosn) + "",
+              currPoint.x - (int) (this.squareSize * .3),
+              currPoint.y - (int) (this.squareSize * .3));
+    }
+    else if (validMoves.contains(currPosn) && enableMoves) {
+      //adds a small yellow indicator to indicate legal moves
+      g2d.setColor(Color.yellow);
+      drawCenteredPiece(g2d,currPoint.x,currPoint.y, (int)(this.squareSize * .3));
+
+    }
   }
 
 

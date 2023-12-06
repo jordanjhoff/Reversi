@@ -62,7 +62,6 @@ public class SquareReversi extends HexReversi {
 
     for (int r = 0; r < size; r++) {
 
-
       for (int c = 0; c < size; c++) {
         Position currPos = new SquarePos(r, c);
         if (!this.board.containsKey(currPos)) {

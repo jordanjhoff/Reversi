@@ -14,7 +14,7 @@ import cs3500.reversi.model.TeamColor;
  */
 public class ReversiGUIView extends JFrame implements IReversiView {
 
-  private final JReversiPanel mainPanel;
+  private final Object mainPanel;
 
   /**
    * Constructs a ReversiGUIView with the given ReadonlyReversiModel.
