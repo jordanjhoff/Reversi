@@ -2,8 +2,7 @@ package cs3500.reversi.view;
 
 import java.util.Objects;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.TeamColor;
@@ -29,7 +28,7 @@ public class ReversiGUIView extends JFrame implements IReversiView {
     else {
       this.mainPanel = new JReversiPanel(model, hints);
     }
-    this.add(this.mainPanel);
+    this.add((JPanel) this.mainPanel);
     this.pack();
   }
 

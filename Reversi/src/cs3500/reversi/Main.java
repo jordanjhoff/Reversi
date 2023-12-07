@@ -62,7 +62,7 @@ public class Main {
       }
         }
     }
-  }
+  
 
   private static Player parseProviderPlayer(String arg, TeamColor color,
                                             ReadonlyReversiModel rorModel) {

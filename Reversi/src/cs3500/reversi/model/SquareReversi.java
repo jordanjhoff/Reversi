@@ -70,6 +70,10 @@ public class SquareReversi extends HexReversi {
           toBeFlipped.addAll(toFlip(color, currPos, new int[]{1,0}));
           toBeFlipped.addAll(toFlip(color, currPos, new int[]{-1,0}));
           toBeFlipped.addAll(toFlip(color, currPos, new int[]{0,-1}));
+          toBeFlipped.addAll(toFlip(color, currPos, new int[]{-1,-1}));
+          toBeFlipped.addAll(toFlip(color, currPos, new int[]{1,1}));
+          toBeFlipped.addAll(toFlip(color, currPos, new int[]{1,-1}));
+          toBeFlipped.addAll(toFlip(color, currPos, new int[]{-1,1}));
 
           if (!toBeFlipped.isEmpty()) {
             validityMap.put(currPos,toBeFlipped);
