@@ -133,10 +133,10 @@ public class JSquareReversiPanel extends JPanel implements IReversiPanel {
     g2d.setColor(Color.black);
     g2d.drawRect(currPoint.x - squareSize/2, currPoint.y - squareSize/2, squareSize, squareSize);
 
-    if (this.hints && selectedPos.isPresent() && currPosn.equals(selectedPos.get()) && piece == null) {
+    if (!gameState.isGameOver() && this.hints && selectedPos.isPresent() && currPosn.equals(selectedPos.get()) && piece == null) {
       g2d.drawString(gameState.flipCount(currPosn) + "",
-              currPoint.x - (int) (this.squareSize * .3),
-              currPoint.y - (int) (this.squareSize * .3));
+              currPoint.x - (int) (this.squareSize * .2),
+              currPoint.y - (int) (this.squareSize * .2));
     }
     if (piece != null) {
       Color team = piece.equals(TeamColor.WHITE)
@@ -219,11 +219,9 @@ public class JSquareReversiPanel extends JPanel implements IReversiPanel {
 
       //if the view is allowed to make moves
       if (enableMoves) {
-        System.out.println(gameState.getBoard());
         int x = e.getX();
         int y = e.getY();
         SquarePos clickedPos = pixelToSquare(x,y);
-        System.out.println(clickedPos);
         if (selectedPos.isPresent() && clickedPos.equals(selectedPos.get())) {
           selectedPos = Optional.empty();
         }
