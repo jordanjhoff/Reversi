@@ -33,7 +33,7 @@ import static java.lang.Math.sqrt;
  * ReadonlyReversiModel. Users can click on cells to select them, and key presses trigger specific
  * actions, such as making a move or passing.
  **/
-public class JReversiPanel extends JPanel {
+public class JReversiPanel extends JPanel implements IReversiPanel {
 
   //The radius of the Reversi game board.
   private int modelRadius;
@@ -113,7 +113,7 @@ public class JReversiPanel extends JPanel {
    * @param g The Graphics context.
    */
   @Override
-  protected void paintComponent(Graphics g) {
+  public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
     ArrayList<Position> currValidMoves = gameState.getValidMoves();
@@ -257,6 +257,16 @@ public class JReversiPanel extends JPanel {
 
   public void addFeatureListener(MoveFeatures features) {
     this.featuresListeners.add(features);
+  }
+
+  @Override
+  public void setPlayer(TeamColor player) {
+    this.thisPlayer = player;
+  }
+
+  @Override
+  public void enableMoves(boolean enable) {
+    this.enableMoves = enable;
   }
 
   /**

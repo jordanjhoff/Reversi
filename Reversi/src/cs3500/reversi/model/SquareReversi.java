@@ -22,10 +22,10 @@ public class SquareReversi extends HexReversi {
   @Override
   protected void dealBoard() {
     int mid = this.size / 2;
-    this.board.put(new SquarePos(mid + 1, mid + 1), TeamColor.WHITE);
+    this.board.put(new SquarePos(mid - 1, mid - 1), TeamColor.WHITE);
     this.board.put(new SquarePos(mid, mid), TeamColor.WHITE);
-    this.board.put(new SquarePos(mid + 1, mid), TeamColor.BLACK);
-    this.board.put(new SquarePos(mid, mid + 1), TeamColor.BLACK);
+    this.board.put(new SquarePos(mid - 1, mid), TeamColor.BLACK);
+    this.board.put(new SquarePos(mid, mid - 1), TeamColor.BLACK);
   }
 
   @Override
@@ -70,6 +70,10 @@ public class SquareReversi extends HexReversi {
           toBeFlipped.addAll(toFlip(color, currPos, new int[]{1,0}));
           toBeFlipped.addAll(toFlip(color, currPos, new int[]{-1,0}));
           toBeFlipped.addAll(toFlip(color, currPos, new int[]{0,-1}));
+          toBeFlipped.addAll(toFlip(color, currPos, new int[]{1,1}));
+          toBeFlipped.addAll(toFlip(color, currPos, new int[]{1,-1}));
+          toBeFlipped.addAll(toFlip(color, currPos, new int[]{-1,1}));
+          toBeFlipped.addAll(toFlip(color, currPos, new int[]{-1,-1}));
 
           if (!toBeFlipped.isEmpty()) {
             validityMap.put(currPos,toBeFlipped);

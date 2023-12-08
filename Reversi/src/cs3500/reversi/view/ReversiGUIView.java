@@ -1,5 +1,6 @@
 package cs3500.reversi.view;
 
+import java.awt.*;
 import java.util.Objects;
 
 import javax.swing.JFrame;
@@ -14,7 +15,7 @@ import cs3500.reversi.model.TeamColor;
  */
 public class ReversiGUIView extends JFrame implements IReversiView {
 
-  private final Object mainPanel;
+  private final IReversiPanel mainPanel;
 
   /**
    * Constructs a ReversiGUIView with the given ReadonlyReversiModel.
@@ -29,7 +30,7 @@ public class ReversiGUIView extends JFrame implements IReversiView {
     else {
       this.mainPanel = new JReversiPanel(model, hints);
     }
-    this.add(this.mainPanel);
+    this.add((Component) this.mainPanel);
     this.pack();
   }
 
@@ -42,7 +43,7 @@ public class ReversiGUIView extends JFrame implements IReversiView {
   @Override
   public void renderView(TeamColor color) {
     this.repaint();
-    this.mainPanel.thisPlayer = color;
+    this.mainPanel.setPlayer(color);
   }
 
   @Override
@@ -52,13 +53,13 @@ public class ReversiGUIView extends JFrame implements IReversiView {
 
   @Override
   public void enableMoves(boolean enable) {
-    this.mainPanel.enableMoves = enable;
+    this.mainPanel.enableMoves(enable);
     this.repaint();
   }
 
   @Override
   public void displayMessage(String message) {
-    JOptionPane.showMessageDialog(mainPanel, message);
+    JOptionPane.showMessageDialog((Component)mainPanel, message);
   }
 
 }

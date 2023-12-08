@@ -17,10 +17,7 @@ import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.Position;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.SquarePos;
-import cs3500.reversi.model.SquareReversi;
 import cs3500.reversi.model.TeamColor;
-
-import static java.lang.Math.sqrt;
 
 /**
  * JReversiPanel is a Swing JPanel implementation designed for rendering and interacting with a
@@ -29,7 +26,7 @@ import static java.lang.Math.sqrt;
  * ReadonlyReversiModel. Users can click on cells to select them, and key presses trigger specific
  * actions, such as making a move or passing.
  **/
-public class JSquareReversiPanel extends JPanel {
+public class JSquareReversiPanel extends JPanel implements IReversiPanel {
 
   //The radius of the Reversi game board.
   private int modelSize;
@@ -50,8 +47,8 @@ public class JSquareReversiPanel extends JPanel {
   //represents the player's color of this view
   protected TeamColor thisPlayer;
 
-
   private boolean hints;
+
 
   private final List<MoveFeatures> featuresListeners;
 
@@ -73,6 +70,7 @@ public class JSquareReversiPanel extends JPanel {
     this.enableMoves = false;
     this.gameState = model;
     this.modelSize = model.getSize();
+    this.hints = hints;
   }
 
   /**
@@ -91,36 +89,38 @@ public class JSquareReversiPanel extends JPanel {
    * @param g The Graphics context.
    */
   @Override
-  protected void paintComponent(Graphics g) {
+  public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
     ArrayList<Position> currValidMoves = gameState.getValidMoves();
     //scales hexagon size based on bounds
-    this.squareSize = Math.min(this.getWidth() / this.modelSize,
-            this.getHeight() / this.modelSize);
-
-    int offset = squareSize/2;
+    this.squareSize = Math.min(this.getWidth() / (this.modelSize + 2),
+            this.getHeight() / (this.modelSize + 2));
     Graphics2D g2d = (Graphics2D) g.create();
     g2d.setStroke(new BasicStroke(2));
-    for (int r = 0; r < modelSize; r++) {
+    drawCurrentPlayer(g2d);
+    for (int row = 0; row < modelSize; row++) {
+      for (int col = 0; col < modelSize; col++) {
 
-      for (int c = 0; c < modelSize; c++) {
-        drawCell(g2d, r, c, currValidMoves);
+        drawCell(g2d, row, col, currValidMoves);
       }
     }
 
   }
 
   /**
-   * Draws a single square cell based on the game state.
+   * Draws a single hexagonal cell based on the game state.
    * @param g2d The graphics object to draw the cell on.
-   * @param r The given cell's r coordinate.
-   * @param c The given cell's c coordinate.
+   * @param r The given cell's q coordinate.
+   * @param c The given cell's r coordinate.
    * @param validMoves the currently available valid moves
    */
   private void drawCell(Graphics2D g2d, int r, int c, ArrayList<Position> validMoves) {
-    Position currPosn = new SquarePos(r,c);
-    Point currPoint = squareToPixel(r,c);
+    Point currPoint = squareToPixel(r, c);
+    SquarePos currPosn = new SquarePos(r,c);
+
+
+
     TeamColor piece = gameState.getPieceAt(currPosn);
     //change color to grey if selected
     if (selectedPos.isPresent() && currPosn.equals(selectedPos.get()) && piece == null) {
@@ -129,28 +129,25 @@ public class JSquareReversiPanel extends JPanel {
     else {
       g2d.setColor(new Color(255,204,0));
     }
-    //draw here
-    int x = (getWidth() - squareSize) / 2;
-    int y = (getHeight() - squareSize) / 2;
+    g2d.fillRect(currPoint.x - squareSize/2, currPoint.y - squareSize/2, squareSize, squareSize);
+    g2d.setColor(Color.black);
+    g2d.drawRect(currPoint.x - squareSize/2, currPoint.y - squareSize/2, squareSize, squareSize);
 
-    // Draw the square
-    g2d.drawRect(x, y, squareSize, squareSize);
-
-    if (piece != null) {
-      Color team = piece.equals(TeamColor.WHITE)
-              ? Color.white : Color.black;
-      g2d.setColor(team);
-      drawCenteredPiece(g2d,currPoint.x,currPoint.y, (int)(this.squareSize * .7));
-    }
-    else if (this.hints && selectedPos.isPresent() && currPosn.equals(selectedPos.get()) && piece == null) {
+    if (this.hints && selectedPos.isPresent() && currPosn.equals(selectedPos.get()) && piece == null) {
       g2d.drawString(gameState.flipCount(currPosn) + "",
               currPoint.x - (int) (this.squareSize * .3),
               currPoint.y - (int) (this.squareSize * .3));
     }
+    if (piece != null) {
+      Color team = piece.equals(TeamColor.WHITE)
+              ? Color.white : Color.black;
+      g2d.setColor(team);
+      drawCenteredPiece(g2d, currPoint.x, currPoint.y, (int)(this.squareSize/1.5));
+    }
     else if (validMoves.contains(currPosn) && enableMoves) {
       //adds a small yellow indicator to indicate legal moves
       g2d.setColor(Color.yellow);
-      drawCenteredPiece(g2d,currPoint.x,currPoint.y, (int)(this.squareSize * .3));
+      drawCenteredPiece(g2d, currPoint.x, currPoint.y, (int)(this.squareSize/4));
 
     }
   }
@@ -181,31 +178,37 @@ public class JSquareReversiPanel extends JPanel {
     }
   }
 
-
   private Point squareToPixel(int r, int c) {
-    int x = c * this.squareSize;
-    int y = r * this.squareSize;
-
-    return new Point(x, y);
+    int x = c * squareSize + (int)(squareSize*1.5);
+    int y = r * squareSize + (int)(squareSize*1.5);
+    return new Point(x,y);
   }
 
   private SquarePos pixelToSquare(int x, int y) {
-    double r = y / this.squareSize;
-    double c = x / this.squareSize;
-
-    return roundSquare(r, c);
-  }
-
-  private SquarePos roundSquare(double x, double y) {
-    int r = (int) Math.round(x);
-    int c = (int) Math.round(y);
-
+    if (y - squareSize < 0 || x - squareSize < 0) {
+      return new SquarePos(-1,-1);
+    }
+    int r = (y - squareSize) / squareSize;
+    int c = (x - squareSize) / squareSize;
     return new SquarePos(r, c);
   }
+
+
 
   public void addFeatureListener(MoveFeatures features) {
     this.featuresListeners.add(features);
   }
+
+  @Override
+  public void setPlayer(TeamColor player) {
+    this.thisPlayer = player;
+  }
+
+  @Override
+  public void enableMoves(boolean enable) {
+    this.enableMoves = enable;
+  }
+
 
   /**
    * Private inner class for handling mouse events within the Reversi panel.
@@ -216,17 +219,35 @@ public class JSquareReversiPanel extends JPanel {
 
       //if the view is allowed to make moves
       if (enableMoves) {
-
+        System.out.println(gameState.getBoard());
+        int x = e.getX();
+        int y = e.getY();
+        SquarePos clickedPos = pixelToSquare(x,y);
+        System.out.println(clickedPos);
+        if (selectedPos.isPresent() && clickedPos.equals(selectedPos.get())) {
+          selectedPos = Optional.empty();
+        }
+        else if (clickedPos.getFirstCoordinate() < modelSize &&
+                clickedPos.getSecondCoordinate() < modelSize &&
+                clickedPos.getFirstCoordinate() >= 0 &&
+                clickedPos.getSecondCoordinate() >= 0 &&
+                gameState.getPieceAt(clickedPos) == null) {
+          selectedPos = Optional.of(clickedPos);
+        }
+        else {
+          selectedPos = Optional.empty();
+        }
+        repaint();
       }
 
     }
   }
 
-
   private class MyKeyListener extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
       //if the view is allowed to make moves
+
       if (enableMoves) {
         if (e.getKeyChar() == 'p') {
           for (MoveFeatures listener : JSquareReversiPanel.this.featuresListeners) {

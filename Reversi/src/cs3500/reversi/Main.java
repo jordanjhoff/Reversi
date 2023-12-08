@@ -30,8 +30,9 @@ public class Main {
       try {
         //5 human ai hints square
         boolean square = hexOrSquare(args[4]);
+        ReversiModel model;
         if (square) {
-          ReversiModel model = new SquareReversi(Integer.parseInt(args[0]));
+          model = new SquareReversi(Integer.parseInt(args[0]));
           Player player1 = parseProviderPlayer(args[1], TeamColor.BLACK,
                   new ReadonlyHexReversiModel(model));
           Player player2 = parseProviderPlayer(args[2], TeamColor.WHITE,
@@ -41,11 +42,10 @@ public class Main {
           IReversiView viewPlayer2 = new ReversiGUIView(model, hints, true);
           VisualController controller1 = new VisualController(model, viewPlayer1, player1);
           VisualController controller2 = new VisualController(model, viewPlayer2, player2);
-          model.startGame();
         }
         else {
           //5 human ai hints hex
-          ReversiModel model = new HexReversi(Integer.parseInt(args[0]));
+          model = new HexReversi(Integer.parseInt(args[0]));
           Player player1 = parseProviderPlayer(args[1], TeamColor.BLACK,
                   new ReadonlyHexReversiModel(model));
           Player player2 = parseProviderPlayer(args[2], TeamColor.WHITE,
@@ -55,14 +55,14 @@ public class Main {
           IReversiView viewPlayer2 = new ReversiGUIView(model, hints, false);
           VisualController controller1 = new VisualController(model, viewPlayer1, player1);
           VisualController controller2 = new VisualController(model, viewPlayer2, player2);
-          model.startGame();
         }
+        model.startGame();
       } catch (NumberFormatException e) {
         throw new IllegalArgumentException("invalid input");
       }
         }
     }
-  }
+
 
   private static Player parseProviderPlayer(String arg, TeamColor color,
                                             ReadonlyReversiModel rorModel) {
@@ -83,10 +83,10 @@ public class Main {
 
   private static boolean hexOrSquare(String arg) {
     if (arg.toLowerCase().equals("hex")) {
-      return true;
+      return false;
     }
     else if (arg.toLowerCase().equals("square")) {
-      return false;
+      return true;
     }
     else {
       throw new IllegalArgumentException("illegal arguments");
