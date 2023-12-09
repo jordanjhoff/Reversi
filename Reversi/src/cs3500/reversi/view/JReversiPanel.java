@@ -36,19 +36,17 @@ import static java.lang.Math.sqrt;
 public class JReversiPanel extends JPanel implements IReversiPanel {
 
   //The radius of the Reversi game board.
-  private int modelRadius;
-
-  private final boolean hints;
+  protected int modelRadius;
 
   //The ReadonlyReversiModel instance providing game state information.
   protected ReadonlyReversiModel gameState;
 
 
   //The currently selected hexagon position.
-  private Optional<HexPosition> selectedHex;
+  protected Optional<HexPosition> selectedHex;
 
   //The size of each hexagon cell.
-  private int hexagonSize;
+  protected int hexagonSize;
 
   //determines if clicking and making moves are allowed
   protected boolean enableMoves;
@@ -65,7 +63,7 @@ public class JReversiPanel extends JPanel implements IReversiPanel {
    *
    * @throws IllegalArgumentException iff the provided model is null
    */
-  public JReversiPanel(ReadonlyReversiModel model, boolean hints) {
+  public JReversiPanel(ReadonlyReversiModel model) {
     MouseListener mouselistener = new MyMouseListener();
     KeyListener keylistener = new MyKeyListener();
     this.featuresListeners = new ArrayList<>();
@@ -77,7 +75,6 @@ public class JReversiPanel extends JPanel implements IReversiPanel {
     this.enableMoves = false;
     this.gameState = model;
     this.modelRadius = model.getSize();
-    this.hints = hints;
   }
 
   /**
@@ -160,11 +157,7 @@ public class JReversiPanel extends JPanel implements IReversiPanel {
     g2d.setColor(Color.black);
     g2d.drawPolygon(hexagon);
 
-    if (this.hints && selectedHex.isPresent() && currPosn.equals(selectedHex.get()) && piece == null) {
-      g2d.drawString(gameState.flipCount(currPosn) + "",
-              currPoint.x - (int) (this.hexagonSize * .3),
-              currPoint.y - (int) (this.hexagonSize * .3));
-    }
+
     if (piece != null) {
       Color team = piece.equals(TeamColor.WHITE)
               ? Color.white : Color.black;
@@ -213,7 +206,7 @@ public class JReversiPanel extends JPanel implements IReversiPanel {
    * @param y the y coordinate
    * @return the corresponding HexPosition
    */
-  private HexPosition pixelToHex(int x, int y) {
+  protected HexPosition pixelToHex(int x, int y) {
     double q = (sqrt(3) / 3 * (x - this.getWidth() / 2)  -  1. / 3 * (y - this.getHeight() / 2)) /
             this.hexagonSize;
     double r = (2. / 3 * (y - this.getHeight() / 2)) / this.hexagonSize;
@@ -248,7 +241,7 @@ public class JReversiPanel extends JPanel implements IReversiPanel {
    * @param r hexagon position r
    * @return the corrisponding coordinate
    */
-  private Point hexToPixel(int q, int r) {
+  protected Point hexToPixel(int q, int r) {
     int x = this.getWidth() / 2 + (int)(this.hexagonSize * (sqrt(3) * q  +  sqrt(3) / 2 * r));
     int y = this.getHeight() / 2 + (int)(this.hexagonSize * (3. / 2 * r));
 

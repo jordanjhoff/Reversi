@@ -29,17 +29,17 @@ import cs3500.reversi.model.TeamColor;
 public class JSquareReversiPanel extends JPanel implements IReversiPanel {
 
   //The radius of the Reversi game board.
-  private int modelSize;
+  protected final int modelSize;
 
   //The ReadonlyReversiModel instance providing game state information.
   protected ReadonlyReversiModel gameState;
 
 
   //The currently selected hexagon position.
-  private Optional<SquarePos> selectedPos;
+  protected Optional<SquarePos> selectedPos;
 
   //The size of each hexagon cell.
-  private int squareSize;
+  protected int squareSize;
 
   //determines if clicking and making moves are allowed
   protected boolean enableMoves;
@@ -47,10 +47,10 @@ public class JSquareReversiPanel extends JPanel implements IReversiPanel {
   //represents the player's color of this view
   protected TeamColor thisPlayer;
 
-  private boolean hints;
+  protected boolean hints;
 
 
-  private final List<MoveFeatures> featuresListeners;
+  protected final List<MoveFeatures> featuresListeners;
 
 
   /**
@@ -58,7 +58,7 @@ public class JSquareReversiPanel extends JPanel implements IReversiPanel {
    *
    * @throws IllegalArgumentException iff the provided model is null
    */
-  public JSquareReversiPanel(ReadonlyReversiModel model, boolean hints) {
+  public JSquareReversiPanel(ReadonlyReversiModel model) {
     MouseListener mouselistener = new MyMouseListener();
     KeyListener keylistener = new MyKeyListener();
     this.featuresListeners = new ArrayList<>();
@@ -70,7 +70,6 @@ public class JSquareReversiPanel extends JPanel implements IReversiPanel {
     this.enableMoves = false;
     this.gameState = model;
     this.modelSize = model.getSize();
-    this.hints = hints;
   }
 
   /**
@@ -133,11 +132,6 @@ public class JSquareReversiPanel extends JPanel implements IReversiPanel {
     g2d.setColor(Color.black);
     g2d.drawRect(currPoint.x - squareSize/2, currPoint.y - squareSize/2, squareSize, squareSize);
 
-    if (!gameState.isGameOver() && this.hints && selectedPos.isPresent() && currPosn.equals(selectedPos.get()) && piece == null) {
-      g2d.drawString(gameState.flipCount(currPosn) + "",
-              currPoint.x - (int) (this.squareSize * .2),
-              currPoint.y - (int) (this.squareSize * .2));
-    }
     if (piece != null) {
       Color team = piece.equals(TeamColor.WHITE)
               ? Color.white : Color.black;

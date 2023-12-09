@@ -25,10 +25,13 @@ public class ReversiGUIView extends JFrame implements IReversiView {
   public ReversiGUIView(ReadonlyReversiModel model, boolean hints, boolean square) {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     if (square) {
-      this.mainPanel = new JSquareReversiPanel(model, hints);
+      this.mainPanel = new JSquareReversiPanel(model);
+    }
+    else if (hints && !square){
+      this.mainPanel = new JReversiPanelHintDecorator(model);
     }
     else {
-      this.mainPanel = new JReversiPanel(model, hints);
+      this.mainPanel = new JReversiPanel(model);
     }
     this.add((Component) this.mainPanel);
     this.pack();
