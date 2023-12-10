@@ -222,6 +222,34 @@ The blanks spots can be filled with the keywords "human", "strategy1", "provider
 "providerstrategy2", and finally "providerstrategy3" to play with the respective strategies and 
 players. 
 
+
+# Part V: Extra Credit
+In the extra credit, we removed all the changes from the code swap. 
+We added the ability to add hints in the game every when 'h' is pressed on the keyboard. When a 
+cell is highlighted, when hint mode is on, it will display the number of flips that move will make.
+
+
+We also added all the functionality of SQUARE reversi. To play, the commandline now looks like the 
+following:
+
+    java -jar reversi.jar SIZE human/ai human/ai hex/square
+
+where 'hex'/'square' is the type of board you want to play on. Everything you loved 
+about the original reversi is preserved, with the ability to control the gui against the ai.
+
+
+### nota bene
+for the ta, we abstracted hexreversi to abstractreversi, and added the class
+squarereversi to represent the new game. we also added a new decorator class
+for the hints. we implemented all the extra credit features, and didn't
+have to touch our controller or strategies. we also added interface position
+and implementations hexposition and squareposition. thanks!
+
+# Finale
+
+This project has been a great fun, and we hope you enjoy it as much as we did making it.
+
+
 # References
 
 

@@ -2,7 +2,6 @@ package cs3500.reversi.strategy;
 
 import java.util.ArrayList;
 
-import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.Position;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.TeamColor;

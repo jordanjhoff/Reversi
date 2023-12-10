@@ -3,7 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs3500.reversi.controller.AIPlayer;
-import cs3500.reversi.controller.HexReversiController;
+import cs3500.reversi.controller.ReversiController;
 import cs3500.reversi.controller.Player;
 import cs3500.reversi.controller.PlayerMock;
 import cs3500.reversi.controller.VisualController;
@@ -42,11 +42,11 @@ public class MockTests {
   IReversiView view1mock;
   IReversiView view2mock;
 
-  HexReversiController controller1;
-  HexReversiController controllerMock1;
+  ReversiController controller1;
+  ReversiController controllerMock1;
 
-  HexReversiController controller2;
-  HexReversiController controllerMock2;
+  ReversiController controller2;
+  ReversiController controllerMock2;
 
   Player mockTwo1;
   Player mockTwo2;
@@ -54,11 +54,11 @@ public class MockTests {
   IReversiView viewTwo1mock;
   IReversiView viewTwo2mock;
 
-  HexReversiController controllerTwo1;
-  HexReversiController controllerMockTwo1;
+  ReversiController controllerTwo1;
+  ReversiController controllerMockTwo1;
 
-  HexReversiController controllerTwo2;
-  HexReversiController controllerMockTwo2;
+  ReversiController controllerTwo2;
+  ReversiController controllerMockTwo2;
 
   @Before
   public void init() {

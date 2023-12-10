@@ -8,6 +8,6 @@ import cs3500.reversi.view.MoveFeatures;
  * entirely separate interfaces that shouldn't be forced together, but any
  * HexReversiController needs both.
  */
-public interface HexReversiController extends MoveFeatures, ModelFeatures {
+public interface ReversiController extends MoveFeatures, ModelFeatures {
   //no additional features
 }

@@ -1,6 +1,6 @@
 package cs3500.reversi.view;
 
-import java.awt.*;
+import java.awt.Component;
 import java.util.Objects;
 
 import javax.swing.JFrame;
@@ -27,7 +27,7 @@ public class ReversiGUIView extends JFrame implements IReversiView {
     if (square) {
       this.mainPanel = new JSquareReversiPanel(model);
     }
-    else if (hints && !square){
+    else if (hints && !square) {
       this.mainPanel = new JReversiPanelHintDecorator(model);
     }
     else {

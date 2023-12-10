@@ -1,6 +1,5 @@
 package cs3500.reversi.controller;
 
-import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.Position;
 import cs3500.reversi.model.TeamColor;
 
@@ -10,9 +9,9 @@ import java.io.IOException;
  * A mock implementation of the VisualController class for testing and logging purposes.
  * This class logs method invocations and delegates calls to an adaptee VisualController instance.
  */
-public class VisualControllerMock implements HexReversiController {
+public class VisualControllerMock implements ReversiController {
   private Appendable out;
-  private HexReversiController adaptee;
+  private ReversiController adaptee;
 
   /**
    * Constructs a VisualControllerMock with the given Appendable and adaptee.
@@ -20,7 +19,7 @@ public class VisualControllerMock implements HexReversiController {
    * @param out The Appendable for logging method invocations.
    * @param adaptee functional class to make the moves
    */
-  public VisualControllerMock(Appendable out, HexReversiController adaptee) {
+  public VisualControllerMock(Appendable out, ReversiController adaptee) {
     this.out = out;
     this.adaptee = adaptee;
   }

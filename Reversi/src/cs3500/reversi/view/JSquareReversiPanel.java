@@ -1,6 +1,12 @@
 package cs3500.reversi.view;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.BasicStroke;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -10,10 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 
-import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.Position;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.SquarePos;
@@ -128,20 +132,22 @@ public class JSquareReversiPanel extends JPanel implements IReversiPanel {
     else {
       g2d.setColor(new Color(255,204,0));
     }
-    g2d.fillRect(currPoint.x - squareSize/2, currPoint.y - squareSize/2, squareSize, squareSize);
+    g2d.fillRect(currPoint.x - squareSize / 2,
+            currPoint.y - squareSize / 2, squareSize, squareSize);
     g2d.setColor(Color.black);
-    g2d.drawRect(currPoint.x - squareSize/2, currPoint.y - squareSize/2, squareSize, squareSize);
+    g2d.drawRect(currPoint.x - squareSize / 2,
+            currPoint.y - squareSize / 2, squareSize, squareSize);
 
     if (piece != null) {
       Color team = piece.equals(TeamColor.WHITE)
               ? Color.white : Color.black;
       g2d.setColor(team);
-      drawCenteredPiece(g2d, currPoint.x, currPoint.y, (int)(this.squareSize/1.5));
+      drawCenteredPiece(g2d, currPoint.x, currPoint.y, (int)(this.squareSize / 1.5));
     }
     else if (validMoves.contains(currPosn) && enableMoves) {
       //adds a small yellow indicator to indicate legal moves
       g2d.setColor(Color.yellow);
-      drawCenteredPiece(g2d, currPoint.x, currPoint.y, (int)(this.squareSize/4));
+      drawCenteredPiece(g2d, currPoint.x, currPoint.y, (int)(this.squareSize / 4));
 
     }
   }
@@ -173,8 +179,8 @@ public class JSquareReversiPanel extends JPanel implements IReversiPanel {
   }
 
   private Point squareToPixel(int r, int c) {
-    int x = c * squareSize + (int)(squareSize*1.5);
-    int y = r * squareSize + (int)(squareSize*1.5);
+    int x = c * squareSize + (int)(squareSize * 1.5);
+    int y = r * squareSize + (int)(squareSize * 1.5);
     return new Point(x,y);
   }
 

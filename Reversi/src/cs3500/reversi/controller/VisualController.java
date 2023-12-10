@@ -1,6 +1,5 @@
 package cs3500.reversi.controller;
 
-import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.Position;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
@@ -11,7 +10,7 @@ import cs3500.reversi.view.IReversiView;
  * Has a player (which can either be a human/ai) as well as the model
  * of the game and the view for the given player to be controlled.
  */
-public class VisualController implements HexReversiController {
+public class VisualController implements ReversiController {
   private final ReversiModel model; // the model the game is played on
   private final IReversiView view; // the view of the player
   private final Player player; // the player to be controlled

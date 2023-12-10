@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import cs3500.reversi.controller.AIPlayer;
-import cs3500.reversi.controller.HexReversiController;
+import cs3500.reversi.controller.ReversiController;
 import cs3500.reversi.controller.Player;
 import cs3500.reversi.controller.PlayerMock;
 import cs3500.reversi.controller.VisualController;
@@ -40,11 +40,11 @@ public class SquareReversiTests {
   IReversiView view1mock;
   IReversiView view2mock;
 
-  HexReversiController controller1;
-  HexReversiController controllerMock1;
+  ReversiController controller1;
+  ReversiController controllerMock1;
 
-  HexReversiController controller2;
-  HexReversiController controllerMock2;
+  ReversiController controller2;
+  ReversiController controllerMock2;
 
   @Before
   public void init() {
@@ -300,8 +300,8 @@ public class SquareReversiTests {
     //black's turn
     Assert.assertEquals(TeamColor.BLACK, square4.getCurrentTurn());
     Assert.assertEquals(TeamColor.BLACK, square4read.getCurrentTurn());
-    Assert.assertThrows(IllegalStateException.class,
-            () -> square4.addPiece(TeamColor.BLACK, new SquarePos(2,2)));
+    Assert.assertThrows(IllegalStateException.class, () -> square4.addPiece(
+            TeamColor.BLACK, new SquarePos(2,2)));
     Assert.assertEquals(TeamColor.BLACK, square4.getCurrentTurn());
     Assert.assertEquals(TeamColor.BLACK, square4read.getCurrentTurn());
 

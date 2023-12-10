@@ -1,21 +1,28 @@
 package cs3500.reversi.model;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-public class SquareReversi extends HexReversi {
+/**
+ * Class to represent a game of Square Reversi. Game is played
+ * on a cartesian board with a size of 4 or greater.
+ **/
+public class SquareReversi extends AbstractReversi {
   /**
-   * Constructs a game of HexReversi. Additionally,
+   * Constructs a game of Square Reversi. Additionally,
    * starts the game by dealing out the board and
    * updating valid moves. Initial move goes to black.
    *
    * @param size size of the game board to be played.
+   * @throws IllegalArgumentException if size is not even or less than 4
    */
   public SquareReversi(int size) {
     super(size);
     if (size % 2 != 0) {
       throw new IllegalArgumentException("size must be even");
+    }
+    if (size < 4) {
+      throw new IllegalArgumentException("size must be at least 4");
     }
   }
 

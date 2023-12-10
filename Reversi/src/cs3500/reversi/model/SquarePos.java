@@ -3,16 +3,15 @@ package cs3500.reversi.model;
 import java.util.Objects;
 
 /**
- * Class to represent a hexagonal position, represented by
- * three coordinates q, r, and s.
- * A position is invalid solely if s != -q - r.
+ * Class to represent a cartesian coordinate position
+ * for the game of square reversi.
  */
 public class SquarePos implements Position {
   private final int x;
   private final int y;
 
   /**
-   * Constructs a new position due to two inputs
+   * Constructs a new position due to two inputs.
    * @param x x coordinate
    * @param y y coordinate
    * @throws IllegalArgumentException if position is invalid/illegal

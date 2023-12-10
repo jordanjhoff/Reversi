@@ -1,5 +1,8 @@
 package cs3500.reversi.model;
 
+/**
+ * Interface to represent a position on the board.
+ */
 public interface Position {
 
   /**

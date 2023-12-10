@@ -3,13 +3,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs3500.reversi.controller.AIPlayer;
-import cs3500.reversi.controller.HexReversiController;
+import cs3500.reversi.controller.ReversiController;
 import cs3500.reversi.controller.Player;
 import cs3500.reversi.controller.PlayerMock;
 import cs3500.reversi.controller.VisualController;
 import cs3500.reversi.controller.VisualControllerMock;
-import cs3500.reversi.model.HexPosition;
-import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.Position;
 import cs3500.reversi.model.ReversiMock;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
@@ -37,11 +35,11 @@ public class StrategyMockTests {
   IReversiView view1mock;
   IReversiView view2mock;
 
-  HexReversiController controller1;
-  HexReversiController controllerMock1;
+  ReversiController controller1;
+  ReversiController controllerMock1;
 
-  HexReversiController controller2;
-  HexReversiController controllerMock2;
+  ReversiController controller2;
+  ReversiController controllerMock2;
 
   ReadonlyHexReversiModel ror;
 

@@ -26,8 +26,7 @@ public class Main {
   public static void main(String[] args) {
     if (args == null || args.length != 4) {
       throw new IllegalArgumentException("Code 1");
-    }
-    else {
+    } else {
       try {
         //5 human ai hints square
         boolean square = hexOrSquare(args[3]);
@@ -42,9 +41,8 @@ public class Main {
           IReversiView viewPlayer2 = new ReversiGUIView(model, true, true);
           IReversiView textviewPlayer2 = new ReversiSquareTextualView(model);
           VisualController controller1 = new VisualController(model, viewPlayer1, player1);
-          VisualController controller2 = new VisualController(model, viewPlayer2, player2);
-        }
-        else {
+          VisualController controller2 = new VisualController(model, textviewPlayer2, player2);
+        } else {
           //5 human ai hints hex
           model = new HexReversi(Integer.parseInt(args[0]));
           Player player1 = parseProviderPlayer(args[1], TeamColor.BLACK,
@@ -60,8 +58,8 @@ public class Main {
       } catch (NumberFormatException e) {
         throw new IllegalArgumentException("invalid input");
       }
-        }
     }
+  }
 
 
   private static Player parseProviderPlayer(String arg, TeamColor color,
