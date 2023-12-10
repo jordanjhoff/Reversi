@@ -35,12 +35,6 @@ public class ReversiSubcomponentTests {
   }
 
   @Test
-  public void testHexPositionIAE() {
-    Assert.assertThrows(IllegalArgumentException.class, () -> new HexPosition(1,1));
-    Assert.assertThrows(IllegalArgumentException.class, () -> new HexPosition(1,-11));
-  }
-
-  @Test
   public void testHexPositionGetters() {
     HexPosition posn = new HexPosition(1,1);
     Assert.assertEquals(1, posn.getFirstCoordinate());

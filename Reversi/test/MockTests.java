@@ -7,6 +7,7 @@ import cs3500.reversi.controller.HexReversiController;
 import cs3500.reversi.controller.Player;
 import cs3500.reversi.controller.PlayerMock;
 import cs3500.reversi.controller.VisualController;
+import cs3500.reversi.controller.VisualControllerMock;
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
@@ -15,6 +16,7 @@ import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.strategy.CaptureMost;
 import cs3500.reversi.view.IReversiView;
+import cs3500.reversi.view.ReversiGUIViewMock;
 
 /**
  * Class for testing the hexreversi model implementation of reversimodel.
@@ -107,33 +109,33 @@ public class MockTests {
   @Test
   public void testFullGame() {
     //black's turn
-    hex2.addPiece(TeamColor.BLACK, new HexPosition(1,-2,1));
+    hex2.addPiece(TeamColor.BLACK, new HexPosition(1,-2));
     //white's turn
-    hex2.addPiece(TeamColor.WHITE, new HexPosition(2,-1,-1));
+    hex2.addPiece(TeamColor.WHITE, new HexPosition(2,-1));
     //black's turn
-    hex2.addPiece(TeamColor.BLACK, new HexPosition(1,1,-2));
+    hex2.addPiece(TeamColor.BLACK, new HexPosition(1,1));
     //white's turn
     hex2.pass();
     //black's turn
     Assert.assertThrows(IllegalStateException.class, () -> hex2.addPiece(
-            TeamColor.BLACK, new HexPosition(-2,2,0)));
+            TeamColor.BLACK, new HexPosition(-2,2)));
     Assert.assertEquals(TeamColor.BLACK, hex2.getCurrentTurn());
-    hex2.addPiece(TeamColor.BLACK, new HexPosition(-1,-1,2));
+    hex2.addPiece(TeamColor.BLACK, new HexPosition(-1,-1));
     //white's turn
-    hex2.addPiece(TeamColor.WHITE, new HexPosition(-1,2,-1));
+    hex2.addPiece(TeamColor.WHITE, new HexPosition(-1,2));
     //black's turn
     hex2.pass();
     //white's turn
-    hex2.addPiece(TeamColor.WHITE, new HexPosition(-2,1,1));
+    hex2.addPiece(TeamColor.WHITE, new HexPosition(-2,1));
     //no more valid moves for either
     Assert.assertTrue(hex2.isGameOver());
   }
 
   @Test
   public void testControllerObservesMove() {
-    controllerMock1.notifyMakeMove(new HexPosition(1,1,-2));
+    controllerMock1.notifyMakeMove(new HexPosition(1,1));
     Assert.assertTrue(out.toString().contains("makeMove: [1,1,-2]"));
-    controllerMock1.notifyMakeMove(new HexPosition(1,1,-2));
+    controllerMock1.notifyMakeMove(new HexPosition(1,1));
     Assert.assertTrue(out.toString().contains("makeMove: [1,1,-2]"));
     Assert.assertTrue(out.toString().contains("Not your turn"));
   }

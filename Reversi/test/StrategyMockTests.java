@@ -130,11 +130,11 @@ public class StrategyMockTests {
 
   @Test
   public void testCaptureMostNoValidMovesReturnsNull() {
-    mock.addPiece(TeamColor.BLACK, new HexPosition(-1, 2, -1));
-    mock.addPiece(TeamColor.WHITE, new HexPosition(1, 1, -2));
-    mock.addPiece(TeamColor.BLACK, new HexPosition(-2, 1, 1));
-    mock.addPiece(TeamColor.WHITE, new HexPosition(-1, -1, 2));
-    mock.addPiece(TeamColor.BLACK, new HexPosition(2, -1, -1));
+    mock.addPiece(TeamColor.BLACK, new HexPosition(-1, 2));
+    mock.addPiece(TeamColor.WHITE, new HexPosition(1, 1));
+    mock.addPiece(TeamColor.BLACK, new HexPosition(-2, 1));
+    mock.addPiece(TeamColor.WHITE, new HexPosition(-1, -1));
+    mock.addPiece(TeamColor.BLACK, new HexPosition(2, -1));
     Assert.assertNull(captureMost.choosePosn(new ReadonlyHexReversiModel(mock), TeamColor.WHITE));
     mock.pass();
     mock.addPiece(TeamColor.BLACK, captureMost.choosePosn(
