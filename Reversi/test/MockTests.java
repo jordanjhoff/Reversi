@@ -7,7 +7,6 @@ import cs3500.reversi.controller.HexReversiController;
 import cs3500.reversi.controller.Player;
 import cs3500.reversi.controller.PlayerMock;
 import cs3500.reversi.controller.VisualController;
-import cs3500.reversi.controller.VisualControllerMock;
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.HexReversi;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
@@ -16,7 +15,6 @@ import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.strategy.CaptureMost;
 import cs3500.reversi.view.IReversiView;
-import cs3500.reversi.view.ReversiGUIViewMock;
 
 /**
  * Class for testing the hexreversi model implementation of reversimodel.

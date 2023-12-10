@@ -23,7 +23,7 @@ import cs3500.reversi.view.IReversiView;
 /**
  * Class for testing the hexreversi model implementation of reversimodel.
  */
-public class ReversiTests {
+public class SquareReversiTests {
 
 
   ReversiModel hex5;
@@ -370,7 +370,7 @@ public class ReversiTests {
     Assert.assertEquals(TeamColor.BLACK, hex5.getCurrentTurn());
     Assert.assertEquals(TeamColor.BLACK, hex5read.getCurrentTurn());
     Assert.assertThrows(IllegalStateException.class,
-        () -> hex5.addPiece(TeamColor.BLACK, new HexPosition(2,-2,0)));
+            () -> hex5.addPiece(TeamColor.BLACK, new HexPosition(2,-2,0)));
     Assert.assertEquals(TeamColor.BLACK, hex5.getCurrentTurn());
     Assert.assertEquals(TeamColor.BLACK, hex5read.getCurrentTurn());
 
@@ -495,7 +495,7 @@ public class ReversiTests {
     hex2.pass();
     //black's turn
     Assert.assertThrows(IllegalStateException.class,
-        () -> hex2.addPiece(TeamColor.BLACK, new HexPosition(-2,2,0)));
+            () -> hex2.addPiece(TeamColor.BLACK, new HexPosition(-2,2,0)));
     Assert.assertEquals(TeamColor.BLACK, hex2.getCurrentTurn());
     hex2.addPiece(TeamColor.BLACK, new HexPosition(-1,-1,2));
     //white's turn
