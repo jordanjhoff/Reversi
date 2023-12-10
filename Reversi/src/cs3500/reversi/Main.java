@@ -23,13 +23,13 @@ public class Main {
    * A main method to execute and view a HexReversi game.
    */
   public static void main(String[] args) {
-    if (args == null || args.length != 5) {
+    if (args == null || args.length != 4) {
       throw new IllegalArgumentException("Code 1");
     }
     else {
       try {
         //5 human ai hints square
-        boolean square = hexOrSquare(args[4]);
+        boolean square = hexOrSquare(args[3]);
         ReversiModel model;
         if (square) {
           model = new SquareReversi(Integer.parseInt(args[0]));
@@ -37,9 +37,8 @@ public class Main {
                   new ReadonlyHexReversiModel(model));
           Player player2 = parseProviderPlayer(args[2], TeamColor.WHITE,
                   new ReadonlyHexReversiModel(model));
-          boolean hints = hint(args[3]);
-          IReversiView viewPlayer1 = new ReversiGUIView(model, hints, true);
-          IReversiView viewPlayer2 = new ReversiGUIView(model, hints, true);
+          IReversiView viewPlayer1 = new ReversiGUIView(model, true, true);
+          IReversiView viewPlayer2 = new ReversiGUIView(model, true, true);
           VisualController controller1 = new VisualController(model, viewPlayer1, player1);
           VisualController controller2 = new VisualController(model, viewPlayer2, player2);
         }
@@ -50,9 +49,8 @@ public class Main {
                   new ReadonlyHexReversiModel(model));
           Player player2 = parseProviderPlayer(args[2], TeamColor.WHITE,
                   new ReadonlyHexReversiModel(model));
-          boolean hints = hint(args[3]);
-          IReversiView viewPlayer1 = new ReversiGUIView(model, hints, false);
-          IReversiView viewPlayer2 = new ReversiGUIView(model, hints, false);
+          IReversiView viewPlayer1 = new ReversiGUIView(model, true, false);
+          IReversiView viewPlayer2 = new ReversiGUIView(model, true, false);
           VisualController controller1 = new VisualController(model, viewPlayer1, player1);
           VisualController controller2 = new VisualController(model, viewPlayer2, player2);
         }
@@ -75,10 +73,6 @@ public class Main {
     else {
       throw new IllegalArgumentException("illegal arguments");
     }
-  }
-
-  private static boolean hint(String arg) {
-    return arg.toLowerCase().equals("hints");
   }
 
   private static boolean hexOrSquare(String arg) {
