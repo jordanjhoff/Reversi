@@ -13,6 +13,7 @@ import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.strategy.CaptureMost;
 import cs3500.reversi.view.IReversiView;
 import cs3500.reversi.view.ReversiGUIView;
+import cs3500.reversi.view.ReversiSquareTextualView;
 
 /**
  * A main class to execute and view a HexReversi game.
@@ -39,6 +40,7 @@ public class Main {
                   new ReadonlyHexReversiModel(model));
           IReversiView viewPlayer1 = new ReversiGUIView(model, true, true);
           IReversiView viewPlayer2 = new ReversiGUIView(model, true, true);
+          IReversiView textviewPlayer2 = new ReversiSquareTextualView(model);
           VisualController controller1 = new VisualController(model, viewPlayer1, player1);
           VisualController controller2 = new VisualController(model, viewPlayer2, player2);
         }
