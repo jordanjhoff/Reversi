@@ -8,7 +8,7 @@ import java.util.HashMap;
  * A mock implementation of the ReversiModel interface for testing and logging purposes.
  * This class delegates calls to an adaptee HexReversi instance and logs method invocations.
  */
-public class HexReversiMock implements ReversiModel {
+public class ReversiMock implements ReversiModel {
   private Appendable out;
   private ReversiModel adaptee;
 
@@ -18,7 +18,7 @@ public class HexReversiMock implements ReversiModel {
    * @param out The Appendable for logging method invocations.
    * @param adaptee functional class to make the moves
    */
-  public HexReversiMock(Appendable out, HexReversi adaptee) {
+  public ReversiMock(Appendable out, ReversiModel adaptee) {
     this.out = out;
     this.adaptee = adaptee;
   }

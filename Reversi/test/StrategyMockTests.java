@@ -10,7 +10,7 @@ import cs3500.reversi.controller.VisualController;
 import cs3500.reversi.controller.VisualControllerMock;
 import cs3500.reversi.model.HexPosition;
 import cs3500.reversi.model.HexReversi;
-import cs3500.reversi.model.HexReversiMock;
+import cs3500.reversi.model.ReversiMock;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReversiModel;
 import cs3500.reversi.model.TeamColor;
@@ -46,7 +46,7 @@ public class StrategyMockTests {
   @Before
   public void initData() {
     mockOut = new StringBuilder();
-    mock = new HexReversiMock(mockOut, new HexReversi(2));
+    mock = new ReversiMock(mockOut, new HexReversi(2));
     captureMost = new CaptureMost();
     viewOut = new StringBuilder();
 

@@ -18,6 +18,7 @@ import cs3500.reversi.model.Position;
 import cs3500.reversi.model.ReadonlyHexReversiModel;
 import cs3500.reversi.model.ReadonlyReversiModel;
 import cs3500.reversi.model.ReversiModel;
+import cs3500.reversi.model.SquarePos;
 import cs3500.reversi.model.SquareReversi;
 import cs3500.reversi.model.TeamColor;
 import cs3500.reversi.strategy.CaptureMost;
@@ -31,7 +32,6 @@ public class SquareReversiTests {
 
 
   ReversiModel square4;
-
   ReadonlyReversiModel square4read;
 
   Player player1;
@@ -66,7 +66,7 @@ public class SquareReversiTests {
 
   @Before
   public void init() {
-    square4 = new SquareReversi(4);
+    square4 = new HexReversi(4);
     square4read = new ReadonlyHexReversiModel(square4);
 
     // for a hexgame of size 5
@@ -86,45 +86,24 @@ public class SquareReversiTests {
     controllerMock2 = new VisualControllerMock(out, controller2);
 
     square4.startGame();
-
-    //for a hexgame of size 2
-
-    out2 = new StringBuilder();
-    mockTwo1 = new PlayerMock(out, new AIPlayer(TeamColor.BLACK, new CaptureMost(), square4read));
-    mockTwo2 = new PlayerMock(out, new AIPlayer(TeamColor.WHITE, new CaptureMost(), square4read));
-
-
-    viewTwo1mock = new ReversiGUIViewMock(out2);
-
-    viewTwo2mock = new ReversiGUIViewMock(out2);
-
-    controllerTwo1 = new VisualController(hex2, viewTwo1mock, mockTwo1);
-    controllerMockTwo1 = new VisualControllerMock(out2, controllerTwo1);
-
-    controllerTwo2 = new VisualController(hex2, viewTwo2mock, mockTwo2);
-    controllerMockTwo2 = new VisualControllerMock(out2, controllerTwo2);
-
-    hex2.startGame();
   }
 
 
   //test getsize works
   @Test
   public void getSize() {
-    Assert.assertEquals(5, square4.getSize());
-    Assert.assertEquals(2, hex2.getSize());
-    Assert.assertEquals(5, square4read.getSize());
-    Assert.assertEquals(2, hex2read.getSize());
-    Assert.assertEquals(100, new HexReversi(100).getSize());
+    Assert.assertEquals(4, square4.getSize());
+    Assert.assertEquals(4, square4read.getSize());
+    Assert.assertEquals(100, new SquareReversi(100).getSize());
   }
 
   //test the constructor doesn't throw on valid sizes
   @Test
-  public void testHexReversiConstructor() {
+  public void testSquareReversiConstructor() {
     try {
-      new HexReversi(5);
-      new HexReversi(100);
-      new HexReversi(23);
+      new SquareReversi(4);
+      new SquareReversi(100);
+      new SquareReversi(22);
 
     }
     catch (Exception e) {
@@ -134,19 +113,20 @@ public class SquareReversiTests {
 
   //tests the constructor throws when incorrect sizes
   @Test
-  public void testHexReversiConstructorIAE() {
-    Assert.assertThrows(IllegalArgumentException.class, () -> new HexReversi(1));
-    Assert.assertThrows(IllegalArgumentException.class, () -> new HexReversi(0));
-    Assert.assertThrows(IllegalArgumentException.class, () -> new HexReversi(-11));
+  public void testSquareReversiConstructorIAE() {
+    Assert.assertThrows(IllegalArgumentException.class, () -> new SquareReversi(1));
+    Assert.assertThrows(IllegalArgumentException.class, () -> new SquareReversi(0));
+    Assert.assertThrows(IllegalArgumentException.class, () -> new SquareReversi(13));
+    Assert.assertThrows(IllegalArgumentException.class, () -> new SquareReversi(-11));
   }
 
   //test getting a piece returns accurately
   @Test
   public void testGetPieceAt() {
-    Assert.assertEquals(TeamColor.BLACK, square4.getPieceAt(new HexPosition(0,-1)));
-    Assert.assertEquals(TeamColor.WHITE, square4.getPieceAt(new HexPosition(1,-1)));
-    Assert.assertEquals(TeamColor.BLACK, square4.getPieceAt(new HexPosition(1,0)));
-    Assert.assertEquals(TeamColor.WHITE, square4.getPieceAt(new HexPosition(0,1)));
+    Assert.assertEquals(TeamColor.BLACK, square4.getPieceAt(new SquarePos(0,-1)));
+    Assert.assertEquals(TeamColor.WHITE, square4.getPieceAt(new SquarePos(1,-1)));
+    Assert.assertEquals(TeamColor.BLACK, square4.getPieceAt(new SquarePos(1,0)));
+    Assert.assertEquals(TeamColor.WHITE, square4.getPieceAt(new SquarePos(0,1)));
   }
 
   //test getting a piece that isn't there returns null
