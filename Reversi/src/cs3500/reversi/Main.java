@@ -39,9 +39,9 @@ public class Main {
                   new ReadonlyHexReversiModel(model));
           IReversiView viewPlayer1 = new ReversiGUIView(model, true, true);
           IReversiView viewPlayer2 = new ReversiGUIView(model, true, true);
-          IReversiView textviewPlayer2 = new ReversiSquareTextualView(model);
+          //IReversiView textviewPlayer2 = new ReversiSquareTextualView(model);
           VisualController controller1 = new VisualController(model, viewPlayer1, player1);
-          VisualController controller2 = new VisualController(model, textviewPlayer2, player2);
+          VisualController controller2 = new VisualController(model, viewPlayer2, player2);
         } else {
           //5 human ai hints hex
           model = new HexReversi(Integer.parseInt(args[0]));
